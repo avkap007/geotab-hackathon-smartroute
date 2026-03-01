@@ -1,7 +1,9 @@
 /* SmartRoute Add-In - Dynamic Waste Fleet Optimization */
 /* ES5 only - MyGeotab embedded environment */
+/* Implements DVRP patterns from dvpr_paper.md: AddInData, Zone+Route writeback, 2-opt */
 
 var _debugData = {};
+var MY_ADDIN_ID = 'SmartRouteBinState2026';
 
 function debugLog(msg) {
   var el = document.getElementById('debug-log');
@@ -85,7 +87,6 @@ function nearestNeighborRoute(start, bins) {
   var ordered = [];
   var remaining = bins.slice();
   var current = start;
-
   while (remaining.length > 0) {
     var bestIdx = 0;
     var bestDist = haversineKm(current.lat, current.lng, remaining[0].lat, remaining[0].lng);
@@ -103,19 +104,59 @@ function nearestNeighborRoute(start, bins) {
   return ordered;
 }
 
+function twoOptImprove(points) {
+  if (points.length < 4) return points;
+  var improved = true;
+  var result = points.slice();
+  while (improved) {
+    improved = false;
+    for (var i = 0; i < result.length - 2; i++) {
+      for (var j = i + 2; j < result.length; j++) {
+        var before = routeDistanceKm(result);
+        var rev = result.slice(i + 1, j + 1).reverse();
+        var newRoute = result.slice(0, i + 1).concat(rev).concat(result.slice(j + 1));
+        var after = routeDistanceKm(newRoute);
+        if (after < before) {
+          result = newRoute;
+          improved = true;
+          break;
+        }
+      }
+      if (improved) break;
+    }
+  }
+  return result;
+}
+
 function getBinColor(fillLevel) {
   if (fillLevel < 50) return '#28a745';
   if (fillLevel < 70) return '#ffc107';
   return '#dc3545';
 }
 
+function createZonePoints(lat, lng) {
+  var offset = 0.0001;
+  return [
+    { x: lng - offset, y: lat - offset },
+    { x: lng + offset, y: lat - offset },
+    { x: lng + offset, y: lat + offset },
+    { x: lng - offset, y: lat + offset },
+    { x: lng - offset, y: lat - offset }
+  ];
+}
+
 geotab.addin['smartroute'] = function() {
   var map, apiRef;
   var binMarkers = [];
   var vehicleMarkers = [];
+  var vehiclePolylines = [];
+  var vehicleStatuses = [];
   var originalPolyline = null;
   var optimizedPolyline = null;
   var bins = [];
+  var binStateId = null;
+  var lastOptimizedOrder = [];
+  var lastThreshold = 70;
 
   function randomizeFillLevels() {
     bins = BINS_DATA.bins.map(function(b) {
@@ -128,9 +169,90 @@ geotab.addin['smartroute'] = function() {
     });
   }
 
+  function loadBinState(cb) {
+    apiRef.call('Get', {
+      typeName: 'AddInData',
+      search: { addInId: MY_ADDIN_ID }
+    }, function(results) {
+      var binState = null;
+      for (var i = 0; i < (results || []).length; i++) {
+        var r = results[i];
+        if (r.details && r.details.type === 'bin_state') {
+          binState = r.details;
+          binStateId = r.id;
+          break;
+        }
+      }
+      if (binState && binState.bins && binState.bins.length > 0) {
+        bins = binState.bins;
+        debugLog('Loaded bin_state from AddInData: ' + bins.length + ' bins');
+      } else {
+        randomizeFillLevels();
+        saveBinState(cb);
+        return;
+      }
+      if (cb) cb();
+    }, function(err) {
+      debugLog('AddInData Get error: ' + err);
+      randomizeFillLevels();
+      if (cb) cb();
+    });
+  }
+
+  function saveBinState(cb) {
+    var entity = {
+      addInId: MY_ADDIN_ID,
+      groups: [{ id: 'GroupCompanyId' }],
+      details: {
+        type: 'bin_state',
+        bins: bins,
+        savedAt: new Date().toISOString()
+      }
+    };
+    if (binStateId) entity.id = binStateId;
+    apiRef.call(binStateId ? 'Set' : 'Add', {
+      typeName: 'AddInData',
+      entity: entity
+    }, function(id) {
+      if (!binStateId) binStateId = id;
+      debugLog('Saved bin_state');
+      if (cb) cb();
+    }, function(err) {
+      debugLog('AddInData save error: ' + err);
+      if (cb) cb();
+    });
+  }
+
+  function addCollectionLog(routeId, deviceId, binId, fillPct, lat, lng, thresholdUsed) {
+    apiRef.call('Add', {
+      typeName: 'AddInData',
+      entity: {
+        addInId: MY_ADDIN_ID,
+        groups: [{ id: 'GroupCompanyId' }],
+        details: {
+          type: 'collection_log',
+          routeId: routeId || 'demo',
+          deviceId: deviceId || 'demo',
+          binId: binId,
+          collectedAt: new Date().toISOString(),
+          fillPctAtCollection: fillPct,
+          lat: lat,
+          lng: lng,
+          thresholdUsed: thresholdUsed
+        }
+      }
+    }, function() {
+      debugLog('Collection logged: ' + binId);
+    }, function(err) {
+      debugLog('Collection log error: ' + err);
+    });
+  }
+
   function clearMapOverlays() {
     binMarkers.forEach(function(m) { if (map && map.removeLayer) map.removeLayer(m); });
     binMarkers = [];
+    vehiclePolylines.forEach(function(p) { if (map && map.removeLayer) map.removeLayer(p); });
+    vehiclePolylines = [];
     if (originalPolyline && map) map.removeLayer(originalPolyline);
     originalPolyline = null;
     if (optimizedPolyline && map) map.removeLayer(optimizedPolyline);
@@ -177,49 +299,194 @@ geotab.addin['smartroute'] = function() {
     document.getElementById('val-co2').textContent = co2Avoided.toFixed(1) + ' kg';
   }
 
+  function assignBinsToVehicles(binsList, vehicles) {
+    var clusters = {};
+    vehicles.forEach(function(v, i) {
+      clusters['v' + i] = { vehicle: v, bins: [] };
+    });
+    binsList.forEach(function(bin) {
+      var bestIdx = 0;
+      var bestDist = haversineKm(bin.lat, bin.lng, vehicles[0].latitude, vehicles[0].longitude);
+      for (var i = 1; i < vehicles.length; i++) {
+        var d = haversineKm(bin.lat, bin.lng, vehicles[i].latitude, vehicles[i].longitude);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i;
+        }
+      }
+      clusters['v' + bestIdx].bins.push(bin);
+    });
+    return clusters;
+  }
+
   function runOptimization() {
     var threshold = parseInt(document.getElementById('threshold-slider').value, 10);
     document.getElementById('threshold-value').textContent = threshold;
+    lastThreshold = threshold;
 
     var binsAboveThreshold = bins.filter(function(b) { return b.fillLevel >= threshold; });
     var depot = BINS_DATA.depot;
+    var vehiclesWithPos = (vehicleStatuses || []).filter(function(s) { return s.latitude && s.longitude; });
 
     clearMapOverlays();
 
     bins.forEach(function(b) { addBinMarker(b); });
 
     var originalOrder = nearestNeighborRoute(depot, bins.slice());
-    var optimizedOrder = binsAboveThreshold.length > 0
-      ? nearestNeighborRoute(depot, binsAboveThreshold.slice())
-      : [];
-
     var originalPoints = [depot].concat(originalOrder.map(function(b) { return { lat: b.lat, lng: b.lng }; }));
-    var optimizedPoints = [depot].concat(optimizedOrder.map(function(b) { return { lat: b.lat, lng: b.lng }; }));
-    if (optimizedPoints.length > 1) optimizedPoints.push(depot);
     if (originalPoints.length > 1) originalPoints.push(depot);
-
     originalPolyline = drawRoute(originalPoints, '#6c757d', 3);
-    if (optimizedOrder.length > 0) {
+
+    var optimizedOrder = [];
+    var optimizedKm = 0;
+
+    if (binsAboveThreshold.length > 0 && vehiclesWithPos.length > 0) {
+      var clusters = assignBinsToVehicles(binsAboveThreshold, vehiclesWithPos);
+      var colors = ['#0d6efd', '#198754', '#fd7e14', '#6f42c1'];
+      Object.keys(clusters).forEach(function(k, i) {
+        var c = clusters[k];
+        if (c.bins.length === 0) return;
+        var start = { lat: c.vehicle.latitude, lng: c.vehicle.longitude };
+        var order = nearestNeighborRoute(start, c.bins.slice());
+        var pts = [start].concat(order.map(function(b) { return { lat: b.lat, lng: b.lng }; }));
+        pts = twoOptImprove(pts);
+        pts.push(start);
+        optimizedKm += routeDistanceKm(pts);
+        var color = colors[i % colors.length];
+        vehiclePolylines.push(drawRoute(pts, color, 4));
+        if (i === 0) optimizedOrder = order;
+      });
+      lastOptimizedOrder = optimizedOrder.length > 0 ? optimizedOrder : binsAboveThreshold;
+    } else if (binsAboveThreshold.length > 0) {
+      optimizedOrder = nearestNeighborRoute(depot, binsAboveThreshold.slice());
+      var optimizedPoints = [depot].concat(optimizedOrder.map(function(b) { return { lat: b.lat, lng: b.lng }; }));
+      optimizedPoints = twoOptImprove(optimizedPoints);
+      optimizedPoints.push(depot);
       optimizedPolyline = drawRoute(optimizedPoints, '#0d6efd', 5);
+      optimizedKm = routeDistanceKm(optimizedPoints);
+      lastOptimizedOrder = optimizedOrder;
     }
 
     var originalKm = routeDistanceKm(originalPoints);
-    var optimizedKm = optimizedOrder.length > 0 ? routeDistanceKm(optimizedPoints) : 0;
-
     updateStats(bins.length, binsAboveThreshold.length, originalKm, optimizedKm);
 
+    var statusExtra = vehiclesWithPos.length > 0 ? ' (' + vehiclesWithPos.length + ' vehicles)' : '';
     document.getElementById('status-text').textContent =
-      binsAboveThreshold.length + ' bins above ' + threshold + '% (of ' + bins.length + ') — ' +
+      binsAboveThreshold.length + ' bins above ' + threshold + '% (of ' + bins.length + ')' + statusExtra + ' — ' +
       (bins.length - binsAboveThreshold.length) + ' stops skipped';
 
     debugLog('Threshold: ' + threshold + '%, bins above: ' + binsAboveThreshold.length);
     debugSample('binsAboveThreshold', binsAboveThreshold);
+
+    saveBinState();
+  }
+
+  function writeRouteToGeotab() {
+    if (lastOptimizedOrder.length < 2) {
+      alert('Need at least 2 bins above threshold to create a route.');
+      return;
+    }
+
+    var btn = document.getElementById('write-route-btn');
+    btn.disabled = true;
+    btn.textContent = 'Writing...';
+
+    var routeName = 'SmartRoute-' + new Date().toISOString().slice(0, 10) + '-' + Date.now();
+    var zoneIds = [];
+    var idx = 0;
+
+    function createNextZone() {
+      if (idx >= lastOptimizedOrder.length) {
+        createRoute(zoneIds);
+        return;
+      }
+      var bin = lastOptimizedOrder[idx];
+      var zoneName = 'SmartRoute-' + bin.id;
+      apiRef.call('Add', {
+        typeName: 'Zone',
+        entity: {
+          name: zoneName,
+          points: createZonePoints(bin.lat, bin.lng),
+          displayed: true
+        }
+      }, function(zoneId) {
+        zoneIds.push({ id: zoneId });
+        idx++;
+        createNextZone();
+      }, function(err) {
+        debugLog('Zone Add error: ' + err);
+        btn.disabled = false;
+        btn.textContent = 'Write Route to MyGeotab';
+        alert('Failed to create zone: ' + err);
+      });
+    }
+
+    function createRoute(zones) {
+      apiRef.call('Add', {
+        typeName: 'Route',
+        entity: {
+          name: routeName,
+          comment: 'SmartRoute optimized waste collection route'
+        }
+      }, function(routeId) {
+        var seq = 0;
+        function addNextPlanItem() {
+          if (seq >= zones.length) {
+            debugLog('Route created: ' + routeName);
+            btn.disabled = false;
+            btn.textContent = 'Write Route to MyGeotab';
+            alert('Route "' + routeName + '" created successfully!');
+            return;
+          }
+          apiRef.call('Add', {
+            typeName: 'RoutePlanItem',
+            entity: {
+              route: { id: routeId },
+              zone: zones[seq],
+              sequence: seq
+            }
+          }, function() {
+            seq++;
+            addNextPlanItem();
+          }, function(err) {
+            debugLog('RoutePlanItem Add error: ' + err);
+            btn.disabled = false;
+            btn.textContent = 'Write Route to MyGeotab';
+            alert('Route created but failed to add waypoint: ' + err);
+          });
+        }
+        addNextPlanItem();
+      }, function(err) {
+        debugLog('Route Add error: ' + err);
+        btn.disabled = false;
+        btn.textContent = 'Write Route to MyGeotab';
+        alert('Failed to create route: ' + err);
+      });
+    }
+
+    createNextZone();
+  }
+
+  function logCollectionSimulate() {
+    if (lastOptimizedOrder.length === 0) {
+      alert('Optimize a route first (set threshold).');
+      return;
+    }
+    var bin = lastOptimizedOrder[0];
+    var deviceId = (vehicleStatuses[0] && vehicleStatuses[0].device) ? vehicleStatuses[0].device.id : 'demo';
+    addCollectionLog('demo', deviceId, bin.id, bin.fillLevel, bin.lat, bin.lng, lastThreshold);
+    bin.fillLevel = 0;
+    saveBinState(function() {
+      runOptimization();
+      alert('Simulated collection of ' + bin.id + ' (fill reset to 0%).');
+    });
   }
 
   function loadVehicles() {
     apiRef.call('Get', { typeName: 'DeviceStatusInfo' }, function(statuses) {
       debugLog('DeviceStatusInfo: ' + (statuses ? statuses.length : 0) + ' vehicles');
       debugSample('deviceStatuses', statuses);
+      vehicleStatuses = statuses || [];
       if (statuses) {
         statuses.forEach(function(s) {
           if (s.latitude && s.longitude) addVehicleMarker(s);
@@ -243,13 +510,16 @@ geotab.addin['smartroute'] = function() {
         attribution: '© OpenStreetMap'
       }).addTo(map);
 
-      randomizeFillLevels();
-
       document.getElementById('threshold-slider').oninput = function() {
         runOptimization();
       };
 
-      loadVehicles();
+      document.getElementById('write-route-btn').onclick = writeRouteToGeotab;
+      document.getElementById('log-collection-btn').onclick = logCollectionSimulate;
+
+      loadBinState(function() {
+        loadVehicles();
+      });
       callback();
     },
     focus: function(api, state) {
