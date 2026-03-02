@@ -3,9 +3,11 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet"
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { BinCharacter } from "./SvgIcons";
+import type { OptimizedResult, LoadedRoute } from "@/hooks/useSmartRoute";
 
 export interface Bin {
   id: number;
+  stringId: string;
   name: string;
   lat: number;
   lng: number;
@@ -19,6 +21,10 @@ interface SmartRouteMapProps {
   bins: Bin[];
   threshold: number;
   optimizeState: OptimizeState;
+  optimizedMap: Record<string, OptimizedResult>;
+  loadedRoutes: LoadedRoute[];
+  selectedRouteId: string | null;
+  onRouteSelect: (routeId: string) => void;
 }
 
 const getOverflowTime = (fillLevel: number): string => {
@@ -54,16 +60,10 @@ function getBinSvg(fillLevel: number, meetsThreshold: boolean): string {
     <path d="M17.5 34 Q22 38 26.5 34" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
   </svg>`;
 }
-function sortBinsForRoute(binList: Bin[]): Bin[] {
-  if (binList.length <= 1) return binList;
-  const cLat = binList.reduce((s, b) => s + b.lat, 0) / binList.length;
-  const cLng = binList.reduce((s, b) => s + b.lng, 0) / binList.length;
-  return [...binList].sort((a, b) => {
-    return Math.atan2(a.lat - cLat, a.lng - cLng) - Math.atan2(b.lat - cLat, b.lng - cLng);
-  });
-}
 
-const SmartRouteMap: React.FC<SmartRouteMapProps> = ({ bins, threshold, optimizeState }) => {
+const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
+  bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect,
+}) => {
   const icons = useMemo(() => {
     const map = new Map<string, L.DivIcon>();
     bins.forEach((b) => {
@@ -85,16 +85,47 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({ bins, threshold, optimize
     return map;
   }, [bins, threshold]);
 
-  const allRoute = useMemo(() => {
-    const sorted = sortBinsForRoute(bins);
-    return sorted.map((b) => [b.lat, b.lng] as L.LatLngTuple);
-  }, [bins]);
+  // Collect all OSRM road polylines from optimized routes
+  const roadPolylines = useMemo(() => {
+    const lines: { positions: L.LatLngTuple[]; color: string; routeId: string }[] = [];
+    for (const route of loadedRoutes) {
+      const opt = optimizedMap[route.id];
+      if (!opt) continue;
+      opt.roadPolylines.forEach((poly, i) => {
+        const color = opt.result.vehicleRoutes[i]?.color || route.color;
+        lines.push({
+          positions: poly as L.LatLngTuple[],
+          color,
+          routeId: route.id,
+        });
+      });
+    }
+    return lines;
+  }, [optimizedMap, loadedRoutes]);
 
-  const optimizedRoute = useMemo(() => {
-    const qualifying = bins.filter((b) => b.fillLevel >= threshold);
-    const sorted = sortBinsForRoute(qualifying);
-    return sorted.map((b) => [b.lat, b.lng] as L.LatLngTuple);
-  }, [bins, threshold]);
+  // Original route polylines — use OSRM road polyline when available, fallback to straight lines
+  const originalPolylines = useMemo(() => {
+    const lines: { positions: L.LatLngTuple[]; color: string; routeId: string }[] = [];
+    for (const route of loadedRoutes) {
+      if (route.originalRoadPolyline && route.originalRoadPolyline.length > 0) {
+        lines.push({
+          positions: route.originalRoadPolyline as L.LatLngTuple[],
+          color: route.color,
+          routeId: route.id,
+        });
+      } else if (route.bins.length >= 2) {
+        const pts: L.LatLngTuple[] = [
+          [route.depot.lat, route.depot.lng],
+          ...route.bins.map((b) => [b.lat, b.lng] as L.LatLngTuple),
+          [route.depot.lat, route.depot.lng],
+        ];
+        lines.push({ positions: pts, color: route.color, routeId: route.id });
+      }
+    }
+    return lines;
+  }, [loadedRoutes]);
+
+  const hasOptimized = Object.keys(optimizedMap).length > 0;
 
   return (
     <MapContainer
@@ -109,18 +140,37 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({ bins, threshold, optimize
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
       />
 
-      {/* Route lines */}
-      {optimizeState === "showing-original" && allRoute.length > 1 && (
-        <Polyline positions={allRoute} color="#9CA3AF" weight={3} dashArray="8 6" opacity={0.7} />
-      )}
-      {optimizeState === "optimized" && optimizedRoute.length > 1 && (
-        <Polyline positions={optimizedRoute} color="#7EC8E3" weight={4} opacity={0.85} />
-      )}
+      {/* Original route lines — always visible as dashed, dimmed when optimized */}
+      {originalPolylines.map((line, i) => (
+        <Polyline
+          key={`orig-${i}`}
+          positions={line.positions}
+          color={line.color}
+          weight={hasOptimized ? 2 : 3}
+          opacity={hasOptimized ? 0.3 : 0.6}
+          dashArray="7 5"
+        />
+      ))}
+
+      {/* Optimized road polylines (solid, shown after optimization) */}
+      {hasOptimized && optimizeState === "optimized" && roadPolylines.map((line, i) => (
+        <Polyline
+          key={`opt-${i}`}
+          positions={line.positions}
+          color={line.color}
+          weight={selectedRouteId === line.routeId ? 6 : 4}
+          opacity={0.85}
+          eventHandlers={{
+            click: () => onRouteSelect(line.routeId),
+          }}
+        />
+      ))}
 
       {/* Bin markers */}
       {bins.map((bin) => {
         const meets = bin.fillLevel >= threshold;
         const icon = icons.get(`${bin.id}-${meets}`);
+
         return (
           <Marker key={bin.id} position={[bin.lat, bin.lng]} icon={icon}>
             <Popup>

@@ -2,6 +2,13 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
+// Inject Google Maps key from Vite env var for the smartroute-algo.js IIFE
+// (it reads window.SMARTROUTE_CONFIG.googleMapsKey to decide whether to use
+// Google Distance Matrix or Haversine fallback)
+window.SMARTROUTE_CONFIG = {
+  googleMapsKey: import.meta.env.VITE_GOOGLE_MAPS_KEY || "",
+};
+
 // Geotab API type
 export interface GeotabApi {
   call: (

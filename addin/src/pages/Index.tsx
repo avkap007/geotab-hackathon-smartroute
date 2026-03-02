@@ -1,33 +1,27 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer } from
 "recharts";
-import SmartRouteMap, { type Bin, type OptimizeState } from "@/components/SmartRouteMap";
+import SmartRouteMap from "@/components/SmartRouteMap";
+import RouteOverlayPanel from "@/components/RouteOverlayPanel";
 import {
   TruckIcon, ClockIcon, FuelIcon, LeafIcon, SkipIcon,
   SearchIcon, CalendarIcon, CheckIcon, CloseIcon, SpinnerIcon,
-  PinIcon, BinCharacter } from
+  PinIcon } from
 "@/components/SvgIcons";
+import { useSmartRoute } from "@/hooks/useSmartRoute";
+import type { GeotabRouteRef } from "@/services/geotabApi";
 
 // ═══════════════════════════════════════════════
-// MOCK DATA — swap with API calls later
+// Static chart data (illustrative — kept as-is)
 // ═══════════════════════════════════════════════
-
-const bins: Bin[] = [
-{ id: 1, name: "Bin #A12", lat: 43.6555, lng: -79.3806, fillLevel: 85, lastCollected: "2 days ago" },
-{ id: 2, name: "Bin #B07", lat: 43.6485, lng: -79.3953, fillLevel: 22, lastCollected: "Today" },
-{ id: 3, name: "Bin #C33", lat: 43.6610, lng: -79.3876, fillLevel: 60, lastCollected: "1 day ago" },
-{ id: 4, name: "Bin #D19", lat: 43.6440, lng: -79.3720, fillLevel: 91, lastCollected: "3 days ago" },
-{ id: 5, name: "Bin #E55", lat: 43.6580, lng: -79.3680, fillLevel: 38, lastCollected: "Today" }];
-
 
 const fuelChartData = [
 { week: "Week 1", thisMonth: 42, lastMonth: 38 },
 { week: "Week 2", thisMonth: 51, lastMonth: 44 },
 { week: "Week 3", thisMonth: 58, lastMonth: 49 },
 { week: "Week 4", thisMonth: 68, lastMonth: 56 }];
-
 
 const stopsChartData = [
 { week: "W1", skipped: 12 },
@@ -36,7 +30,6 @@ const stopsChartData = [
 { week: "W4", skipped: 22 },
 { week: "W5", skipped: 26 },
 { week: "W6", skipped: 31 }];
-
 
 // ═══════════════════════════════════════════════
 // Animated number hook
@@ -201,36 +194,82 @@ const StatCard: React.FC<StatCardProps> = ({ icon, value, unit, label, decimals 
 // ═══════════════════════════════════════════════
 
 const Index: React.FC = () => {
-  const [threshold, setThreshold] = useState(50);
-  const [optimizeState, setOptimizeState] = useState<OptimizeState>("idle");
+  const sr = useSmartRoute();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState(["Asset 1", "Route 1", "Route 2", "Asset 3", "Route 4"]);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const MAX_VISIBLE_CHIPS = 2;
   const [startDate, setStartDate] = useState("2026-02-15");
   const [endDate, setEndDate] = useState("2026-03-02");
+  const searchWrapRef = useRef<HTMLDivElement>(null);
 
-  // Derived stats
-  const binsBelow = bins.filter((b) => b.fillLevel < threshold).length;
-  const stopsSkipped = binsBelow;
-  const hoursSaved = binsBelow * 0.5;
-  const fuelSaved = binsBelow * 12.4;
-  const co2Reduced = binsBelow * 8.2;
+  // Determine optimize button state from hook
+  const optimizeState = sr.isOptimizing ? "loading" as const
+    : Object.keys(sr.optimizedMap).length > 0 ? "optimized" as const
+    : "idle" as const;
 
-  const handleOptimize = () => {
-    if (optimizeState === "loading" || optimizeState === "showing-original") return;
-    setOptimizeState("loading");
-    setTimeout(() => setOptimizeState("showing-original"), 600);
-    setTimeout(() => setOptimizeState("optimized"), 2200);
+  // Per-route or aggregate metrics
+  const displayMetrics = useMemo(() => {
+    if (sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId]) {
+      return sr.optimizedMap[sr.selectedRouteId].result.metrics;
+    }
+    return sr.aggregateMetrics;
+  }, [sr.selectedRouteId, sr.optimizedMap, sr.aggregateMetrics]);
+
+  const { hoursSaved, fuelSavedL: fuelSaved, co2AvoidedKg: co2Reduced, stopsSkipped } = displayMetrics;
+
+  // Search filtering
+  const filteredRoutes = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return sr.allRoutes.slice(0, 10);
+    return sr.allRoutes.filter((r) => (r.name || "").toLowerCase().includes(q));
+  }, [searchQuery, sr.allRoutes]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("click", handler);
+    return () => document.removeEventListener("click", handler);
+  }, []);
+
+  const handleOptimize = async () => {
+    if (sr.isOptimizing || sr.loadedRoutes.length === 0) return;
+    await sr.runOptimize();
   };
 
-  const removeFilter = (f: string) => {
-    setFilters((prev) => {
-      const next = prev.filter((x) => x !== f);
-      if (next.length <= MAX_VISIBLE_CHIPS) setFiltersExpanded(false);
-      return next;
-    });
+  const handleSelectRoute = (route: GeotabRouteRef) => {
+    setShowDropdown(false);
+    setSearchQuery("");
+    sr.addRoute(route);
   };
+
+  const removeRoute = (routeId: string) => {
+    sr.removeRoute(routeId);
+    if (sr.loadedRoutes.length - 1 <= MAX_VISIBLE_CHIPS) setFiltersExpanded(false);
+  };
+
+  // Selected route info for overlay
+  const selectedRoute = sr.selectedRouteId
+    ? sr.loadedRoutes.find((r) => r.id === sr.selectedRouteId)
+    : null;
+  const selectedOpt = sr.selectedRouteId
+    ? sr.optimizedMap[sr.selectedRouteId]
+    : null;
+
+  // Build bins array for the map (from all loaded routes)
+  const mapBins = sr.allBins.map((b, i) => ({
+    id: i,
+    stringId: b.id,
+    name: b.name,
+    lat: b.lat,
+    lng: b.lng,
+    fillLevel: b.fillLevel,
+    lastCollected: "N/A",
+  }));
 
   return (
     <div className="min-h-screen bg-background">
@@ -251,17 +290,40 @@ const Index: React.FC = () => {
           {/* LEFT — Controls + Map */}
           <div className="w-[65%] flex flex-col gap-3">
             {/* Controls bar — adaptive layout */}
-            {filters.length === 0 ? (
+            {sr.loadedRoutes.length === 0 ? (
               /* ── Single-row: no tags ── */
               <div className="flex items-center gap-3">
-                <div className="relative flex-1 max-w-xs">
+                <div className="relative flex-1 max-w-xs" ref={searchWrapRef}>
                   <SearchIcon size={16} color="hsl(240, 5%, 55%)" className="absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     placeholder="Search routes..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => { setSearchQuery(e.target.value); setShowDropdown(true); }}
+                    onFocus={() => setShowDropdown(true)}
                     className="w-full pl-9 pr-3 py-2 rounded-xl bg-muted text-sm placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 transition" />
+                  {showDropdown && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-card shadow-lg rounded-xl border border-border z-50 max-h-64 overflow-y-auto">
+                      {filteredRoutes.length === 0 ? (
+                        <div className="px-4 py-3 text-xs text-muted-foreground">No routes found</div>
+                      ) : filteredRoutes.slice(0, 8).map((route) => {
+                        const added = sr.loadedRoutes.some((r) => r.id === route.id);
+                        return (
+                          <button
+                            key={route.id}
+                            disabled={added}
+                            onClick={() => handleSelectRoute(route)}
+                            className={`w-full text-left px-4 py-2.5 hover:bg-muted/60 transition flex items-center gap-2.5 ${added ? "opacity-50" : ""}`}>
+                            <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: added ? "#7EC8E3" : "#d1d5db" }} />
+                            <div>
+                              <div className="text-sm font-medium text-foreground">{route.name || "Unnamed Route"}{added ? " \u2713" : ""}</div>
+                              <div className="text-[10px] text-muted-foreground">{route.bins ? `${route.bins.length} stops` : "Click to load"}</div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
                 <div className="flex items-center gap-2 ml-auto">
                   <div className="relative">
@@ -288,33 +350,57 @@ const Index: React.FC = () => {
               <div className="grid grid-cols-[1fr_auto] gap-4">
                 {/* Left: search + chips */}
                 <div className="space-y-2">
-                  <div className="relative">
+                  <div className="relative" ref={searchWrapRef}>
                     <SearchIcon size={16} color="hsl(240, 5%, 55%)" className="absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       placeholder="Search routes..."
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={(e) => { setSearchQuery(e.target.value); setShowDropdown(true); }}
+                      onFocus={() => setShowDropdown(true)}
                       className="w-full pl-9 pr-3 py-2 rounded-xl bg-muted text-sm placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 transition" />
+                    {showDropdown && (
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-card shadow-lg rounded-xl border border-border z-50 max-h-64 overflow-y-auto">
+                        {filteredRoutes.length === 0 ? (
+                          <div className="px-4 py-3 text-xs text-muted-foreground">No routes found</div>
+                        ) : filteredRoutes.slice(0, 8).map((route) => {
+                          const added = sr.loadedRoutes.some((r) => r.id === route.id);
+                          return (
+                            <button
+                              key={route.id}
+                              disabled={added}
+                              onClick={() => handleSelectRoute(route)}
+                              className={`w-full text-left px-4 py-2.5 hover:bg-muted/60 transition flex items-center gap-2.5 ${added ? "opacity-50" : ""}`}>
+                              <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: added ? "#7EC8E3" : "#d1d5db" }} />
+                              <div>
+                                <div className="text-sm font-medium text-foreground">{route.name || "Unnamed Route"}{added ? " \u2713" : ""}</div>
+                                <div className="text-[10px] text-muted-foreground">{route.bins ? `${route.bins.length} stops` : "Click to load"}</div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    {(filtersExpanded ? filters : filters.slice(0, MAX_VISIBLE_CHIPS)).map((f) =>
+                    {(filtersExpanded ? sr.loadedRoutes : sr.loadedRoutes.slice(0, MAX_VISIBLE_CHIPS)).map((r) =>
                     <button
-                      key={f}
-                      onClick={() => removeFilter(f)}
+                      key={r.id}
+                      onClick={() => removeRoute(r.id)}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold hover:bg-primary/20 transition shrink-0">
-                        {f}
+                        <span className="w-2 h-2 rounded-full" style={{ background: r.color }} />
+                        {r.name}
                         <CloseIcon size={12} color="hsl(200, 70%, 55%)" />
                       </button>
                     )}
-                    {filters.length > MAX_VISIBLE_CHIPS && !filtersExpanded && (
+                    {sr.loadedRoutes.length > MAX_VISIBLE_CHIPS && !filtersExpanded && (
                       <button
                         onClick={() => setFiltersExpanded(true)}
                         className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-semibold hover:bg-muted/80 transition shrink-0">
-                        +{filters.length - MAX_VISIBLE_CHIPS} more
+                        +{sr.loadedRoutes.length - MAX_VISIBLE_CHIPS} more
                       </button>
                     )}
-                    {filtersExpanded && filters.length > MAX_VISIBLE_CHIPS && (
+                    {filtersExpanded && sr.loadedRoutes.length > MAX_VISIBLE_CHIPS && (
                       <button
                         onClick={() => setFiltersExpanded(false)}
                         className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-semibold hover:bg-muted/80 transition shrink-0">
@@ -353,34 +439,115 @@ const Index: React.FC = () => {
                 </div>
               </div>
             )}
+
+            {/* Optimize status */}
+            {sr.optimizeStatus && (
+              <div className="text-xs text-muted-foreground flex items-center gap-2">
+                {sr.isOptimizing && <SpinnerIcon size={14} color="hsl(200, 70%, 55%)" />}
+                {sr.optimizeStatus}
+              </div>
+            )}
+
             {/* Map */}
             <div className="relative flex-1 min-h-0">
               <div className="bg-card shadow-sm overflow-hidden rounded h-full">
-                <SmartRouteMap bins={bins} threshold={threshold} optimizeState={optimizeState} />
+                <SmartRouteMap
+                  bins={mapBins}
+                  threshold={sr.threshold}
+                  optimizeState={optimizeState}
+                  optimizedMap={sr.optimizedMap}
+                  loadedRoutes={sr.loadedRoutes}
+                  selectedRouteId={sr.selectedRouteId}
+                  onRouteSelect={sr.setSelectedRouteId}
+                />
               </div>
               <div className="absolute top-4 right-4 z-[1000] bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-sm">
                 <PinIcon size={14} color="#7EC8E3" />
-                <span className="text-xs font-semibold text-foreground">Route Preview</span>
+                <span className="text-xs font-semibold text-foreground">
+                  {sr.loadedRoutes.length > 0
+                    ? `${sr.loadedRoutes.length} route${sr.loadedRoutes.length > 1 ? "s" : ""} \u00B7 ${sr.allBins.length} bins`
+                    : "Route Preview"}
+                </span>
               </div>
+              {/* Route overlay panel (accept/discard) */}
+              {selectedRoute && selectedOpt && (
+                <RouteOverlayPanel
+                  routeName={selectedRoute.name}
+                  routeColor={selectedRoute.color}
+                  metrics={selectedOpt.result.metrics}
+                  accepted={selectedOpt.accepted}
+                  onAccept={() => sr.acceptRoute(sr.selectedRouteId!)}
+                  onDiscard={() => sr.discardRoute(sr.selectedRouteId!)}
+                  onClose={() => sr.setSelectedRouteId(null)}
+                />
+              )}
             </div>
           </div>
 
           {/* RIGHT — Controls */}
           <div className="w-[35%] flex flex-col gap-4">
-            {/* Threshold Card */}
+            {/* Combined Threshold + Intensity Card */}
             <div className="bg-card shadow-sm p-6 rounded">
               <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
                 Bin Threshold
               </label>
-              <BinThresholdSlider value={threshold} onChange={setThreshold} />
+              <BinThresholdSlider value={sr.threshold} onChange={sr.setThreshold} />
               <div className="text-center mt-2">
-                <span className="text-4xl font-extrabold text-primary">{threshold}</span>
+                <span className="text-4xl font-extrabold text-primary">{sr.threshold}</span>
                 <span className="text-lg font-bold text-primary">%</span>
               </div>
               <p className="text-[11px] text-muted-foreground text-center mt-1">
                 Bins at or above this fill level will be collected
               </p>
+
+              {/* Intensity slider within same card */}
+              <div className="mt-5 pt-4 border-t border-border">
+                <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
+                  Route Intensity
+                </label>
+                <div className="mt-3 mb-2">
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    value={sr.intensity}
+                    onChange={(e) => sr.setIntensity(Number(e.target.value))}
+                    className="w-full accent-primary h-2 rounded-full appearance-none bg-muted cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, hsl(200, 70%, 55%) ${sr.intensity}%, hsl(214, 20%, 90%) ${sr.intensity}%)`,
+                    }}
+                  />
+                </div>
+                <div className="text-center">
+                  <span className="text-2xl font-extrabold text-primary">{sr.intensity}</span>
+                  <span className="text-sm font-bold text-primary">%</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground text-center mt-1">
+                  Higher = collect more sub-threshold bins with low detour cost
+                </p>
+              </div>
             </div>
+
+            {/* Metrics context label */}
+            {sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId] && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: sr.loadedRoutes.find((r) => r.id === sr.selectedRouteId)?.color }}
+                  />
+                  <span className="font-semibold">
+                    {sr.loadedRoutes.find((r) => r.id === sr.selectedRouteId)?.name} metrics
+                  </span>
+                </div>
+                <button
+                  onClick={() => sr.setSelectedRouteId(null)}
+                  className="text-xs text-primary hover:underline"
+                >
+                  Show all
+                </button>
+              </div>
+            )}
 
             {/* Stat Cards */}
             <div className="grid grid-cols-2 gap-3">
@@ -400,7 +567,7 @@ const Index: React.FC = () => {
                 icon={<LeafIcon size={28} color="#6BCB9F" />}
                 value={co2Reduced}
                 unit="kg"
-                label="CO₂ Reduced" />
+                label="CO&#x2082; Reduced" />
 
               <StatCard
                 icon={<SkipIcon size={28} color="#C9B6FF" />}
@@ -415,10 +582,10 @@ const Index: React.FC = () => {
             <div className="flex-1 min-h-0" />
             <button
               onClick={handleOptimize}
-              disabled={optimizeState === "loading" || optimizeState === "showing-original"}
+              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
               className="w-full py-3.5 bg-gradient-to-r from-[#7EC8E3] to-[#C9B6FF] text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 transition disabled:opacity-60 shadow-md rounded">
 
-              {optimizeState === "loading" || optimizeState === "showing-original" ?
+              {sr.isOptimizing ?
               <>
                   <SpinnerIcon size={18} color="white" />
                   Optimizing...
