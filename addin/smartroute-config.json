@@ -3,7 +3,7 @@
   "supportEmail": "https://github.com/avkap007/geotab-hackathon-smartroute",
   "version": "1.0",
   "items": [{
-    "url": "https://avkap007.github.io/geotab-hackathon-smartroute/addin/smartroute.html",
+    "url": "https://avkap007.github.io/geotab-hackathon-smartroute/addin/dist/index.html",
     "path": "ActivityLink",
     "menuName": { "en": "SmartRoute" }
   }]

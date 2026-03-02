@@ -16,3 +16,6 @@ npm-debug.log*
 # Build output
 dist/
 build/
+# Exception: addin/dist is committed so GitHub Pages can serve it without CI/CD
+!addin/dist/
+!addin/dist/**

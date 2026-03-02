@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 20% 97%;
+    --foreground: 240 10% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 25%;
+
+    --primary: 200 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 15% 93%;
+    --secondary-foreground: 240 10% 25%;
+
+    --muted: 240 15% 93%;
+    --muted-foreground: 240 5% 55%;
+
+    --accent: 160 50% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 350 70% 65%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 15% 90%;
+    --input: 240 15% 90%;
+    --ring: 200 70% 55%;
+
+    --radius: 1rem;
+
+    --smartroute-navy: 240 20% 30%;
+    --smartroute-teal: 160 50% 55%;
+    --smartroute-red: 350 70% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Leaflet popup overrides */
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: auto !important;
+}
+.leaflet-popup-tip {
+  box-shadow: none !important;
+}
