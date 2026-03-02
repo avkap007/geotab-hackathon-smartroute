@@ -7,6 +7,7 @@
 
 import { getGeotabApi, type GeotabApi } from "../main";
 import type { AlgoBin } from "./algorithm";
+import binDataJson from "../../../data/bin-data.json";
 
 /* ── Types ── */
 
@@ -27,9 +28,13 @@ export interface GeotabRouteRef {
   collectionLogs?: unknown[];
 }
 
-/* ── Constants ── */
+interface BinDataEntry {
+  depot: { lat: number; lng: number };
+  bins: { name: string; lat: number; lng: number; fillLevel: number }[];
+  collectionLogs: { binName: string; collectedAt: string; fillPctAtCollection: number }[];
+}
 
-const MY_ADDIN_ID = "SmartRouteBinState2026";
+const binData: Record<string, BinDataEntry> = binDataJson;
 
 /* ── Fallback demo data ── */
 
@@ -126,8 +131,12 @@ export async function fetchAllRoutes(): Promise<GeotabRouteRef[]> {
 }
 
 /**
- * Load a single route's bins from Geotab (zones + RoutePlanItems + AddInData fill levels).
- * For fallback routes that already have bins, returns them directly.
+ * Load a single route's bins from Geotab + local bin-data.json.
+ *
+ * Strategy:
+ *  1. Demo/fallback routes with existing bins → return directly
+ *  2. Fetch RoutePlanItems → get zone IDs and coords from Geotab
+ *  3. Match zones to bin-data.json by name → overlay fill levels, depot, collection logs
  */
 export async function loadRouteById(routeId: string, routeName: string, existingBins?: AlgoBin[], existingDepot?: { lat: number; lng: number }): Promise<RouteEntry | null> {
   // Demo routes already have bins baked in
@@ -138,8 +147,12 @@ export async function loadRouteById(routeId: string, routeName: string, existing
   const api = getGeotabApi();
   if (!api) return null;
 
+  const localRoute = binData[routeName];
+
   try {
-    // Step 1: Fetch all zones and build lookup
+    let bins: AlgoBin[] = [];
+
+    // Fetch zones from Geotab to get real zone IDs
     const zones = await callApi<GeotabZone[]>(api, "Get", { typeName: "Zone" });
     const zoneMap: Record<string, { id: string; name: string; lat: number; lng: number }> = {};
     for (const z of zones || []) {
@@ -149,55 +162,60 @@ export async function loadRouteById(routeId: string, routeName: string, existing
       }
     }
 
-    // Step 2: Fetch RoutePlanItems for this route
     const items = await callApi<{ zone?: { id: string } | string; sequence?: number }[]>(
       api, "Get", { typeName: "RoutePlanItem", search: { route: { id: routeId } } },
     );
     const sorted = (items || []).sort((a, b) => (a.sequence || 0) - (b.sequence || 0));
-
-    const bins: AlgoBin[] = [];
     const addedIds = new Set<string>();
+
+    // Build a lookup from bin name → local bin data for quick matching
+    const localBinMap: Record<string, { fillLevel: number }> = {};
+    if (localRoute) {
+      for (const b of localRoute.bins) {
+        localBinMap[b.name] = { fillLevel: b.fillLevel };
+      }
+    }
+
     for (const item of sorted) {
       const zid = typeof item.zone === "object" && item.zone ? item.zone.id : String(item.zone);
       const zData = zoneMap[zid];
       if (zData && !addedIds.has(zData.id)) {
         addedIds.add(zData.id);
-        bins.push({ id: zData.id, name: zData.name, lat: zData.lat, lng: zData.lng, fillLevel: 50 });
+        const binName = zData.name.replace(/^SR-/, "");
+        const local = localBinMap[binName];
+        bins.push({
+          id: zData.id,
+          name: binName,
+          lat: zData.lat,
+          lng: zData.lng,
+          fillLevel: local?.fillLevel ?? 50,
+        });
       }
     }
 
-    // Step 3: Merge persisted fill levels from AddInData
+    if (bins.length > 0) {
+      console.log(`[SmartRoute] Loaded ${bins.length} bins for route "${routeName}" (${localRoute ? "with" : "without"} local data)`);
+    }
+
+    // Map collection log binNames to real zone IDs
     let collectionLogs: unknown[] = [];
-    try {
-      const addinData = await callApi<{ id: string; details: { type: string; bins?: { id: string; fillLevel: number }[]; [k: string]: unknown } }[]>(
-        api, "Get", { typeName: "AddInData", search: { addInId: MY_ADDIN_ID } },
-      );
-      const fillById: Record<string, number> = {};
-      for (const r of addinData || []) {
-        if (r.details?.type === "bin_state" && r.details.bins) {
-          for (const b of r.details.bins) {
-            fillById[b.id] = b.fillLevel;
-          }
-        }
-        if (r.details?.type === "collection_log") {
-          collectionLogs.push(r.details);
-        }
-      }
+    if (localRoute?.collectionLogs) {
+      const nameToId: Record<string, string> = {};
       for (const bin of bins) {
-        bin.fillLevel = fillById[bin.id] ?? Math.floor(Math.random() * 90) + 10;
+        nameToId[bin.name] = bin.id;
       }
-    } catch {
-      for (const bin of bins) {
-        if (!bin.fillLevel) bin.fillLevel = Math.floor(Math.random() * 90) + 10;
-      }
+      collectionLogs = localRoute.collectionLogs.map(log => ({
+        binId: nameToId[log.binName] || log.binName,
+        collectedAt: log.collectedAt,
+        fillPctAtCollection: log.fillPctAtCollection,
+      }));
     }
 
-    const depot = bins.length > 0
-      ? { lat: bins[0].lat, lng: bins[0].lng }
-      : { lat: 43.65, lng: -79.38 };
+    const depot = localRoute?.depot ?? (bins.length > 0 ? { lat: bins[0].lat, lng: bins[0].lng } : { lat: 43.65, lng: -79.38 });
 
     return { id: routeId, name: routeName, bins, depot, collectionLogs };
-  } catch {
+  } catch (err) {
+    console.error("[SmartRoute] loadRouteById failed:", err);
     return null;
   }
 }

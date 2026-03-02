@@ -1,0 +1,5213 @@
+{
+  "Downtown Core Collection": {
+    "depot": {
+      "lat": 43.651,
+      "lng": -79.383
+    },
+    "bins": [
+      {
+        "name": "Union Station East",
+        "lat": 43.6457,
+        "lng": -79.3797,
+        "fillLevel": 82
+      },
+      {
+        "name": "BCE Place",
+        "lat": 43.649,
+        "lng": -79.3773,
+        "fillLevel": 45
+      },
+      {
+        "name": "King & Bay",
+        "lat": 43.6488,
+        "lng": -79.3813,
+        "fillLevel": 91
+      },
+      {
+        "name": "Commerce Court",
+        "lat": 43.6494,
+        "lng": -79.3795,
+        "fillLevel": 33
+      },
+      {
+        "name": "First Canadian Place",
+        "lat": 43.6494,
+        "lng": -79.3823,
+        "fillLevel": 67
+      },
+      {
+        "name": "TD Centre",
+        "lat": 43.6474,
+        "lng": -79.3818,
+        "fillLevel": 55
+      },
+      {
+        "name": "Royal Bank Plaza",
+        "lat": 43.6464,
+        "lng": -79.3806,
+        "fillLevel": 78
+      },
+      {
+        "name": "Scotiabank Tower",
+        "lat": 43.6483,
+        "lng": -79.3832,
+        "fillLevel": 22
+      },
+      {
+        "name": "Adelaide & Yonge",
+        "lat": 43.6509,
+        "lng": -79.3781,
+        "fillLevel": 88
+      },
+      {
+        "name": "Richmond & Victoria",
+        "lat": 43.6516,
+        "lng": -79.3761,
+        "fillLevel": 41
+      },
+      {
+        "name": "Temperance & Bay",
+        "lat": 43.6512,
+        "lng": -79.383,
+        "fillLevel": 73
+      },
+      {
+        "name": "Wellington & York",
+        "lat": 43.6469,
+        "lng": -79.3787,
+        "fillLevel": 15
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-01-19T21:47:57.170Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-01-23T21:47:57.170Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-01-26T21:47:57.170Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-02-02T21:47:57.170Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-02-06T21:47:57.170Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-02-12T21:47:57.170Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-02-16T21:47:57.170Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-02-21T21:47:57.170Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Union Station East",
+        "collectedAt": "2026-02-28T21:47:57.170Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-01-19T21:47:57.170Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-01-26T21:47:57.170Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-02-01T21:47:57.170Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-02-08T21:47:57.170Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-02-12T21:47:57.170Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-02-19T21:47:57.170Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "BCE Place",
+        "collectedAt": "2026-02-26T21:47:57.170Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-01-23T21:47:57.170Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-01-27T21:47:57.170Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-01-30T21:47:57.170Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-02-06T21:47:57.170Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-02-11T21:47:57.170Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-02-14T21:47:57.170Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-02-18T21:47:57.170Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "King & Bay",
+        "collectedAt": "2026-02-25T21:47:57.170Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-01-20T21:47:57.170Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-01-27T21:47:57.170Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-01-30T21:47:57.170Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-02-06T21:47:57.170Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-02-11T21:47:57.170Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-02-17T21:47:57.170Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-02-22T21:47:57.170Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Commerce Court",
+        "collectedAt": "2026-02-28T21:47:57.170Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-01-19T21:47:57.171Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-01-25T21:47:57.171Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-02-01T21:47:57.171Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-02-08T21:47:57.171Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-02-12T21:47:57.171Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-02-16T21:47:57.171Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-02-19T21:47:57.171Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "First Canadian Place",
+        "collectedAt": "2026-02-24T21:47:57.171Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-01-21T21:47:57.171Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-01-27T21:47:57.171Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-01-30T21:47:57.171Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-02-02T21:47:57.171Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-02-06T21:47:57.171Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-02-13T21:47:57.171Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-02-16T21:47:57.171Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-02-19T21:47:57.171Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-02-23T21:47:57.171Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "TD Centre",
+        "collectedAt": "2026-03-01T21:47:57.171Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-01-22T21:47:57.171Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-01-25T21:47:57.171Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-01-28T21:47:57.171Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-01T21:47:57.171Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-07T21:47:57.171Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-10T21:47:57.171Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-13T21:47:57.171Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-16T21:47:57.171Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-23T21:47:57.171Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Royal Bank Plaza",
+        "collectedAt": "2026-02-26T21:47:57.171Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-01-22T21:47:57.171Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-01-28T21:47:57.171Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-01-31T21:47:57.171Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-02-05T21:47:57.171Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-02-08T21:47:57.171Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-02-13T21:47:57.171Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-02-19T21:47:57.171Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-02-24T21:47:57.171Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Scotiabank Tower",
+        "collectedAt": "2026-02-28T21:47:57.171Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-01-22T21:47:57.171Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-01-27T21:47:57.171Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-01-30T21:47:57.171Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-02-03T21:47:57.171Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-02-06T21:47:57.171Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-02-11T21:47:57.171Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-02-16T21:47:57.171Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-02-20T21:47:57.171Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Adelaide & Yonge",
+        "collectedAt": "2026-02-25T21:47:57.171Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Richmond & Victoria",
+        "collectedAt": "2026-01-23T21:47:57.171Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Richmond & Victoria",
+        "collectedAt": "2026-01-27T21:47:57.171Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Richmond & Victoria",
+        "collectedAt": "2026-02-02T21:47:57.171Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Richmond & Victoria",
+        "collectedAt": "2026-02-09T21:47:57.171Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Richmond & Victoria",
+        "collectedAt": "2026-02-16T21:47:57.171Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Richmond & Victoria",
+        "collectedAt": "2026-02-23T21:47:57.171Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-01-23T21:47:57.171Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-01-29T21:47:57.171Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-02-01T21:47:57.171Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-02-05T21:47:57.171Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-02-12T21:47:57.171Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-02-18T21:47:57.171Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-02-22T21:47:57.171Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Temperance & Bay",
+        "collectedAt": "2026-02-27T21:47:57.171Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-01-19T21:47:57.171Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-01-26T21:47:57.171Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-01-29T21:47:57.171Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-02-05T21:47:57.171Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-02-09T21:47:57.171Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-02-13T21:47:57.171Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-02-19T21:47:57.171Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-02-23T21:47:57.171Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Wellington & York",
+        "collectedAt": "2026-03-01T21:47:57.171Z",
+        "fillPctAtCollection": 81
+      }
+    ]
+  },
+  "Waterfront & Harbourfront": {
+    "depot": {
+      "lat": 43.64,
+      "lng": -79.378
+    },
+    "bins": [
+      {
+        "name": "Queens Quay Terminal",
+        "lat": 43.6389,
+        "lng": -79.3762,
+        "fillLevel": 94
+      },
+      {
+        "name": "Harbourfront Centre",
+        "lat": 43.6387,
+        "lng": -79.3812,
+        "fillLevel": 48
+      },
+      {
+        "name": "HTO Park",
+        "lat": 43.638,
+        "lng": -79.3858,
+        "fillLevel": 71
+      },
+      {
+        "name": "Music Garden",
+        "lat": 43.6369,
+        "lng": -79.3927,
+        "fillLevel": 36
+      },
+      {
+        "name": "Spadina & Queens Quay",
+        "lat": 43.6383,
+        "lng": -79.3953,
+        "fillLevel": 85
+      },
+      {
+        "name": "Rees St Pier",
+        "lat": 43.6385,
+        "lng": -79.3838,
+        "fillLevel": 19
+      },
+      {
+        "name": "York & Queens Quay",
+        "lat": 43.6393,
+        "lng": -79.3769,
+        "fillLevel": 62
+      },
+      {
+        "name": "Simcoe & Bremner",
+        "lat": 43.6413,
+        "lng": -79.3868,
+        "fillLevel": 77
+      },
+      {
+        "name": "CN Tower Base",
+        "lat": 43.6426,
+        "lng": -79.3871,
+        "fillLevel": 53
+      },
+      {
+        "name": "Rogers Centre South",
+        "lat": 43.641,
+        "lng": -79.3894,
+        "fillLevel": 89
+      },
+      {
+        "name": "Bathurst Quay",
+        "lat": 43.6365,
+        "lng": -79.3987,
+        "fillLevel": 28
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-01-20T21:47:57.172Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-01-26T21:47:57.172Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-01-30T21:47:57.172Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-02-03T21:47:57.172Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-02-07T21:47:57.172Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-02-14T21:47:57.172Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-02-17T21:47:57.172Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-02-21T21:47:57.172Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Queens Quay Terminal",
+        "collectedAt": "2026-02-27T21:47:57.172Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-01-23T21:47:57.172Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-01-27T21:47:57.172Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-01-31T21:47:57.172Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-02-05T21:47:57.172Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-02-12T21:47:57.172Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-02-15T21:47:57.172Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-02-21T21:47:57.172Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Harbourfront Centre",
+        "collectedAt": "2026-02-25T21:47:57.172Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-01-23T21:47:57.172Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-01-28T21:47:57.172Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-02-04T21:47:57.172Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-02-09T21:47:57.172Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-02-13T21:47:57.172Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-02-17T21:47:57.172Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "HTO Park",
+        "collectedAt": "2026-02-24T21:47:57.172Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-01-23T21:47:57.172Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-01-29T21:47:57.172Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-02-04T21:47:57.172Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-02-11T21:47:57.172Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-02-18T21:47:57.172Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-02-21T21:47:57.172Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Music Garden",
+        "collectedAt": "2026-02-26T21:47:57.172Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-01-22T21:47:57.172Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-01-28T21:47:57.172Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-02-04T21:47:57.172Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-02-09T21:47:57.172Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-02-13T21:47:57.172Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-02-19T21:47:57.172Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-02-23T21:47:57.172Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Spadina & Queens Quay",
+        "collectedAt": "2026-03-01T21:47:57.172Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-01-22T21:47:57.172Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-01-25T21:47:57.172Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-01-30T21:47:57.172Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-02-02T21:47:57.172Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-02-07T21:47:57.172Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-02-11T21:47:57.172Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-02-16T21:47:57.172Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-02-22T21:47:57.172Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Rees St Pier",
+        "collectedAt": "2026-02-27T21:47:57.172Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-01-23T21:47:57.172Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-01-29T21:47:57.172Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-02-01T21:47:57.172Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-02-08T21:47:57.172Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-02-15T21:47:57.172Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-02-19T21:47:57.172Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-02-23T21:47:57.172Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "York & Queens Quay",
+        "collectedAt": "2026-02-26T21:47:57.172Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-01-20T21:47:57.172Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-01-27T21:47:57.172Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-02-01T21:47:57.172Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-02-04T21:47:57.172Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-02-07T21:47:57.172Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-02-13T21:47:57.172Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-02-20T21:47:57.172Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Simcoe & Bremner",
+        "collectedAt": "2026-02-25T21:47:57.172Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-01-21T21:47:57.172Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-01-28T21:47:57.172Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-01-31T21:47:57.172Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-02-03T21:47:57.172Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-02-09T21:47:57.172Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-02-15T21:47:57.172Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-02-20T21:47:57.172Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "CN Tower Base",
+        "collectedAt": "2026-02-24T21:47:57.172Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-01-21T21:47:57.172Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-01-26T21:47:57.172Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-01-31T21:47:57.172Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-02-05T21:47:57.172Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-02-12T21:47:57.172Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-02-17T21:47:57.172Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-02-24T21:47:57.172Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Rogers Centre South",
+        "collectedAt": "2026-02-27T21:47:57.172Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-01-23T21:47:57.172Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-01-29T21:47:57.172Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-02-01T21:47:57.172Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-02-05T21:47:57.172Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-02-12T21:47:57.172Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-02-18T21:47:57.172Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-02-22T21:47:57.172Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Bathurst Quay",
+        "collectedAt": "2026-02-25T21:47:57.172Z",
+        "fillPctAtCollection": 78
+      }
+    ]
+  },
+  "Midtown Yonge Corridor": {
+    "depot": {
+      "lat": 43.71,
+      "lng": -79.3985
+    },
+    "bins": [
+      {
+        "name": "Yonge & Eglinton NW",
+        "lat": 43.7065,
+        "lng": -79.3985,
+        "fillLevel": 78
+      },
+      {
+        "name": "Yonge & Eglinton SE",
+        "lat": 43.7058,
+        "lng": -79.3974,
+        "fillLevel": 42
+      },
+      {
+        "name": "Yonge & Davisville",
+        "lat": 43.6993,
+        "lng": -79.3972,
+        "fillLevel": 91
+      },
+      {
+        "name": "Mt Pleasant & Eglinton",
+        "lat": 43.7072,
+        "lng": -79.39,
+        "fillLevel": 33
+      },
+      {
+        "name": "Yonge & St Clair",
+        "lat": 43.6873,
+        "lng": -79.3934,
+        "fillLevel": 67
+      },
+      {
+        "name": "Chaplin & Eglinton",
+        "lat": 43.7072,
+        "lng": -79.414,
+        "fillLevel": 55
+      },
+      {
+        "name": "Avenue & Lawrence",
+        "lat": 43.7249,
+        "lng": -79.4027,
+        "fillLevel": 84
+      },
+      {
+        "name": "Bayview & Moore",
+        "lat": 43.7043,
+        "lng": -79.3722,
+        "fillLevel": 18
+      },
+      {
+        "name": "Yonge & Lawrence",
+        "lat": 43.7252,
+        "lng": -79.401,
+        "fillLevel": 72
+      },
+      {
+        "name": "Oriole Pkwy & Eglinton",
+        "lat": 43.7078,
+        "lng": -79.4075,
+        "fillLevel": 46
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-01-22T21:47:57.173Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-01-25T21:47:57.173Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-01T21:47:57.173Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-06T21:47:57.173Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-11T21:47:57.173Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-14T21:47:57.173Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-18T21:47:57.173Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-23T21:47:57.173Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Yonge & Eglinton NW",
+        "collectedAt": "2026-02-28T21:47:57.173Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-01-19T21:47:57.173Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-01-25T21:47:57.173Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-01-28T21:47:57.173Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-02-04T21:47:57.173Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-02-07T21:47:57.173Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-02-11T21:47:57.173Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-02-15T21:47:57.173Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-02-20T21:47:57.173Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-02-26T21:47:57.173Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Yonge & Eglinton SE",
+        "collectedAt": "2026-03-01T21:47:57.173Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-01-19T21:47:57.173Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-01-23T21:47:57.173Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-01-26T21:47:57.173Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-02-01T21:47:57.173Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-02-07T21:47:57.173Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-02-10T21:47:57.173Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-02-15T21:47:57.173Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-02-19T21:47:57.173Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-02-24T21:47:57.173Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Yonge & Davisville",
+        "collectedAt": "2026-03-01T21:47:57.173Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-01-23T21:47:57.173Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-01-26T21:47:57.173Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-01-31T21:47:57.173Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-02-05T21:47:57.173Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-02-10T21:47:57.173Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-02-16T21:47:57.173Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-02-22T21:47:57.173Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Mt Pleasant & Eglinton",
+        "collectedAt": "2026-02-27T21:47:57.173Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-01-20T21:47:57.174Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-01-27T21:47:57.174Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-01-30T21:47:57.174Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-02-05T21:47:57.174Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-02-11T21:47:57.174Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-02-15T21:47:57.174Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-02-22T21:47:57.174Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-02-25T21:47:57.174Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Yonge & St Clair",
+        "collectedAt": "2026-02-28T21:47:57.174Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-01-21T21:47:57.174Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-01-28T21:47:57.174Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-04T21:47:57.174Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-07T21:47:57.174Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-10T21:47:57.174Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-13T21:47:57.174Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-18T21:47:57.174Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-23T21:47:57.174Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Chaplin & Eglinton",
+        "collectedAt": "2026-02-27T21:47:57.174Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-01-20T21:47:57.174Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-01-25T21:47:57.174Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-01T21:47:57.174Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-04T21:47:57.174Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-09T21:47:57.174Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-15T21:47:57.174Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-21T21:47:57.174Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-25T21:47:57.174Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Avenue & Lawrence",
+        "collectedAt": "2026-02-28T21:47:57.174Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-01-23T21:47:57.174Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-01-28T21:47:57.174Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-01T21:47:57.174Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-05T21:47:57.174Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-08T21:47:57.174Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-12T21:47:57.174Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-17T21:47:57.174Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-21T21:47:57.174Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Bayview & Moore",
+        "collectedAt": "2026-02-24T21:47:57.174Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-01-20T21:47:57.174Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-01-24T21:47:57.174Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-01-27T21:47:57.174Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-02-03T21:47:57.174Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-02-06T21:47:57.174Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-02-13T21:47:57.174Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-02-18T21:47:57.174Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-02-21T21:47:57.174Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Yonge & Lawrence",
+        "collectedAt": "2026-02-26T21:47:57.174Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-01-19T21:47:57.174Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-01-25T21:47:57.174Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-01-31T21:47:57.174Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-02-05T21:47:57.174Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-02-10T21:47:57.174Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-02-15T21:47:57.174Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-02-20T21:47:57.174Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-02-24T21:47:57.174Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Oriole Pkwy & Eglinton",
+        "collectedAt": "2026-02-27T21:47:57.174Z",
+        "fillPctAtCollection": 73
+      }
+    ]
+  },
+  "North York Centre": {
+    "depot": {
+      "lat": 43.768,
+      "lng": -79.413
+    },
+    "bins": [
+      {
+        "name": "Yonge & Sheppard NW",
+        "lat": 43.7619,
+        "lng": -79.4117,
+        "fillLevel": 88
+      },
+      {
+        "name": "Sheppard Centre",
+        "lat": 43.7615,
+        "lng": -79.41,
+        "fillLevel": 52
+      },
+      {
+        "name": "North York Civic Centre",
+        "lat": 43.767,
+        "lng": -79.4142,
+        "fillLevel": 35
+      },
+      {
+        "name": "Mel Lastman Square",
+        "lat": 43.7676,
+        "lng": -79.4146,
+        "fillLevel": 76
+      },
+      {
+        "name": "Empress Walk",
+        "lat": 43.766,
+        "lng": -79.413,
+        "fillLevel": 43
+      },
+      {
+        "name": "Yonge & Finch",
+        "lat": 43.7804,
+        "lng": -79.4157,
+        "fillLevel": 91
+      },
+      {
+        "name": "Willowdale Park",
+        "lat": 43.7725,
+        "lng": -79.41,
+        "fillLevel": 21
+      },
+      {
+        "name": "Doris & Sheppard",
+        "lat": 43.762,
+        "lng": -79.4085,
+        "fillLevel": 64
+      },
+      {
+        "name": "Beecroft & Finch",
+        "lat": 43.78,
+        "lng": -79.4185,
+        "fillLevel": 87
+      },
+      {
+        "name": "Spring Garden & Yonge",
+        "lat": 43.774,
+        "lng": -79.413,
+        "fillLevel": 38
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-01-19T21:47:57.175Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-01-28T21:47:57.175Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-02-01T21:47:57.175Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-02-08T21:47:57.175Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-02-11T21:47:57.175Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-02-18T21:47:57.175Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-02-22T21:47:57.175Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Yonge & Sheppard NW",
+        "collectedAt": "2026-02-28T21:47:57.175Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-01-19T21:47:57.175Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-01-26T21:47:57.175Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-01-29T21:47:57.175Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-01T21:47:57.175Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-05T21:47:57.175Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-08T21:47:57.175Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-11T21:47:57.175Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-15T21:47:57.175Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-20T21:47:57.175Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-24T21:47:57.175Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Sheppard Centre",
+        "collectedAt": "2026-02-27T21:47:57.175Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-01-20T21:47:57.175Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-01-26T21:47:57.175Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-01-30T21:47:57.175Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-02-04T21:47:57.175Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-02-10T21:47:57.175Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-02-14T21:47:57.175Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-02-19T21:47:57.175Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "North York Civic Centre",
+        "collectedAt": "2026-02-26T21:47:57.175Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-01-28T21:47:57.175Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-02-01T21:47:57.175Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-02-07T21:47:57.175Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-02-11T21:47:57.175Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-02-16T21:47:57.175Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-02-21T21:47:57.175Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Mel Lastman Square",
+        "collectedAt": "2026-02-28T21:47:57.175Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-01-27T21:47:57.175Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-02-03T21:47:57.175Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-02-07T21:47:57.175Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-02-13T21:47:57.175Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-02-18T21:47:57.175Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-02-24T21:47:57.175Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Empress Walk",
+        "collectedAt": "2026-02-28T21:47:57.175Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-01-19T21:47:57.175Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-01-26T21:47:57.175Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-02-01T21:47:57.175Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-02-06T21:47:57.175Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-02-10T21:47:57.175Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-02-14T21:47:57.175Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-02-21T21:47:57.175Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Yonge & Finch",
+        "collectedAt": "2026-02-27T21:47:57.175Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-01-28T21:47:57.175Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-02-04T21:47:57.175Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-02-08T21:47:57.175Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-02-11T21:47:57.175Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-02-18T21:47:57.175Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Willowdale Park",
+        "collectedAt": "2026-02-24T21:47:57.175Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-01-19T21:47:57.175Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-01-27T21:47:57.175Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-02-03T21:47:57.175Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-02-07T21:47:57.175Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-02-10T21:47:57.175Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-02-13T21:47:57.175Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-02-20T21:47:57.175Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Doris & Sheppard",
+        "collectedAt": "2026-02-27T21:47:57.175Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-01-19T21:47:57.175Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-01-26T21:47:57.175Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-02-02T21:47:57.175Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-02-06T21:47:57.175Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-02-12T21:47:57.175Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-02-16T21:47:57.175Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-02-23T21:47:57.175Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Beecroft & Finch",
+        "collectedAt": "2026-02-27T21:47:57.175Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-01-22T21:47:57.175Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-01-29T21:47:57.175Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-02-05T21:47:57.175Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-02-12T21:47:57.175Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-02-18T21:47:57.175Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-02-22T21:47:57.175Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-02-25T21:47:57.175Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Spring Garden & Yonge",
+        "collectedAt": "2026-02-28T21:47:57.175Z",
+        "fillPctAtCollection": 76
+      }
+    ]
+  },
+  "Scarborough Town Centre": {
+    "depot": {
+      "lat": 43.7735,
+      "lng": -79.258
+    },
+    "bins": [
+      {
+        "name": "Scarborough Town Centre",
+        "lat": 43.7748,
+        "lng": -79.2584,
+        "fillLevel": 93
+      },
+      {
+        "name": "McCowan & Ellesmere",
+        "lat": 43.77,
+        "lng": -79.254,
+        "fillLevel": 47
+      },
+      {
+        "name": "Brimley & Progress",
+        "lat": 43.768,
+        "lng": -79.265,
+        "fillLevel": 82
+      },
+      {
+        "name": "Consilium Place",
+        "lat": 43.774,
+        "lng": -79.2528,
+        "fillLevel": 31
+      },
+      {
+        "name": "Markham & Ellesmere",
+        "lat": 43.772,
+        "lng": -79.24,
+        "fillLevel": 69
+      },
+      {
+        "name": "Scarborough Civic Centre",
+        "lat": 43.773,
+        "lng": -79.2574,
+        "fillLevel": 56
+      },
+      {
+        "name": "McCowan & Hwy 401",
+        "lat": 43.7812,
+        "lng": -79.2515,
+        "fillLevel": 14
+      },
+      {
+        "name": "Progress & Markham",
+        "lat": 43.767,
+        "lng": -79.241,
+        "fillLevel": 75
+      },
+      {
+        "name": "Corporate Dr & Brimley",
+        "lat": 43.7755,
+        "lng": -79.268,
+        "fillLevel": 88
+      },
+      {
+        "name": "Bellamy & Ellesmere",
+        "lat": 43.7695,
+        "lng": -79.275,
+        "fillLevel": 40
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-01-23T21:47:57.176Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-01-30T21:47:57.176Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-02-03T21:47:57.176Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-02-10T21:47:57.176Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-02-14T21:47:57.176Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-02-17T21:47:57.176Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-02-21T21:47:57.176Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Scarborough Town Centre",
+        "collectedAt": "2026-02-27T21:47:57.176Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-01-22T21:47:57.176Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-01-28T21:47:57.176Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-02-01T21:47:57.176Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-02-07T21:47:57.176Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-02-13T21:47:57.176Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-02-19T21:47:57.176Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "McCowan & Ellesmere",
+        "collectedAt": "2026-02-24T21:47:57.176Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-01-19T21:47:57.176Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-01-23T21:47:57.176Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-01-28T21:47:57.176Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-01T21:47:57.176Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-05T21:47:57.176Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-10T21:47:57.176Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-14T21:47:57.176Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-17T21:47:57.176Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-22T21:47:57.176Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Brimley & Progress",
+        "collectedAt": "2026-02-27T21:47:57.176Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-01-22T21:47:57.176Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-01-26T21:47:57.176Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-01-31T21:47:57.176Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-02-05T21:47:57.176Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-02-11T21:47:57.176Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-02-18T21:47:57.176Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Consilium Place",
+        "collectedAt": "2026-02-23T21:47:57.176Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-01-19T21:47:57.176Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-01-26T21:47:57.176Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-01-31T21:47:57.176Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-02-04T21:47:57.176Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-02-10T21:47:57.176Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-02-16T21:47:57.176Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-02-20T21:47:57.176Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Markham & Ellesmere",
+        "collectedAt": "2026-02-27T21:47:57.176Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-01-23T21:47:57.176Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-01-27T21:47:57.176Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-01-30T21:47:57.176Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-02-05T21:47:57.176Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-02-08T21:47:57.176Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-02-14T21:47:57.176Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-02-17T21:47:57.176Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-02-22T21:47:57.176Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Scarborough Civic Centre",
+        "collectedAt": "2026-03-01T21:47:57.176Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-01-19T21:47:57.176Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-01-22T21:47:57.176Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-01-28T21:47:57.176Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-02-03T21:47:57.176Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-02-09T21:47:57.176Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-02-16T21:47:57.176Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-02-20T21:47:57.176Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "McCowan & Hwy 401",
+        "collectedAt": "2026-02-24T21:47:57.176Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-01-21T21:47:57.176Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-01-25T21:47:57.176Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-01-28T21:47:57.176Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-02-03T21:47:57.176Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-02-08T21:47:57.176Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-02-12T21:47:57.176Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-02-16T21:47:57.176Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-02-20T21:47:57.176Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Progress & Markham",
+        "collectedAt": "2026-02-27T21:47:57.176Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-01-21T21:47:57.176Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-01-26T21:47:57.176Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-02-01T21:47:57.176Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-02-07T21:47:57.176Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-02-14T21:47:57.176Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-02-20T21:47:57.176Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-02-23T21:47:57.176Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Corporate Dr & Brimley",
+        "collectedAt": "2026-02-26T21:47:57.176Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-01-22T21:47:57.176Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-01-29T21:47:57.176Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-02-03T21:47:57.176Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-02-10T21:47:57.176Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-02-16T21:47:57.176Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-02-21T21:47:57.176Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-02-24T21:47:57.176Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Bellamy & Ellesmere",
+        "collectedAt": "2026-02-28T21:47:57.176Z",
+        "fillPctAtCollection": 58
+      }
+    ]
+  },
+  "Etobicoke Lakeshore": {
+    "depot": {
+      "lat": 43.62,
+      "lng": -79.49
+    },
+    "bins": [
+      {
+        "name": "Humber Bay Shores Park",
+        "lat": 43.617,
+        "lng": -79.478,
+        "fillLevel": 79
+      },
+      {
+        "name": "Park Lawn & Lakeshore",
+        "lat": 43.621,
+        "lng": -79.485,
+        "fillLevel": 44
+      },
+      {
+        "name": "Marine Parade Dr",
+        "lat": 43.614,
+        "lng": -79.476,
+        "fillLevel": 92
+      },
+      {
+        "name": "Mimico GO Station",
+        "lat": 43.611,
+        "lng": -79.495,
+        "fillLevel": 27
+      },
+      {
+        "name": "Royal York & Lakeshore",
+        "lat": 43.613,
+        "lng": -79.504,
+        "fillLevel": 65
+      },
+      {
+        "name": "Long Branch Loop",
+        "lat": 43.594,
+        "lng": -79.541,
+        "fillLevel": 83
+      },
+      {
+        "name": "Colonel Samuel Smith Park",
+        "lat": 43.598,
+        "lng": -79.517,
+        "fillLevel": 51
+      },
+      {
+        "name": "Islington & Lakeshore",
+        "lat": 43.61,
+        "lng": -79.513,
+        "fillLevel": 70
+      },
+      {
+        "name": "Lakeshore & Browns Line",
+        "lat": 43.596,
+        "lng": -79.536,
+        "fillLevel": 38
+      },
+      {
+        "name": "Humber Bay Park East",
+        "lat": 43.618,
+        "lng": -79.471,
+        "fillLevel": 86
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-01-19T21:47:57.177Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-01-24T21:47:57.177Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-01-28T21:47:57.177Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-02-02T21:47:57.177Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-02-08T21:47:57.177Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-02-13T21:47:57.177Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-02-19T21:47:57.177Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-02-23T21:47:57.177Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Humber Bay Shores Park",
+        "collectedAt": "2026-02-27T21:47:57.177Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-01-21T21:47:57.177Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-01-28T21:47:57.177Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-01-31T21:47:57.177Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-02-05T21:47:57.177Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-02-09T21:47:57.177Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-02-15T21:47:57.177Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-02-22T21:47:57.177Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Park Lawn & Lakeshore",
+        "collectedAt": "2026-03-01T21:47:57.177Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-01-19T21:47:57.177Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-01-26T21:47:57.177Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-02-02T21:47:57.177Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-02-08T21:47:57.177Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-02-12T21:47:57.177Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-02-19T21:47:57.177Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Marine Parade Dr",
+        "collectedAt": "2026-02-25T21:47:57.177Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-01-20T21:47:57.177Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-01-27T21:47:57.177Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-02-02T21:47:57.177Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-02-05T21:47:57.177Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-02-10T21:47:57.177Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-02-16T21:47:57.177Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-02-19T21:47:57.177Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Mimico GO Station",
+        "collectedAt": "2026-02-24T21:47:57.177Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-01-19T21:47:57.177Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-01-25T21:47:57.177Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-01-28T21:47:57.177Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-01-31T21:47:57.177Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-02-06T21:47:57.177Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-02-13T21:47:57.177Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-02-16T21:47:57.177Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-02-23T21:47:57.177Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Royal York & Lakeshore",
+        "collectedAt": "2026-02-27T21:47:57.177Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-01-20T21:47:57.177Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-01-24T21:47:57.177Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-01-30T21:47:57.177Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-02-04T21:47:57.177Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-02-09T21:47:57.177Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-02-15T21:47:57.177Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-02-21T21:47:57.177Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-02-26T21:47:57.177Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Long Branch Loop",
+        "collectedAt": "2026-03-01T21:47:57.177Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-01-23T21:47:57.177Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-01-28T21:47:57.177Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-02-03T21:47:57.177Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-02-09T21:47:57.177Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-02-13T21:47:57.177Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-02-16T21:47:57.177Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-02-23T21:47:57.177Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Colonel Samuel Smith Park",
+        "collectedAt": "2026-03-01T21:47:57.177Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-01-19T21:47:57.177Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-01-24T21:47:57.177Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-01-29T21:47:57.177Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-02-02T21:47:57.177Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-02-09T21:47:57.177Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-02-16T21:47:57.177Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-02-19T21:47:57.177Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-02-22T21:47:57.177Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Islington & Lakeshore",
+        "collectedAt": "2026-03-01T21:47:57.177Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-01-19T21:47:57.177Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-01-25T21:47:57.177Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-01-29T21:47:57.177Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-02-04T21:47:57.177Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-02-09T21:47:57.177Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-02-15T21:47:57.177Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-02-20T21:47:57.177Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Lakeshore & Browns Line",
+        "collectedAt": "2026-02-25T21:47:57.177Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-01-20T21:47:57.177Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-01-27T21:47:57.177Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-01-31T21:47:57.177Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-02-05T21:47:57.177Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-02-11T21:47:57.177Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-02-16T21:47:57.177Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-02-22T21:47:57.177Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Humber Bay Park East",
+        "collectedAt": "2026-02-28T21:47:57.177Z",
+        "fillPctAtCollection": 55
+      }
+    ]
+  },
+  "Yorkville & Bloor": {
+    "depot": {
+      "lat": 43.67,
+      "lng": -79.393
+    },
+    "bins": [
+      {
+        "name": "Bloor & Yonge NE",
+        "lat": 43.6709,
+        "lng": -79.386,
+        "fillLevel": 90
+      },
+      {
+        "name": "Cumberland & Bellair",
+        "lat": 43.6716,
+        "lng": -79.388,
+        "fillLevel": 54
+      },
+      {
+        "name": "Yorkville Ave & Hazelton",
+        "lat": 43.6727,
+        "lng": -79.391,
+        "fillLevel": 72
+      },
+      {
+        "name": "Avenue & Bloor",
+        "lat": 43.671,
+        "lng": -79.3949,
+        "fillLevel": 31
+      },
+      {
+        "name": "Bay & Bloor",
+        "lat": 43.6704,
+        "lng": -79.3895,
+        "fillLevel": 86
+      },
+      {
+        "name": "ROM South Entrance",
+        "lat": 43.6677,
+        "lng": -79.3948,
+        "fillLevel": 48
+      },
+      {
+        "name": "St George & Bloor",
+        "lat": 43.6683,
+        "lng": -79.3997,
+        "fillLevel": 63
+      },
+      {
+        "name": "Varsity Stadium",
+        "lat": 43.6665,
+        "lng": -79.3968,
+        "fillLevel": 25
+      },
+      {
+        "name": "Church & Bloor",
+        "lat": 43.6707,
+        "lng": -79.3827,
+        "fillLevel": 81
+      },
+      {
+        "name": "Rosedale Valley Rd",
+        "lat": 43.673,
+        "lng": -79.378,
+        "fillLevel": 17
+      },
+      {
+        "name": "Prince Arthur & Bloor",
+        "lat": 43.6697,
+        "lng": -79.395,
+        "fillLevel": 59
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-01-21T21:47:57.178Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-01-27T21:47:57.178Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-02-02T21:47:57.178Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-02-09T21:47:57.178Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-02-15T21:47:57.178Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-02-22T21:47:57.178Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Bloor & Yonge NE",
+        "collectedAt": "2026-02-26T21:47:57.178Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-01-21T21:47:57.178Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-01-27T21:47:57.178Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-02-01T21:47:57.178Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-02-06T21:47:57.178Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-02-12T21:47:57.178Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-02-18T21:47:57.178Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-02-21T21:47:57.178Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Cumberland & Bellair",
+        "collectedAt": "2026-02-27T21:47:57.178Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-01-22T21:47:57.178Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-01-25T21:47:57.178Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-01-28T21:47:57.178Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-01-31T21:47:57.178Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-02-04T21:47:57.178Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-02-09T21:47:57.178Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-02-16T21:47:57.178Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-02-21T21:47:57.178Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Yorkville Ave & Hazelton",
+        "collectedAt": "2026-02-25T21:47:57.178Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-01-23T21:47:57.178Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-01-29T21:47:57.178Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-02-02T21:47:57.178Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-02-07T21:47:57.178Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-02-11T21:47:57.178Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-02-16T21:47:57.178Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-02-22T21:47:57.178Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Avenue & Bloor",
+        "collectedAt": "2026-02-28T21:47:57.178Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-01-21T21:47:57.178Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-01-24T21:47:57.178Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-01-27T21:47:57.178Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-02-02T21:47:57.178Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-02-06T21:47:57.178Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-02-10T21:47:57.178Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-02-17T21:47:57.178Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-02-24T21:47:57.178Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Bay & Bloor",
+        "collectedAt": "2026-02-27T21:47:57.178Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-01-22T21:47:57.178Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-01-26T21:47:57.178Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-02-02T21:47:57.178Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-02-06T21:47:57.178Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-02-11T21:47:57.178Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-02-15T21:47:57.178Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-02-22T21:47:57.178Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "ROM South Entrance",
+        "collectedAt": "2026-02-26T21:47:57.178Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-01-23T21:47:57.178Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-01-26T21:47:57.178Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-01-29T21:47:57.178Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-02-01T21:47:57.178Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-02-06T21:47:57.178Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-02-10T21:47:57.178Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-02-17T21:47:57.178Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-02-22T21:47:57.178Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "St George & Bloor",
+        "collectedAt": "2026-02-28T21:47:57.178Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-01-23T21:47:57.178Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-01-30T21:47:57.178Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-02-04T21:47:57.178Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-02-07T21:47:57.178Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-02-11T21:47:57.178Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-02-16T21:47:57.178Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-02-20T21:47:57.178Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Varsity Stadium",
+        "collectedAt": "2026-02-27T21:47:57.178Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-01-23T21:47:57.178Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-01-29T21:47:57.178Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-02-04T21:47:57.178Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-02-08T21:47:57.178Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-02-15T21:47:57.178Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-02-22T21:47:57.178Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Church & Bloor",
+        "collectedAt": "2026-02-26T21:47:57.178Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-01-20T21:47:57.178Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-01-25T21:47:57.178Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-02-01T21:47:57.178Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-02-08T21:47:57.178Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-02-13T21:47:57.178Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-02-16T21:47:57.178Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-02-19T21:47:57.178Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Rosedale Valley Rd",
+        "collectedAt": "2026-02-24T21:47:57.178Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-01-23T21:47:57.178Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-01-30T21:47:57.178Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-02-02T21:47:57.178Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-02-08T21:47:57.178Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-02-11T21:47:57.178Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-02-18T21:47:57.178Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-02-23T21:47:57.178Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Prince Arthur & Bloor",
+        "collectedAt": "2026-02-28T21:47:57.178Z",
+        "fillPctAtCollection": 85
+      }
+    ]
+  },
+  "The Annex & U of T": {
+    "depot": {
+      "lat": 43.665,
+      "lng": -79.405
+    },
+    "bins": [
+      {
+        "name": "Bloor & Spadina",
+        "lat": 43.6669,
+        "lng": -79.404,
+        "fillLevel": 85
+      },
+      {
+        "name": "King's College Circle",
+        "lat": 43.661,
+        "lng": -79.3958,
+        "fillLevel": 42
+      },
+      {
+        "name": "Harbord & Spadina",
+        "lat": 43.6611,
+        "lng": -79.4013,
+        "fillLevel": 76
+      },
+      {
+        "name": "College & St George",
+        "lat": 43.6601,
+        "lng": -79.398,
+        "fillLevel": 29
+      },
+      {
+        "name": "Knox College",
+        "lat": 43.6606,
+        "lng": -79.3964,
+        "fillLevel": 68
+      },
+      {
+        "name": "Sidney Smith Hall",
+        "lat": 43.6626,
+        "lng": -79.399,
+        "fillLevel": 93
+      },
+      {
+        "name": "Robarts Library",
+        "lat": 43.6645,
+        "lng": -79.3997,
+        "fillLevel": 51
+      },
+      {
+        "name": "Dupont & Spadina",
+        "lat": 43.674,
+        "lng": -79.407,
+        "fillLevel": 37
+      },
+      {
+        "name": "Bloor & Bathurst",
+        "lat": 43.6664,
+        "lng": -79.4119,
+        "fillLevel": 80
+      },
+      {
+        "name": "Brunswick & Bloor",
+        "lat": 43.667,
+        "lng": -79.4085,
+        "fillLevel": 14
+      },
+      {
+        "name": "Sussex & Harbord",
+        "lat": 43.6618,
+        "lng": -79.404,
+        "fillLevel": 62
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-01-21T21:47:57.180Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-01-24T21:47:57.180Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-01-29T21:47:57.180Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-02-02T21:47:57.180Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-02-06T21:47:57.180Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-02-10T21:47:57.180Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-02-15T21:47:57.180Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-02-21T21:47:57.180Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Bloor & Spadina",
+        "collectedAt": "2026-02-27T21:47:57.180Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-01-21T21:47:57.180Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-01-28T21:47:57.180Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-02-01T21:47:57.180Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-02-05T21:47:57.180Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-02-12T21:47:57.180Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-02-15T21:47:57.180Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-02-20T21:47:57.180Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "King's College Circle",
+        "collectedAt": "2026-02-23T21:47:57.180Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-01-21T21:47:57.180Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-01-28T21:47:57.180Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-03T21:47:57.180Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-07T21:47:57.180Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-11T21:47:57.180Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-16T21:47:57.180Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-19T21:47:57.180Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-25T21:47:57.180Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Harbord & Spadina",
+        "collectedAt": "2026-02-28T21:47:57.180Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-01-23T21:47:57.180Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-01-30T21:47:57.180Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-02-04T21:47:57.180Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-02-09T21:47:57.180Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-02-13T21:47:57.180Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-02-16T21:47:57.180Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-02-20T21:47:57.180Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "College & St George",
+        "collectedAt": "2026-02-27T21:47:57.180Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-01-22T21:47:57.180Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-01-25T21:47:57.180Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-01-29T21:47:57.180Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-02-01T21:47:57.180Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-02-05T21:47:57.180Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-02-12T21:47:57.180Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-02-19T21:47:57.180Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-02-24T21:47:57.180Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Knox College",
+        "collectedAt": "2026-02-28T21:47:57.180Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-01-21T21:47:57.180Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-01-28T21:47:57.180Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-02-02T21:47:57.180Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-02-08T21:47:57.180Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-02-13T21:47:57.180Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-02-17T21:47:57.180Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-02-22T21:47:57.180Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Sidney Smith Hall",
+        "collectedAt": "2026-03-01T21:47:57.180Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-01-23T21:47:57.180Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-01-30T21:47:57.180Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-02-04T21:47:57.180Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-02-08T21:47:57.180Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-02-15T21:47:57.180Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-02-19T21:47:57.180Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-02-23T21:47:57.180Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Robarts Library",
+        "collectedAt": "2026-03-01T21:47:57.180Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-01-20T21:47:57.180Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-01-27T21:47:57.180Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-02-03T21:47:57.180Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-02-08T21:47:57.180Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-02-15T21:47:57.180Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-02-18T21:47:57.180Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-02-24T21:47:57.180Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Dupont & Spadina",
+        "collectedAt": "2026-02-27T21:47:57.180Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-01-19T21:47:57.180Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-01-24T21:47:57.180Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-01-29T21:47:57.180Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-02T21:47:57.180Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-07T21:47:57.180Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-11T21:47:57.180Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-14T21:47:57.180Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-20T21:47:57.180Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-23T21:47:57.180Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-02-26T21:47:57.180Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Bloor & Bathurst",
+        "collectedAt": "2026-03-01T21:47:57.180Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-01-19T21:47:57.180Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-01-22T21:47:57.180Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-01-29T21:47:57.180Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-02-03T21:47:57.180Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-02-08T21:47:57.180Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-02-12T21:47:57.180Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-02-16T21:47:57.180Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-02-23T21:47:57.180Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Brunswick & Bloor",
+        "collectedAt": "2026-02-28T21:47:57.180Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-01-21T21:47:57.180Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-01-28T21:47:57.180Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-02-04T21:47:57.180Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-02-08T21:47:57.180Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-02-13T21:47:57.180Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-02-16T21:47:57.180Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-02-19T21:47:57.180Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Sussex & Harbord",
+        "collectedAt": "2026-02-25T21:47:57.180Z",
+        "fillPctAtCollection": 79
+      }
+    ]
+  },
+  "Liberty Village & King West": {
+    "depot": {
+      "lat": 43.638,
+      "lng": -79.42
+    },
+    "bins": [
+      {
+        "name": "King & Dufferin",
+        "lat": 43.6395,
+        "lng": -79.4266,
+        "fillLevel": 87
+      },
+      {
+        "name": "Liberty St & Atlantic",
+        "lat": 43.6377,
+        "lng": -79.4215,
+        "fillLevel": 52
+      },
+      {
+        "name": "East Liberty & Pirandello",
+        "lat": 43.637,
+        "lng": -79.4175,
+        "fillLevel": 74
+      },
+      {
+        "name": "King & Strachan",
+        "lat": 43.64,
+        "lng": -79.4163,
+        "fillLevel": 33
+      },
+      {
+        "name": "Exhibition Place",
+        "lat": 43.6347,
+        "lng": -79.4181,
+        "fillLevel": 91
+      },
+      {
+        "name": "Ontario Place",
+        "lat": 43.6299,
+        "lng": -79.4115,
+        "fillLevel": 46
+      },
+      {
+        "name": "King & Spadina",
+        "lat": 43.6449,
+        "lng": -79.3966,
+        "fillLevel": 81
+      },
+      {
+        "name": "Queen & Bathurst",
+        "lat": 43.6439,
+        "lng": -79.4082,
+        "fillLevel": 20
+      },
+      {
+        "name": "Dundas & Ossington",
+        "lat": 43.6524,
+        "lng": -79.423,
+        "fillLevel": 68
+      },
+      {
+        "name": "Sudbury & Dovercourt",
+        "lat": 43.639,
+        "lng": -79.424,
+        "fillLevel": 55
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-01-20T21:47:57.181Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-01-25T21:47:57.181Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-01-30T21:47:57.181Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-02-04T21:47:57.181Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-02-07T21:47:57.181Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-02-11T21:47:57.181Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-02-16T21:47:57.181Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-02-21T21:47:57.181Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "King & Dufferin",
+        "collectedAt": "2026-02-28T21:47:57.181Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-01-22T21:47:57.181Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-01-26T21:47:57.181Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-01-31T21:47:57.181Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-02-04T21:47:57.181Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-02-08T21:47:57.181Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-02-12T21:47:57.181Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-02-15T21:47:57.181Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-02-19T21:47:57.181Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Liberty St & Atlantic",
+        "collectedAt": "2026-02-25T21:47:57.181Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-01-23T21:47:57.181Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-01-26T21:47:57.181Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-01-31T21:47:57.181Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-02-03T21:47:57.181Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-02-08T21:47:57.181Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-02-12T21:47:57.181Z",
+        "fillPctAtCollection": 86
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-02-18T21:47:57.181Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "East Liberty & Pirandello",
+        "collectedAt": "2026-02-24T21:47:57.181Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-01-19T21:47:57.181Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-01-22T21:47:57.181Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-01-28T21:47:57.181Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-02-01T21:47:57.181Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-02-07T21:47:57.181Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-02-11T21:47:57.181Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-02-18T21:47:57.181Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "King & Strachan",
+        "collectedAt": "2026-02-24T21:47:57.181Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-01-21T21:47:57.181Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-01-28T21:47:57.181Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-02-03T21:47:57.181Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-02-06T21:47:57.181Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-02-12T21:47:57.181Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-02-19T21:47:57.181Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Exhibition Place",
+        "collectedAt": "2026-02-25T21:47:57.181Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-01-20T21:47:57.181Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-01-24T21:47:57.181Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-01-27T21:47:57.181Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-02-01T21:47:57.181Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-02-04T21:47:57.181Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-02-07T21:47:57.181Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-02-12T21:47:57.181Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-02-19T21:47:57.181Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-02-25T21:47:57.181Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Ontario Place",
+        "collectedAt": "2026-03-01T21:47:57.181Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-01-22T21:47:57.181Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-01-26T21:47:57.181Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-02-01T21:47:57.181Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-02-04T21:47:57.181Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-02-08T21:47:57.181Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-02-15T21:47:57.181Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-02-21T21:47:57.181Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "King & Spadina",
+        "collectedAt": "2026-02-27T21:47:57.181Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-01-23T21:47:57.181Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-01-30T21:47:57.181Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-02-02T21:47:57.181Z",
+        "fillPctAtCollection": 77
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-02-07T21:47:57.181Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-02-10T21:47:57.181Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-02-13T21:47:57.181Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-02-20T21:47:57.181Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Queen & Bathurst",
+        "collectedAt": "2026-02-24T21:47:57.181Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-01-20T21:47:57.181Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-01-27T21:47:57.181Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-01-31T21:47:57.181Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-02-06T21:47:57.181Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-02-11T21:47:57.181Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-02-17T21:47:57.181Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-02-23T21:47:57.181Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Dundas & Ossington",
+        "collectedAt": "2026-02-28T21:47:57.181Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-01-23T21:47:57.181Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-01-28T21:47:57.181Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-01T21:47:57.181Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-04T21:47:57.181Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-11T21:47:57.181Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-16T21:47:57.181Z",
+        "fillPctAtCollection": 70
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-21T21:47:57.181Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-25T21:47:57.181Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Sudbury & Dovercourt",
+        "collectedAt": "2026-02-28T21:47:57.181Z",
+        "fillPctAtCollection": 92
+      }
+    ]
+  },
+  "East End & Leslieville": {
+    "depot": {
+      "lat": 43.66,
+      "lng": -79.34
+    },
+    "bins": [
+      {
+        "name": "Queen & Broadview",
+        "lat": 43.662,
+        "lng": -79.3525,
+        "fillLevel": 83
+      },
+      {
+        "name": "Queen & Carlaw",
+        "lat": 43.661,
+        "lng": -79.3429,
+        "fillLevel": 47
+      },
+      {
+        "name": "Queen & Leslie",
+        "lat": 43.6605,
+        "lng": -79.3335,
+        "fillLevel": 90
+      },
+      {
+        "name": "Gerrard & Coxwell",
+        "lat": 43.6699,
+        "lng": -79.3266,
+        "fillLevel": 26
+      },
+      {
+        "name": "Danforth & Pape",
+        "lat": 43.6811,
+        "lng": -79.3444,
+        "fillLevel": 71
+      },
+      {
+        "name": "Danforth & Broadview",
+        "lat": 43.6774,
+        "lng": -79.3583,
+        "fillLevel": 58
+      },
+      {
+        "name": "Riverdale Park East",
+        "lat": 43.669,
+        "lng": -79.3555,
+        "fillLevel": 39
+      },
+      {
+        "name": "Eastern & Leslie",
+        "lat": 43.656,
+        "lng": -79.3327,
+        "fillLevel": 84
+      },
+      {
+        "name": "Distillery District",
+        "lat": 43.6525,
+        "lng": -79.3589,
+        "fillLevel": 95
+      },
+      {
+        "name": "St Lawrence Market",
+        "lat": 43.6493,
+        "lng": -79.3715,
+        "fillLevel": 62
+      },
+      {
+        "name": "Jimmie Simpson Park",
+        "lat": 43.662,
+        "lng": -79.347,
+        "fillLevel": 30
+      }
+    ],
+    "collectionLogs": [
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-01-23T21:47:57.182Z",
+        "fillPctAtCollection": 64
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-01-30T21:47:57.182Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-02T21:47:57.182Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-08T21:47:57.182Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-12T21:47:57.182Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-16T21:47:57.182Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-19T21:47:57.182Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-24T21:47:57.182Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Queen & Broadview",
+        "collectedAt": "2026-02-27T21:47:57.182Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-01-21T21:47:57.182Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-01-27T21:47:57.182Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-03T21:47:57.182Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-07T21:47:57.182Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-13T21:47:57.182Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-17T21:47:57.182Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-20T21:47:57.182Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-25T21:47:57.182Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Queen & Carlaw",
+        "collectedAt": "2026-02-28T21:47:57.182Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-01-23T21:47:57.182Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-01-28T21:47:57.182Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-02-01T21:47:57.182Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-02-07T21:47:57.182Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-02-12T21:47:57.182Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-02-15T21:47:57.182Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-02-19T21:47:57.182Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-02-22T21:47:57.182Z",
+        "fillPctAtCollection": 95
+      },
+      {
+        "binName": "Queen & Leslie",
+        "collectedAt": "2026-03-01T21:47:57.182Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-01-20T21:47:57.182Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-01-23T21:47:57.182Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-01-28T21:47:57.182Z",
+        "fillPctAtCollection": 88
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-02-04T21:47:57.182Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-02-10T21:47:57.182Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-02-16T21:47:57.182Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-02-21T21:47:57.182Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Gerrard & Coxwell",
+        "collectedAt": "2026-02-24T21:47:57.182Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-01-20T21:47:57.182Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-01-23T21:47:57.182Z",
+        "fillPctAtCollection": 55
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-01-27T21:47:57.182Z",
+        "fillPctAtCollection": 93
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-01-31T21:47:57.182Z",
+        "fillPctAtCollection": 67
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-03T21:47:57.182Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-06T21:47:57.182Z",
+        "fillPctAtCollection": 66
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-11T21:47:57.182Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-16T21:47:57.182Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-19T21:47:57.182Z",
+        "fillPctAtCollection": 62
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-22T21:47:57.182Z",
+        "fillPctAtCollection": 87
+      },
+      {
+        "binName": "Danforth & Pape",
+        "collectedAt": "2026-02-27T21:47:57.182Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-01-22T21:47:57.182Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-01-29T21:47:57.182Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-02-05T21:47:57.182Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-02-09T21:47:57.182Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-02-16T21:47:57.182Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-02-20T21:47:57.182Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Danforth & Broadview",
+        "collectedAt": "2026-02-27T21:47:57.182Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-01-19T21:47:57.182Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-01-22T21:47:57.182Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-01-26T21:47:57.182Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-02-01T21:47:57.182Z",
+        "fillPctAtCollection": 92
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-02-07T21:47:57.182Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-02-14T21:47:57.182Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-02-18T21:47:57.182Z",
+        "fillPctAtCollection": 79
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-02-21T21:47:57.182Z",
+        "fillPctAtCollection": 58
+      },
+      {
+        "binName": "Riverdale Park East",
+        "collectedAt": "2026-02-26T21:47:57.182Z",
+        "fillPctAtCollection": 57
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-01-19T21:47:57.182Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-01-25T21:47:57.182Z",
+        "fillPctAtCollection": 68
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-01-31T21:47:57.182Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-02-03T21:47:57.182Z",
+        "fillPctAtCollection": 90
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-02-10T21:47:57.182Z",
+        "fillPctAtCollection": 76
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-02-15T21:47:57.182Z",
+        "fillPctAtCollection": 83
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-02-18T21:47:57.182Z",
+        "fillPctAtCollection": 74
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-02-23T21:47:57.182Z",
+        "fillPctAtCollection": 78
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-02-26T21:47:57.182Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "Eastern & Leslie",
+        "collectedAt": "2026-03-01T21:47:57.182Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-01-19T21:47:57.182Z",
+        "fillPctAtCollection": 61
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-01-24T21:47:57.182Z",
+        "fillPctAtCollection": 82
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-01-30T21:47:57.182Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-02-03T21:47:57.182Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-02-08T21:47:57.182Z",
+        "fillPctAtCollection": 75
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-02-15T21:47:57.182Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-02-19T21:47:57.182Z",
+        "fillPctAtCollection": 73
+      },
+      {
+        "binName": "Distillery District",
+        "collectedAt": "2026-02-26T21:47:57.182Z",
+        "fillPctAtCollection": 72
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-01-21T21:47:57.182Z",
+        "fillPctAtCollection": 59
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-01-26T21:47:57.182Z",
+        "fillPctAtCollection": 63
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-02-01T21:47:57.182Z",
+        "fillPctAtCollection": 60
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-02-05T21:47:57.182Z",
+        "fillPctAtCollection": 89
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-02-09T21:47:57.182Z",
+        "fillPctAtCollection": 81
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-02-16T21:47:57.182Z",
+        "fillPctAtCollection": 91
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-02-19T21:47:57.182Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "St Lawrence Market",
+        "collectedAt": "2026-02-26T21:47:57.182Z",
+        "fillPctAtCollection": 69
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-01-23T21:47:57.182Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-01-26T21:47:57.182Z",
+        "fillPctAtCollection": 80
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-01-29T21:47:57.182Z",
+        "fillPctAtCollection": 84
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-02-02T21:47:57.182Z",
+        "fillPctAtCollection": 71
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-02-09T21:47:57.182Z",
+        "fillPctAtCollection": 94
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-02-12T21:47:57.182Z",
+        "fillPctAtCollection": 65
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-02-18T21:47:57.182Z",
+        "fillPctAtCollection": 85
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-02-23T21:47:57.182Z",
+        "fillPctAtCollection": 56
+      },
+      {
+        "binName": "Jimmie Simpson Park",
+        "collectedAt": "2026-02-28T21:47:57.182Z",
+        "fillPctAtCollection": 95
+      }
+    ]
+  }
+}
