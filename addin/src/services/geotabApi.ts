@@ -131,12 +131,12 @@ export async function fetchAllRoutes(): Promise<GeotabRouteRef[]> {
 }
 
 /**
- * Load a single route's bins from Geotab + local bin-data.json.
+ * Load a single route's bins from Geotab zones + local bin-data.json.
  *
  * Strategy:
  *  1. Demo/fallback routes with existing bins → return directly
- *  2. Fetch RoutePlanItems → get zone IDs and coords from Geotab
- *  3. Match zones to bin-data.json by name → overlay fill levels, depot, collection logs
+ *  2. If bin-data.json has this route → fetch SR- zones to get real IDs, match by name
+ *  3. Fallback → fetch all SR- zones, match by name with default fill levels
  */
 export async function loadRouteById(routeId: string, routeName: string, existingBins?: AlgoBin[], existingDepot?: { lat: number; lng: number }): Promise<RouteEntry | null> {
   // Demo routes already have bins baked in
@@ -144,80 +144,57 @@ export async function loadRouteById(routeId: string, routeName: string, existing
     return { id: routeId, name: routeName, bins: existingBins, depot: existingDepot, collectionLogs: [] };
   }
 
-  const api = getGeotabApi();
-  if (!api) return null;
-
   const localRoute = binData[routeName];
 
-  try {
-    let bins: AlgoBin[] = [];
+  // If we have local data, we can build bins directly — Geotab zone lookup is
+  // only needed for real zone IDs (used by writeRouteToGeotab).
+  const api = getGeotabApi();
 
-    // Fetch zones from Geotab to get real zone IDs
-    const zones = await callApi<GeotabZone[]>(api, "Get", { typeName: "Zone" });
-    const zoneMap: Record<string, { id: string; name: string; lat: number; lng: number }> = {};
-    for (const z of zones || []) {
-      const c = zoneCentroid(z);
-      if (c) {
-        zoneMap[z.id] = { id: z.id, name: z.name || `Zone ${z.id}`, lat: c.lat, lng: c.lng };
+  // Build a name → zoneId map from Geotab zones (best-effort)
+  const nameToZoneId: Record<string, string> = {};
+  if (api) {
+    try {
+      const zones = await callApi<GeotabZone[]>(api, "Get", { typeName: "Zone" });
+      for (const z of zones || []) {
+        if (z.name?.startsWith("SR-")) {
+          nameToZoneId[z.name.slice(3)] = z.id;
+        }
       }
+    } catch (err) {
+      console.warn("[SmartRoute] Zone lookup failed (continuing with local data):", err);
     }
-
-    const items = await callApi<{ zone?: { id: string } | string; sequence?: number }[]>(
-      api, "Get", { typeName: "RoutePlanItem", search: { route: { id: routeId } } },
-    );
-    const sorted = (items || []).sort((a, b) => (a.sequence || 0) - (b.sequence || 0));
-    const addedIds = new Set<string>();
-
-    // Build a lookup from bin name → local bin data for quick matching
-    const localBinMap: Record<string, { fillLevel: number }> = {};
-    if (localRoute) {
-      for (const b of localRoute.bins) {
-        localBinMap[b.name] = { fillLevel: b.fillLevel };
-      }
-    }
-
-    for (const item of sorted) {
-      const zid = typeof item.zone === "object" && item.zone ? item.zone.id : String(item.zone);
-      const zData = zoneMap[zid];
-      if (zData && !addedIds.has(zData.id)) {
-        addedIds.add(zData.id);
-        const binName = zData.name.replace(/^SR-/, "");
-        const local = localBinMap[binName];
-        bins.push({
-          id: zData.id,
-          name: binName,
-          lat: zData.lat,
-          lng: zData.lng,
-          fillLevel: local?.fillLevel ?? 50,
-        });
-      }
-    }
-
-    if (bins.length > 0) {
-      console.log(`[SmartRoute] Loaded ${bins.length} bins for route "${routeName}" (${localRoute ? "with" : "without"} local data)`);
-    }
-
-    // Map collection log binNames to real zone IDs
-    let collectionLogs: unknown[] = [];
-    if (localRoute?.collectionLogs) {
-      const nameToId: Record<string, string> = {};
-      for (const bin of bins) {
-        nameToId[bin.name] = bin.id;
-      }
-      collectionLogs = localRoute.collectionLogs.map(log => ({
-        binId: nameToId[log.binName] || log.binName,
-        collectedAt: log.collectedAt,
-        fillPctAtCollection: log.fillPctAtCollection,
-      }));
-    }
-
-    const depot = localRoute?.depot ?? (bins.length > 0 ? { lat: bins[0].lat, lng: bins[0].lng } : { lat: 43.65, lng: -79.38 });
-
-    return { id: routeId, name: routeName, bins, depot, collectionLogs };
-  } catch (err) {
-    console.error("[SmartRoute] loadRouteById failed:", err);
-    return null;
   }
+
+  if (localRoute) {
+    const bins: AlgoBin[] = localRoute.bins.map(b => ({
+      id: nameToZoneId[b.name] || `local-${b.name}`,
+      name: b.name,
+      lat: b.lat,
+      lng: b.lng,
+      fillLevel: b.fillLevel,
+    }));
+
+    // Map collection log binNames to zone IDs
+    const collectionLogs = (localRoute.collectionLogs || []).map(log => ({
+      binId: nameToZoneId[log.binName] || `local-${log.binName}`,
+      collectedAt: log.collectedAt,
+      fillPctAtCollection: log.fillPctAtCollection,
+    }));
+
+    console.log(`[SmartRoute] Loaded ${bins.length} bins for route "${routeName}" from local data`);
+    return { id: routeId, name: routeName, bins, depot: localRoute.depot, collectionLogs };
+  }
+
+  // No local data — shouldn't happen for seeded routes, but handle gracefully
+  if (!api) return null;
+
+  console.warn(`[SmartRoute] No local data for route "${routeName}", using zone coords with default fill levels`);
+  const bins: AlgoBin[] = [];
+  for (const [name, zoneId] of Object.entries(nameToZoneId)) {
+    bins.push({ id: zoneId, name, lat: 0, lng: 0, fillLevel: 50 });
+  }
+  const depot = bins.length > 0 ? { lat: bins[0].lat, lng: bins[0].lng } : { lat: 43.65, lng: -79.38 };
+  return { id: routeId, name: routeName, bins, depot, collectionLogs: [] };
 }
 
 /**
