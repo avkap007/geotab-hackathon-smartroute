@@ -5,10 +5,14 @@ import {
 "recharts";
 import SmartRouteMap, { type Bin, type OptimizeState } from "@/components/SmartRouteMap";
 import {
-  TruckIcon, ClockIcon, FuelIcon, LeafIcon, SkipIcon,
+  TruckIcon,
   SearchIcon, CalendarIcon, CheckIcon, CloseIcon, SpinnerIcon,
   PinIcon, BinCharacter } from
 "@/components/SvgIcons";
+import iconClock from "@/assets/icon-clock.png";
+import iconFuel from "@/assets/icon-fuel.png";
+import iconCo2 from "@/assets/icon-co2.png";
+import iconStop from "@/assets/icon-stop.png";
 
 // ═══════════════════════════════════════════════
 // MOCK DATA — swap with API calls later
@@ -385,25 +389,25 @@ const Index: React.FC = () => {
             {/* Stat Cards */}
             <div className="grid grid-cols-2 gap-3">
               <StatCard
-                icon={<ClockIcon size={28} color="#7EC8E3" />}
+                icon={<img src={iconClock} alt="clock" style={{ width: 36, height: 36, imageRendering: "pixelated" }} />}
                 value={hoursSaved}
                 unit="hrs"
                 label="Hours Saved" />
 
               <StatCard
-                icon={<FuelIcon size={28} color="#7EC8E3" />}
+                icon={<img src={iconFuel} alt="fuel" style={{ width: 36, height: 36, imageRendering: "pixelated" }} />}
                 value={fuelSaved}
                 unit="L"
                 label="Fuel Saved" />
 
               <StatCard
-                icon={<LeafIcon size={28} color="#6BCB9F" />}
+                icon={<img src={iconCo2} alt="leaf" style={{ width: 36, height: 36, imageRendering: "pixelated" }} />}
                 value={co2Reduced}
                 unit="kg"
                 label="CO₂ Reduced" />
 
               <StatCard
-                icon={<SkipIcon size={28} color="#C9B6FF" />}
+                icon={<img src={iconStop} alt="stop" style={{ width: 36, height: 36, imageRendering: "pixelated" }} />}
                 value={stopsSkipped}
                 unit=""
                 label="Stops Skipped"
