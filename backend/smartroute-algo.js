@@ -389,10 +389,7 @@
     }
 
     /* ── Phase 1: Clarke-Wright on mandatory bins ── */
-    var start     = vehicles.length > 0
-                  ? { lat: vehicles[0].latitude, lng: vehicles[0].longitude }
-                  : depot;
-    var cwRoutes  = clarkeWright(start, mandatory, capacity, distFn);
+    var cwRoutes  = clarkeWright(depot, mandatory, capacity, distFn);
 
     /* Or-opt post-processing on each CW route */
     var phase1Routes = cwRoutes.map(function (route) {
@@ -412,7 +409,7 @@
     for (var ri = 0; ri < finalRoutes.length; ri++) {
       var route = finalRoutes[ri];
       if (route.length === 0) { continue; }
-      var pts = toPoints(start, route);
+      var pts = toPoints(depot, route);
       optimizedKm += routeDistanceKm(pts, distFn);
       vehicleRoutes.push({ points: pts, color: COLORS[ri % COLORS.length] });
       for (var bi = 0; bi < route.length; bi++) { allOptimizedBins.push(route[bi]); }
