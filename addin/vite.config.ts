@@ -6,7 +6,7 @@ import path from 'path'
 // Build: base = GitHub Pages subpath so assets resolve correctly
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === 'build' ? '/geotab-hackathon-smartroute/addin/dist/' : '/',
+  base: command === 'build' ? './' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
