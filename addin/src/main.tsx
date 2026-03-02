@@ -19,28 +19,36 @@ export function getGeotabApi(): GeotabApi | undefined {
   return _api;
 }
 
+let mounted = false;
+
 function mount() {
+  if (mounted) return;
+  mounted = true;
   createRoot(document.getElementById("root")!).render(<App />);
 }
 
-// Geotab addin registration — MyGeotab calls initialize/focus/blur
+// Always register window.geotab.addin — create the namespace if Geotab hasn't
+// injected it yet (dev mode). Geotab will find and call initialize() when ready.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const win = window as any;
-if (win.geotab) {
-  win.geotab.addin["smartroute"] = function () {
-    return {
-      initialize(api: GeotabApi, _state: unknown, callback: () => void) {
-        _api = api;
-        mount();
-        callback();
-      },
-      focus(api: GeotabApi) {
-        _api = api;
-      },
-      blur() {},
-    };
+win.geotab = win.geotab ?? { addin: {} };
+win.geotab.addin = win.geotab.addin ?? {};
+
+win.geotab.addin["smartroute"] = function () {
+  return {
+    initialize(api: GeotabApi, _state: unknown, callback: () => void) {
+      _api = api;
+      mount();
+      callback();
+    },
+    focus(api: GeotabApi) {
+      _api = api;
+    },
+    blur() {},
   };
-} else {
-  // Dev mode — no Geotab, uses mock data
+};
+
+// Dev mode fallback: if Geotab never calls initialize() within 300ms, mount anyway
+setTimeout(() => {
   mount();
-}
+}, 300);
