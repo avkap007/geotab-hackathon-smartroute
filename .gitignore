@@ -19,3 +19,7 @@ build/
 # Exception: addin/dist is committed so GitHub Pages can serve it without CI/CD
 !addin/dist/
 !addin/dist/**
+
+ignore-docs/
+addin/config.js
+.claude
