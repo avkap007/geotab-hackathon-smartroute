@@ -1,62 +1,688 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset='utf-8'>
-  <script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
-  <script>
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css';
-    document.head.appendChild(link);
-    var mapLink = document.createElement('link');
-    mapLink.rel = 'stylesheet';
-    mapLink.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    document.head.appendChild(mapLink);
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartRoute</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Bootstrap (layout utilities only) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top nav ──────────────────────────────────────────────────────────── */
+    .sr-nav {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      height: 52px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      flex-shrink: 0;
+      gap: 12px;
+    }
+    .sr-logo {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: -0.4px;
+    }
+    .sr-logo span { color: #4361ee; }
+    .sr-badge {
+      background: #eef2ff;
+      color: #4361ee;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.6px;
+    }
+
+    /* ── Search / filter row ──────────────────────────────────────────────── */
+    .sr-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      flex-shrink: 0;
+    }
+    .sr-search-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 300px;
+    }
+    .sr-search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 14px;
+      pointer-events: none;
+    }
+    .sr-search-input {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 7px 12px 7px 34px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .sr-search-input:focus { border-color: #4361ee; box-shadow: 0 0 0 3px rgba(67,97,238,0.12); }
+
+    .sr-btn {
+      border: none;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .sr-btn-primary { background: #4361ee; color: #fff; }
+    .sr-btn-primary:hover { background: #3451d1; }
+    .sr-btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .sr-date-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+    }
+    .sr-date-input {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #374151;
+      outline: none;
+    }
+    .sr-date-sep { color: #9ca3af; font-size: 12px; }
+
+    /* ── Search dropdown ──────────────────────────────────────────────────── */
+    .sr-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      z-index: 9000;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .sr-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #f3f4f6;
+      transition: background 0.1s;
+    }
+    .sr-dropdown-item:last-child { border-bottom: none; }
+    .sr-dropdown-item:hover { background: #f5f7ff; }
+    .sr-dropdown-item.added { opacity: 0.45; cursor: default; }
+    .sr-dropdown-item .item-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #d1d5db;
+      flex-shrink: 0;
+    }
+    .sr-dropdown-item .item-name { font-size: 13px; font-weight: 500; color: #111827; }
+    .sr-dropdown-item .item-sub  { font-size: 11px; color: #9ca3af; }
+    .sr-dropdown-empty { padding: 18px; text-align: center; color: #9ca3af; font-size: 13px; }
+    .sr-dropdown-loading { padding: 18px; text-align: center; }
+
+    /* ── Route chips row ──────────────────────────────────────────────────── */
+    .sr-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      min-height: 44px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .sr-chips-placeholder { font-size: 12px; color: #9ca3af; font-style: italic; }
+    .sr-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f5f7ff;
+      border: 1.5px solid #c7d2fe;
+      color: #4361ee;
+      border-radius: 20px;
+      padding: 4px 10px 4px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .sr-chip:hover { background: #e0e7ff; }
+    .sr-chip.optimized { border-style: solid; border-width: 2px; }
+    .sr-chip.active { background: #4361ee; color: #fff; border-color: #4361ee; }
+    .sr-chip .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .sr-chip .chip-remove {
+      margin-left: 2px;
+      opacity: 0.55;
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .sr-chip .chip-remove:hover { opacity: 1; }
+    .sr-chip.active .chip-dot { background: #fff !important; }
+
+    /* ── Main layout ──────────────────────────────────────────────────────── */
+    .sr-main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── Map ──────────────────────────────────────────────────────────────── */
+    .sr-map-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+    #map { width: 100%; height: 100%; }
+    .sr-map-badge {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      z-index: 500;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      white-space: nowrap;
+    }
+
+    /* ── Controls panel ───────────────────────────────────────────────────── */
+    .sr-panel {
+      width: 290px;
+      flex-shrink: 0;
+      background: #fff;
+      border-left: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .sr-section {
+      padding: 16px 18px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .sr-section:last-child { border-bottom: none; }
+    .sr-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #9ca3af;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ── Threshold / Intensity sliders ────────────────────────────────────── */
+    .sr-threshold-pct {
+      font-size: 44px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1;
+      margin: 6px 0 2px;
+    }
+    .sr-threshold-sub { font-size: 11px; color: #6b7280; margin-bottom: 10px; line-height: 1.4; }
+
+    .sr-slider {
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      appearance: none;
+      -webkit-appearance: none;
+      background: linear-gradient(
+        to right,
+        #4361ee 0%,
+        #4361ee var(--pct, 50%),
+        #e5e7eb var(--pct, 50%),
+        #e5e7eb 100%
+      );
+      outline: none;
+      cursor: pointer;
+    }
+    .sr-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #4361ee;
+      box-shadow: 0 1px 6px rgba(67,97,238,0.45);
+      cursor: pointer;
+    }
+    .sr-slider::-moz-range-thumb {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #4361ee;
+      box-shadow: 0 1px 6px rgba(67,97,238,0.45);
+      border: none;
+      cursor: pointer;
+    }
+    .sr-slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #9ca3af;
+      margin-top: 5px;
+    }
+
+    /* ── KPI grid ─────────────────────────────────────────────────────────── */
+    .sr-kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .sr-kpi-card {
+      background: #f8faff;
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .sr-kpi-icon { font-size: 16px; margin-bottom: 3px; }
+    .sr-kpi-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.1;
+    }
+    .sr-kpi-value.blank { color: #d1d5db; }
+    .sr-kpi-unit { font-size: 10px; color: #6b7280; font-weight: 600; }
+    .sr-kpi-label { font-size: 11px; color: #6b7280; margin-top: 1px; }
+
+    /* ── KPI section title ────────────────────────────────────────────────── */
+    #kpi-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 10px;
+    }
+
+    /* ── Optimize button ──────────────────────────────────────────────────── */
+    .sr-btn-optimize {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #4361ee 0%, #7c3aed 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.2px;
+      transition: opacity 0.15s;
+    }
+    .sr-btn-optimize:hover:not(:disabled) { opacity: 0.88; }
+    .sr-btn-optimize:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .sr-status-line {
+      font-size: 11px;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 8px;
+      min-height: 16px;
+    }
+
+    /* ── Route detail panel ───────────────────────────────────────────────── */
+    .sr-detail-panel { border-top: 2px solid #4361ee; }
+    .sr-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .sr-detail-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .sr-detail-name { font-size: 13px; font-weight: 700; color: #111827; }
+    .sr-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 12px;
+    }
+    .sr-detail-row:last-of-type { border-bottom: none; margin-bottom: 12px; }
+    .sr-detail-row-label { color: #6b7280; }
+    .sr-detail-row-val { font-weight: 700; color: #111827; }
+
+    .sr-btn-accept {
+      width: 100%;
+      padding: 10px;
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: background 0.15s;
+    }
+    .sr-btn-accept:hover:not(:disabled) { background: #15803d; }
+    .sr-btn-accept:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .sr-btn-discard {
+      width: 100%;
+      padding: 10px;
+      background: #f9fafb;
+      color: #6b7280;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sr-btn-discard:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+
+    /* ── Spinner ──────────────────────────────────────────────────────────── */
+    .sr-spinner {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 2px solid #e5e7eb;
+      border-top-color: #4361ee;
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Debug bar ────────────────────────────────────────────────────────── */
+    .sr-debug {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 9999;
+    }
+    .sr-debug-btns { text-align: center; }
+    .sr-debug-btns button {
+      background: #374151;
+      color: #fff;
+      border: none;
+      padding: 3px 12px;
+      cursor: pointer;
+      font-size: 10px;
+      border-radius: 4px 4px 0 0;
+      margin: 0 2px;
+    }
+    #debug-log {
+      display: none;
+      background: #1e1e1e;
+      color: #4ade80;
+      padding: 10px;
+      margin: 0;
+      max-height: 160px;
+      overflow-y: auto;
+      font-size: 10px;
+      font-family: monospace;
+    }
+
+    /* ── Leaflet popup tweaks ─────────────────────────────────────────────── */
+    .leaflet-popup-content { font-size: 13px; line-height: 1.5; }
+    .sr-popup-title { font-weight: 700; margin-bottom: 4px; }
+    .sr-popup-fill { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+    .sr-popup-fill-bar { flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
+    .sr-popup-fill-inner { height: 100%; border-radius: 3px; }
+    .sr-popup-route { font-size: 11px; color: #9ca3af; }
+
+    /* ── Bin popup — prediction section ──────────────────────────────────── */
+    .sr-popup-predict {
+      margin-top: 7px;
+      padding-top: 6px;
+      border-top: 1px solid #f3f4f6;
+      font-size: 11px;
+      color: #374151;
+    }
+    .sr-popup-predict-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 3px;
+    }
+    .sr-popup-predict-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sr-popup-predict-meta { color: #6b7280; font-size: 10px; margin-bottom: 2px; }
+    .sr-popup-predict-conf {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-top: 3px;
+    }
+    .sr-conf-high   { background: #dcfce7; color: #16a34a; }
+    .sr-conf-medium { background: #fef3c7; color: #d97706; }
+    .sr-conf-low    { background: #f3f4f6; color: #9ca3af; }
+
+    /* ── Route detail panel — next-collections section ───────────────────── */
+    #detail-predictions {
+      margin: 10px 0 12px;
+      padding: 10px;
+      background: #f8faff;
+      border-radius: 8px;
+      display: none;
+    }
+    .sr-predict-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 7px;
+    }
+    .sr-predict-bin-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 0;
+      border-bottom: 1px solid #e9eef8;
+      font-size: 11px;
+    }
+    .sr-predict-bin-row:last-of-type { border-bottom: none; }
+    .sr-predict-bin-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .sr-predict-bin-name { flex: 1; color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sr-predict-bin-days { font-weight: 700; color: #111827; flex-shrink: 0; }
+    .sr-predict-fleet-note { font-size: 10px; color: #9ca3af; text-align: center; margin-top: 6px; font-style: italic; }
+  </style>
 </head>
-<body style='background:#f4f7f9;padding:20px;font-family:sans-serif;'>
+<body>
 
-  <div class='container-fluid'>
-    <div class='row mb-3 bg-white p-3 shadow-sm' style='border-radius:8px;'>
-      <div class='col-md-8'>
-        <h3>SmartRoute: Dynamic Waste Fleet Optimization</h3>
-        <p class='text-muted mb-0' id='status-text'>Loading...</p>
-      </div>
-      <div class='col-md-4'>
-        <label class='form-label mb-1'>Fill threshold: <span id='threshold-value'>70</span>%</label>
-        <input type='range' id='threshold-slider' class='form-range' min='50' max='90' step='10' value='70' style='width:100%;'>
-        <div class='d-flex gap-2 mt-1' style='font-size:11px;color:#666;'>
-          <span>Green: empty</span>
-          <span>Yellow: half</span>
-          <span>Red: full</span>
-        </div>
-      </div>
+  <!-- NAV -->
+  <nav class="sr-nav">
+    <span class="sr-logo">smart <span>route</span></span>
+    <span class="sr-badge">BETA</span>
+  </nav>
+
+  <!-- TOOLBAR -->
+  <div class="sr-toolbar">
+    <div class="sr-search-wrap">
+      <span class="sr-search-icon">&#128269;</span>
+      <input type="text" id="route-search" class="sr-search-input" placeholder="Search routes by name…" autocomplete="off">
+      <div id="search-dropdown" class="sr-dropdown" style="display:none;"></div>
     </div>
-
-    <div class='row'>
-      <div class='col-md-9'>
-        <div id='map' style='height:450px;width:100%;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);'></div>
-      </div>
-      <div class='col-md-3'>
-        <div class='card shadow-sm p-3'>
-          <h6 class='mb-3'>Route Impact</h6>
-          <div id='stat-stops' style='margin-bottom:8px;'><strong>Stops reduced:</strong> <span id='val-stops'>-</span></div>
-          <div id='stat-km' style='margin-bottom:8px;'><strong>km saved:</strong> <span id='val-km'>-</span></div>
-          <div id='stat-fuel' style='margin-bottom:8px;'><strong>Fuel saved:</strong> <span id='val-fuel'>-</span></div>
-          <div id='stat-co2' style='margin-bottom:12px;'><strong>CO2 avoided:</strong> <span id='val-co2'>-</span></div>
-          <button id='write-route-btn' class='btn btn-primary btn-sm w-100' style='margin-bottom:8px;'>Write Route to MyGeotab</button>
-          <button id='log-collection-btn' class='btn btn-outline-secondary btn-sm w-100'>Log Collection (simulate)</button>
-        </div>
-      </div>
+    <button id="add-route-btn" class="sr-btn sr-btn-primary">+ Add Route</button>
+    <div class="sr-date-group">
+      <input type="date" id="date-from" class="sr-date-input">
+      <span class="sr-date-sep">to</span>
+      <input type="date" id="date-to" class="sr-date-input">
     </div>
   </div>
 
-  <div id='debug-toggle' style='position:fixed;bottom:0;left:0;right:0;text-align:center;'>
-    <button onclick='var d=document.getElementById("debug-log");d.style.display=d.style.display==="none"?"block":"none";' style='background:#e74c3c;color:#fff;border:none;padding:4px 16px;cursor:pointer;font-size:12px;border-radius:4px 4px 0 0;'>Toggle Debug Log</button>
-    <button onclick='copyDebugData()' style='background:#f39c12;color:#fff;border:none;padding:4px 16px;cursor:pointer;font-size:12px;border-radius:4px 4px 0 0;margin-left:4px;'>Copy Debug Data</button>
-    <pre id='debug-log' style='display:none;background:#1e1e1e;color:#0f0;padding:10px;margin:0;max-height:200px;overflow-y:auto;text-align:left;font-size:11px;'></pre>
+  <!-- CHIPS ROW -->
+  <div id="chips-row" class="sr-chips-row">
+    <span class="sr-chips-placeholder">Search and add routes to get started</span>
   </div>
+
+  <!-- MAIN -->
+  <div class="sr-main">
+
+    <!-- MAP -->
+    <div class="sr-map-wrap">
+      <div id="map"></div>
+      <div id="map-badge" class="sr-map-badge">No routes loaded</div>
+    </div>
+
+    <!-- CONTROLS PANEL -->
+    <aside class="sr-panel">
+
+      <!-- THRESHOLD -->
+      <div class="sr-section">
+        <div class="sr-section-label">&#128465; Bin Threshold</div>
+        <div class="sr-threshold-pct"><span id="threshold-display">50</span>%</div>
+        <div class="sr-threshold-sub">Bins at or above this fill level will always be collected</div>
+        <input type="range" id="threshold-slider" class="sr-slider"
+               min="0" max="100" step="5" value="50" style="--pct:50%">
+      </div>
+
+      <!-- INTENSITY -->
+      <div class="sr-section">
+        <div class="sr-section-label">&#9881; Collection Intensity</div>
+        <div class="sr-threshold-sub" style="margin-bottom:8px;">
+          Controls how aggressively sub-threshold bins are included
+        </div>
+        <input type="range" id="intensity-slider" class="sr-slider"
+               min="0" max="100" step="5" value="50" style="--pct:50%">
+        <div class="sr-slider-labels">
+          <span>Collect all</span>
+          <span>Balanced</span>
+          <span>Critical only</span>
+        </div>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="sr-section">
+        <div id="kpi-title">Optimize to see impact</div>
+        <div class="sr-kpi-grid">
+          <div class="sr-kpi-card">
+            <div class="sr-kpi-icon">&#9201;</div>
+            <div class="sr-kpi-value blank" id="val-hours">—</div>
+            <div class="sr-kpi-label">Hours Saved</div>
+          </div>
+          <div class="sr-kpi-card">
+            <div class="sr-kpi-icon">&#9981;</div>
+            <div class="sr-kpi-value blank" id="val-fuel">—</div>
+            <div class="sr-kpi-unit">L</div>
+            <div class="sr-kpi-label">Fuel Saved</div>
+          </div>
+          <div class="sr-kpi-card">
+            <div class="sr-kpi-icon">&#127807;</div>
+            <div class="sr-kpi-value blank" id="val-co2">—</div>
+            <div class="sr-kpi-unit">kg</div>
+            <div class="sr-kpi-label">CO&#8322; Reduced</div>
+          </div>
+          <div class="sr-kpi-card">
+            <div class="sr-kpi-icon">&#128717;</div>
+            <div class="sr-kpi-value blank" id="val-stops">—</div>
+            <div class="sr-kpi-label">Stops Skipped</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIMIZE BUTTON -->
+      <div class="sr-section">
+        <button id="optimize-btn" class="sr-btn-optimize" disabled>
+          optimize these routes
+        </button>
+        <div id="optimize-status" class="sr-status-line"></div>
+      </div>
+
+      <!-- ROUTE DETAIL (shown after clicking an optimized route) -->
+      <div id="route-detail" class="sr-section sr-detail-panel" style="display:none;">
+        <div class="sr-detail-header">
+          <span class="sr-detail-dot" id="detail-dot"></span>
+          <span class="sr-detail-name" id="detail-name">Route</span>
+        </div>
+        <div class="sr-detail-row">
+          <span class="sr-detail-row-label">&#9201; Hours Saved</span>
+          <span class="sr-detail-row-val" id="detail-hours">—</span>
+        </div>
+        <div class="sr-detail-row">
+          <span class="sr-detail-row-label">&#9981; Fuel Saved</span>
+          <span class="sr-detail-row-val" id="detail-fuel">—</span>
+        </div>
+        <div class="sr-detail-row">
+          <span class="sr-detail-row-label">&#127807; CO&#8322; Reduced</span>
+          <span class="sr-detail-row-val" id="detail-co2">—</span>
+        </div>
+        <div class="sr-detail-row">
+          <span class="sr-detail-row-label">&#128717; Stops Skipped</span>
+          <span class="sr-detail-row-val" id="detail-stops">—</span>
+        </div>
+        <!-- Bin predictions — populated by renderBinPredictions() -->
+        <div id="detail-predictions"></div>
+        <button id="accept-btn" class="sr-btn-accept">&#10003; Accept Optimization</button>
+        <button id="discard-btn" class="sr-btn-discard">&#10007; Discard</button>
+      </div>
+
+    </aside><!-- /sr-panel -->
+  </div><!-- /sr-main -->
+
+  <!-- DEBUG -->
+  <div class="sr-debug">
+    <div class="sr-debug-btns">
+      <button onclick="(function(){var d=document.getElementById('debug-log');d.style.display=d.style.display==='none'?'block':'none';})()">Debug</button>
+      <button onclick="copyDebugData()">Copy</button>
+    </div>
+    <pre id="debug-log"></pre>
+  </div>
+
+  <!-- Browser-side config (gitignored — paste your Google Maps key there) -->
+  <script src="config.js"></script>
+  <!-- Inject Google Maps SDK using key from config.js (no key = SDK not loaded, Haversine fallback used) -->
+  <script>
+    (function () {
+      var key = (window.SMARTROUTE_CONFIG && window.SMARTROUTE_CONFIG.googleMapsKey) || '';
+      if (key) {
+        var s = document.createElement('script');
+        s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&libraries=geometry';
+        document.head.appendChild(s);
+      }
+    }());
+  </script>
   <script src="smartroute-algo.js"></script>
-  <script src='smartroute.js'></script>
+  <script src="smartroute.js"></script>
 </body>
 </html>
