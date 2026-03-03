@@ -48,91 +48,6 @@ function useAnimatedNumber(target: number, duration = 600): number {
 }
 
 // ═══════════════════════════════════════════════
-// Bin Threshold Slider — clean professional icon
-// ═══════════════════════════════════════════════
-
-const BinThresholdSlider: React.FC<{ value: number; onChange: (v: number) => void }> = ({ value, onChange }) => {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-
-  const updateValue = useCallback(
-    (clientX: number) => {
-      if (!trackRef.current) return;
-      const rect = trackRef.current.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(100, (clientX - rect.left) / rect.width * 100));
-      onChange(Math.round(pct));
-    },
-    [onChange]
-  );
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent | TouchEvent) => {
-      if (!isDragging.current) return;
-      const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-      updateValue(x);
-    };
-    const onUp = () => { isDragging.current = false; };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-    window.addEventListener("touchmove", onMove);
-    window.addEventListener("touchend", onUp);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-      window.removeEventListener("touchmove", onMove);
-      window.removeEventListener("touchend", onUp);
-    };
-  }, [updateValue]);
-
-  // Fill from bottom of bin body (body spans y=16..38, height=22)
-  const bodyH = 22;
-  const fillH = Math.max(0, (value / 100) * bodyH);
-  const fillY = 38 - fillH;
-
-  // Color shifts red when high
-  const fillColor = value >= 75 ? "#F97B8B" : value >= 50 ? "#7EC8E3" : "#B5E8D5";
-
-  return (
-    <div className="relative pt-14 pb-2 select-none">
-      <div
-        ref={trackRef}
-        className="h-2.5 bg-muted rounded-full cursor-pointer relative"
-        onMouseDown={(e) => { isDragging.current = true; updateValue(e.clientX); }}
-        onTouchStart={(e) => { isDragging.current = true; updateValue(e.touches[0].clientX); }}
-      >
-        <div
-          className="absolute h-full rounded-full transition-[width] duration-75"
-          style={{ width: `${value}%`, background: `linear-gradient(to right, hsl(200,70%,55%), ${value >= 75 ? "#F97B8B" : "hsl(200,60%,65%)"})` }}
-        />
-        {/* Thumb — clean professional waste bin */}
-        <div
-          className="absolute -top-[52px]"
-          style={{ left: `${value}%`, transform: "translateX(-50%)" }}
-        >
-          <svg width="32" height="46" viewBox="0 0 32 46" className="drop-shadow cursor-grab active:cursor-grabbing">
-            {/* Shadow */}
-            <ellipse cx="16" cy="44" rx="8" ry="1.6" fill="rgba(0,0,0,0.1)" />
-            {/* Bin body background */}
-            <rect x="4" y="16" width="24" height="22" rx="4" fill="#1A5F7A" />
-            {/* Fill level indicator */}
-            <rect x="5" y={fillY} width="22" height={Math.max(0, fillH)} rx="3" fill={fillColor} opacity="0.75" />
-            {/* Rib lines */}
-            <rect x="9"  y="20" width="1.5" height="12" rx="0.75" fill="white" opacity="0.18" />
-            <rect x="15" y="20" width="1.5" height="12" rx="0.75" fill="white" opacity="0.18" />
-            <rect x="21" y="20" width="1.5" height="12" rx="0.75" fill="white" opacity="0.18" />
-            {/* Lid */}
-            <rect x="2" y="10" width="28" height="7" rx="3.5" fill="#2C7DA0" />
-            {/* Handle */}
-            <rect x="11" y="4" width="10" height="7" rx="3.5" fill="#2C7DA0" />
-            <rect x="13" y="5.5" width="6" height="2" rx="1" fill="white" opacity="0.28" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ═══════════════════════════════════════════════
 // Stat Card Component
 // ═══════════════════════════════════════════════
 
@@ -262,8 +177,9 @@ const Index: React.FC = () => {
   const [tourStep, setTourStep] = useState(0);
   const [driverSimEnabled, setDriverSimEnabled] = useState(false);
   const [showDriverModal, setShowDriverModal] = useState(false);
+  const [highlightCriticalBins, setHighlightCriticalBins] = useState(false);
 
-  const TOUR_STEPS = 4;
+  const TOUR_STEPS = 6;
   const tourDone = tourStep < 0;
   const advanceTour = useCallback(() => {
     setTourStep((s) => (s >= TOUR_STEPS - 1 ? -1 : s + 1));
@@ -277,10 +193,25 @@ const Index: React.FC = () => {
 
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const thresholdCardRef = useRef<HTMLDivElement>(null);
+  const predictionsSectionRef = useRef<HTMLDivElement>(null);
+  const weekToggleRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to tour targets when advancing to steps 4 or 5
+  useEffect(() => {
+    if (tourStep === 4 && predictionsSectionRef.current) {
+      predictionsSectionRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    if (tourStep === 5 && weekToggleRef.current) {
+      weekToggleRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [tourStep]);
   const optimizeBtnRef = useRef<HTMLButtonElement>(null);
 
+  const hasOptimized = isForecast
+    ? Object.keys(sr.forecastOptimizedMap ?? {}).length > 0
+    : Object.keys(sr.optimizedMap).length > 0;
   const optimizeState = sr.isOptimizing ? "loading" as const
-    : Object.keys(sr.optimizedMap).length > 0 ? "optimized" as const
+    : hasOptimized ? "optimized" as const
     : "idle" as const;
 
   // Derived accepted route IDs for map green highlighting
@@ -292,23 +223,43 @@ const Index: React.FC = () => {
     );
   }, [sr.optimizedMap]);
 
-  // Per-route or aggregate metrics
+  const activeOptMapForMetrics = isForecast ? (sr.forecastOptimizedMap ?? {}) : sr.optimizedMap;
+  const aggregateMetricsForDisplay = useMemo(() => {
+    const map = isForecast ? (sr.forecastOptimizedMap ?? {}) : sr.optimizedMap;
+    return Object.values(map).reduce(
+      (acc, opt) => {
+        if (!opt?.result?.metrics) return acc;
+        const m = opt.result.metrics;
+        return {
+          stopsSkipped: acc.stopsSkipped + m.stopsSkipped,
+          kmSaved: acc.kmSaved + m.kmSaved,
+          fuelSavedL: acc.fuelSavedL + m.fuelSavedL,
+          co2AvoidedKg: acc.co2AvoidedKg + m.co2AvoidedKg,
+          hoursSaved: acc.hoursSaved + m.hoursSaved,
+          idleMinutesSaved: acc.idleMinutesSaved + (m.idleMinutesSaved ?? 0),
+        };
+      },
+      { stopsSkipped: 0, kmSaved: 0, fuelSavedL: 0, co2AvoidedKg: 0, hoursSaved: 0, idleMinutesSaved: 0 },
+    );
+  }, [isForecast, sr.forecastOptimizedMap, sr.optimizedMap]);
+
   const displayMetrics = useMemo(() => {
-    if (sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId]) {
-      return sr.optimizedMap[sr.selectedRouteId].result.metrics;
+    if (sr.selectedRouteId && activeOptMapForMetrics[sr.selectedRouteId]) {
+      return activeOptMapForMetrics[sr.selectedRouteId].result.metrics;
     }
-    return sr.aggregateMetrics;
-  }, [sr.selectedRouteId, sr.optimizedMap, sr.aggregateMetrics]);
+    return aggregateMetricsForDisplay;
+  }, [sr.selectedRouteId, activeOptMapForMetrics, aggregateMetricsForDisplay]);
 
   const { hoursSaved, fuelSavedL: fuelSaved, co2AvoidedKg: co2Reduced, stopsSkipped, idleMinutesSaved } = displayMetrics;
 
-  // Ace insight fallback
+  // Ace insight fallback (uses active map metrics)
   const aceFallback = useMemo(() => {
-    const m = sr.aggregateMetrics;
+    const m = aggregateMetricsForDisplay;
     if (!m || m.kmSaved <= 0) return null;
     const trees = Math.round(m.co2AvoidedKg / 21.8);
-    return `Today's optimized routes reduce fleet distance by ${m.kmSaved.toFixed(1)} km, avoiding ${m.co2AvoidedKg.toFixed(1)} kg of CO₂ — equivalent to planting ${Math.max(1, trees)} tree${trees !== 1 ? "s" : ""} worth of carbon.`;
-  }, [sr.aggregateMetrics]);
+    const prefix = isForecast ? "Next week's forecasted routes" : "Today's optimized routes";
+    return `${prefix} reduce fleet distance by ${m.kmSaved.toFixed(1)} km, avoiding ${m.co2AvoidedKg.toFixed(1)} kg of CO₂ — equivalent to planting ${Math.max(1, trees)} tree${trees !== 1 ? "s" : ""} worth of carbon.`;
+  }, [aggregateMetricsForDisplay, isForecast]);
 
   // Overflow risk from predictions
   const overflowRisk = useMemo(() => {
@@ -339,7 +290,11 @@ const Index: React.FC = () => {
 
   const handleOptimize = async () => {
     if (sr.isOptimizing || sr.loadedRoutes.length === 0) return;
-    await sr.runOptimize();
+    if (isForecast) {
+      await sr.runForecastOptimize();
+    } else {
+      await sr.runOptimize();
+    }
     setShowReviewModal(true);
     if (sr.loadedRoutes.length > 0) setFocusRouteId(sr.loadedRoutes[0].id);
   };
@@ -356,17 +311,29 @@ const Index: React.FC = () => {
   };
 
   const selectedRoute = sr.selectedRouteId ? sr.loadedRoutes.find((r) => r.id === sr.selectedRouteId) : null;
-  const selectedOpt = sr.selectedRouteId ? sr.optimizedMap[sr.selectedRouteId] : null;
+  const activeOptMap = isForecast ? sr.forecastOptimizedMap : sr.optimizedMap;
+  const selectedOpt = sr.selectedRouteId ? activeOptMap[sr.selectedRouteId] : null;
 
-  const mapBins = sr.allBins.map((b, i) => ({
-    id: i,
-    stringId: b.id,
-    name: b.name,
-    lat: b.lat,
-    lng: b.lng,
-    fillLevel: b.fillLevel,
-    lastCollected: "N/A",
-  }));
+  const daysToNextMon = sr.getDaysToNextMonday ? sr.getDaysToNextMonday() : 7;
+  const mapBins = useMemo(() => {
+    return sr.allBins.map((b, i) => {
+      let fillLevel = b.fillLevel;
+      if (isForecast && sr.predictions[b.id]) {
+        const pred = sr.predictions[b.id];
+        const fillRate = pred.fillRatePerDay ?? 10;
+        fillLevel = Math.min(100, b.fillLevel + fillRate * daysToNextMon);
+      }
+      return {
+        id: i,
+        stringId: b.id,
+        name: b.name,
+        lat: b.lat,
+        lng: b.lng,
+        fillLevel,
+        lastCollected: "N/A",
+      };
+    });
+  }, [sr.allBins, sr.predictions, isForecast, daysToNextMon]);
 
   // Accept handler with better toast
   const handleAccept = async (routeId: string) => {
@@ -404,7 +371,7 @@ const Index: React.FC = () => {
           <div className="flex items-center gap-2.5">
             <div className="w-1 h-6 rounded-full bg-primary" />
             <div>
-              <div className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">This Week</div>
+              <div className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">This Week · Optimize and save</div>
               <div className="text-[11px] text-muted-foreground">{thisWeek.label} · Live sensor data</div>
             </div>
           </div>
@@ -455,21 +422,27 @@ const Index: React.FC = () => {
                 </div>
 
                 {/* Week toggle */}
-                <div className="relative flex bg-muted rounded-lg p-0.5 ml-auto" data-tour="dates">
+                <div className="relative flex bg-muted rounded-lg p-0.5 ml-auto" data-tour="dates" ref={weekToggleRef}>
                   {!tourDone && (
-                    <TourCallout step={1} activeStep={tourStep} totalSteps={TOUR_STEPS}
-                      title="Choose your planning window"
-                      body="'This Week' shows live sensor data for optimization. 'Next Week' shows predicted fill levels for pre-planning."
-                      onNext={advanceTour} onDismiss={dismissTour} />
+                    <>
+                      <TourCallout step={1} activeStep={tourStep} totalSteps={TOUR_STEPS}
+                        title="Choose your planning window"
+                        body="'This Week' shows live sensor data for optimization. 'Next Week' shows predicted fill levels for pre-planning."
+                        onNext={advanceTour} onDismiss={dismissTour} />
+                      <TourCallout step={5} activeStep={tourStep} totalSteps={TOUR_STEPS}
+                        title="See next week's forecast"
+                        body="Click 'Next Week Forecast' to view predicted fill levels and optimize routes for the upcoming week."
+                        onNext={advanceTour} onDismiss={dismissTour} position="bottom" />
+                    </>
                   )}
                   <button
-                    onClick={() => { setActiveWeek("this"); if (tourStep === 1) advanceTour(); }}
+                    onClick={() => { setActiveWeek("this"); if (tourStep === 1 || tourStep === 5) advanceTour(); }}
                     className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${activeWeek === "this" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"}`}
                   >
                     This Week ({thisWeek.label})
                   </button>
                   <button
-                    onClick={() => { setActiveWeek("next"); if (tourStep === 1) advanceTour(); }}
+                    onClick={() => { setActiveWeek("next"); if (tourStep === 1 || tourStep === 5) advanceTour(); }}
                     className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${activeWeek === "next" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"}`}
                   >
                     Next Week Forecast
@@ -519,7 +492,7 @@ const Index: React.FC = () => {
             {isForecast && (
               <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800">
                 <CalendarIcon size={14} color="hsl(38, 92%, 50%)" />
-                <span><strong>Forecast mode:</strong> Fill levels are predicted for {nextWeek.label}. Optimization is disabled — use this view for pre-planning.</span>
+                <span><strong>Forecast mode:</strong> Fill levels are predicted for {nextWeek.label}. Preview optimized routes — switch to This Week to save.</span>
               </div>
             )}
 
@@ -558,12 +531,14 @@ const Index: React.FC = () => {
                   threshold={sr.threshold}
                   optimizeState={optimizeState}
                   optimizedMap={sr.optimizedMap}
+                  forecastOptimizedMap={sr.forecastOptimizedMap}
                   loadedRoutes={sr.loadedRoutes}
                   selectedRouteId={sr.selectedRouteId}
                   onRouteSelect={sr.setSelectedRouteId}
                   focusRouteId={focusRouteId}
                   isForecast={isForecast}
                   acceptedRouteIds={acceptedRouteIds}
+                  highlightBinIds={highlightCriticalBins ? new Set(Object.entries(sr.predictions).filter(([, p]) => p.daysUntilThreshold <= 2).map(([id]) => id)) : undefined}
                 />
               </div>
 
@@ -578,8 +553,9 @@ const Index: React.FC = () => {
 
               {/* Optimize Review overlay on map */}
               {showReviewModal && (() => {
+                const optMap = isForecast ? (sr.forecastOptimizedMap ?? {}) : sr.optimizedMap;
                 const optimizedRoutes = sr.loadedRoutes
-                  .map((route) => { const opt = sr.optimizedMap[route.id]; return opt ? { route, opt } : null; })
+                  .map((route) => { const opt = optMap[route.id]; return opt ? { route, opt } : null; })
                   .filter(Boolean) as { route: typeof sr.loadedRoutes[0]; opt: typeof sr.optimizedMap[string] }[];
                 if (optimizedRoutes.length === 0) return null;
                 return (
@@ -587,9 +563,10 @@ const Index: React.FC = () => {
                     <OptimizeReviewModal
                       optimizedRoutes={optimizedRoutes}
                       onAccept={handleAccept}
-                      onDiscard={(routeId) => sr.discardRoute(routeId)}
+                      onDiscard={isForecast ? () => {} : (routeId: string) => sr.discardRoute(routeId)}
                       onClose={() => setShowReviewModal(false)}
                       onRouteChange={(routeId) => setFocusRouteId(routeId)}
+                      isForecast={isForecast}
                     />
                   </div>
                 );
@@ -606,6 +583,7 @@ const Index: React.FC = () => {
                   }}
                   onDiscard={() => sr.discardRoute(sr.selectedRouteId!)}
                   onClose={() => sr.setSelectedRouteId(null)}
+                  isForecast={isForecast}
                 />
               )}
             </div>
@@ -622,7 +600,17 @@ const Index: React.FC = () => {
                   onNext={advanceTour} onDismiss={dismissTour} />
               )}
               <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">Bin Threshold</label>
-              <BinThresholdSlider value={sr.threshold} onChange={sr.setThreshold} />
+              <div className="mt-3 mb-2">
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={sr.threshold}
+                  onChange={(e) => sr.setThreshold(Number(e.target.value))}
+                  className="w-full accent-primary h-2 rounded-full appearance-none bg-muted cursor-pointer"
+                  style={{ background: `linear-gradient(to right, hsl(200, 70%, 55%) ${sr.threshold}%, hsl(214, 20%, 90%) ${sr.threshold}%)` }}
+                />
+              </div>
               <div className="text-center mt-2">
                 <span className="text-4xl font-extrabold text-primary">{sr.threshold}</span>
                 <span className="text-lg font-bold text-primary">%</span>
@@ -669,12 +657,18 @@ const Index: React.FC = () => {
             </div>
             <button
               ref={optimizeBtnRef}
-              onClick={() => { handleOptimize(); if (tourStep === 3) dismissTour(); }}
-              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0 || isForecast}
+              onClick={() => { handleOptimize(); if (tourStep === 3) advanceTour(); }}
+              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
               className="w-full py-3.5 bg-gradient-to-r from-primary to-accent text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-60 shadow-md rounded-xl"
             >
               {isForecast ? (
-                <><CalendarIcon size={18} color="white" />Forecast Only — Switch to This Week</>
+                sr.isOptimizing ? (
+                  <><SpinnerIcon size={18} color="white" />Forecasting...</>
+                ) : hasOptimized ? (
+                  <><CheckIcon size={18} color="white" />Forecast complete! Review again</>
+                ) : (
+                  <><CalendarIcon size={18} color="white" />Optimize Next Week's Routes</>
+                )
               ) : sr.isOptimizing ? (
                 <><SpinnerIcon size={18} color="white" />Optimizing...</>
               ) : optimizeState === "optimized" ? (
@@ -796,6 +790,22 @@ const Index: React.FC = () => {
           </div>
         )}
 
+        {/* ══════ TOUR STEP 4: Predicted data ══════ */}
+        {!tourDone && tourStep === 4 && sr.loadedRoutes.length > 0 && (
+          <div ref={predictionsSectionRef} className="relative py-4">
+            <TourCallout
+              step={4}
+              activeStep={tourStep}
+              totalSteps={TOUR_STEPS}
+              title="This is predicted data"
+              body="Bin fill predictions show which bins need collection soon. Critical bins are highlighted — use them to plan your week."
+              onNext={advanceTour}
+              onDismiss={dismissTour}
+              position="top"
+            />
+          </div>
+        )}
+
         {/* ══════ PREDICTIONS & NEXT WEEK ══════ */}
         {sr.loadedRoutes.length > 0 && Object.keys(sr.predictions).length > 0 && (() => {
           const predRows = sr.loadedRoutes.flatMap((route) =>
@@ -844,6 +854,11 @@ const Index: React.FC = () => {
                     <span className="text-xs font-bold text-destructive uppercase tracking-widest">Critical</span>
                     <span className="ml-auto text-lg font-extrabold text-destructive">{criticalRows.length}</span>
                   </div>
+                  {criticalRows.length > 0 && (
+                    <p className="text-[11px] text-muted-foreground mb-2">
+                      ~{Math.round(criticalRows.length * 9)} min to collect
+                    </p>
+                  )}
                   <div className="space-y-1.5">
                     {criticalRows.length === 0 ? (
                       <p className="text-xs text-muted-foreground">No bins at critical level</p>
@@ -859,6 +874,22 @@ const Index: React.FC = () => {
                       <p className="text-[11px] text-destructive font-semibold">+{criticalRows.length - 3} more</p>
                     )}
                   </div>
+                  {criticalRows.length > 0 && (
+                    <div className="mt-3 flex flex-col gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setHighlightCriticalBins((v) => !v)}
+                        className="text-[11px] font-semibold text-primary hover:underline"
+                      >
+                        {highlightCriticalBins ? "Hide highlight" : "Highlight on map"}
+                      </button>
+                      {!isForecast && (
+                        <p className="text-[10px] text-muted-foreground">
+                          Optimize routes to skip non-urgent bins
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Schedule soon */}
@@ -901,10 +932,36 @@ const Index: React.FC = () => {
 
               {/* ── NEXT WEEK FORECAST ── */}
               <SectionDivider
-                label={`Next Week Forecast · ${nextWeek.label}`}
+                label={`Next Week · Look ahead · ${nextWeek.label}`}
                 sublabel="Predictive fill model · 4 weeks of collection history"
                 color="amber"
               />
+
+              {(() => {
+                const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+                const binsByDay: Record<string, number> = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0 };
+                for (const { pred } of predRows) {
+                  if (pred.daysUntilThreshold <= 7 && pred.predictedThresholdDate) {
+                    try {
+                      const d = new Date(pred.predictedThresholdDate);
+                      const dayIdx = d.getDay();
+                      const monIdx = dayIdx === 0 ? 6 : dayIdx - 1;
+                      if (monIdx >= 0 && monIdx < 5) binsByDay[dayNames[monIdx]]++;
+                    } catch {
+                      /* ignore parse errors */
+                    }
+                  }
+                }
+                const daySummary = dayNames.map((d) => `${d} ${binsByDay[d]}`).join(" · ");
+                const estStopsNextWeek = predRows.filter((r) => r.pred.daysUntilThreshold <= 7).length;
+                return (
+                  <div className="mb-4 flex flex-wrap items-center gap-3 text-xs">
+                    <span className="font-semibold text-foreground">Next week collection load:</span>
+                    <span className="text-muted-foreground">{daySummary}</span>
+                    <span className="text-primary font-semibold">Estimated stops: {estStopsNextWeek}</span>
+                  </div>
+                );
+              })()}
 
               <div className="bg-card shadow-sm rounded-2xl border border-border/40 p-6">
                 <div className="flex items-start justify-between mb-4">
