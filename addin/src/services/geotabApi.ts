@@ -333,16 +333,16 @@ export async function queryAce(prompt: string): Promise<string | null> {
 /**
  * Fetch live vehicle positions from Geotab.
  */
-export async function fetchVehicleStatuses(): Promise<{ latitude: number; longitude: number }[]> {
+export async function fetchVehicleStatuses(): Promise<{ latitude: number; longitude: number; name?: string }[]> {
   const api = getGeotabApi();
   if (!api) return [];
   try {
-    const statuses = await callApi<{ latitude?: number; longitude?: number }[]>(
+    const statuses = await callApi<{ latitude?: number; longitude?: number; device?: { name?: string } }[]>(
       api, "Get", { typeName: "DeviceStatusInfo" },
     );
-    return (statuses || []).filter(
-      (s): s is { latitude: number; longitude: number } => !!s.latitude && !!s.longitude,
-    );
+    return (statuses || [])
+      .filter((s) => !!s.latitude && !!s.longitude)
+      .map((s) => ({ latitude: s.latitude!, longitude: s.longitude!, name: s.device?.name }));
   } catch {
     return [];
   }

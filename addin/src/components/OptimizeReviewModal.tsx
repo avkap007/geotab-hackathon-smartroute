@@ -30,14 +30,22 @@ const RouteCard: React.FC<{
   metrics: AlgoMetrics;
   accepted: boolean;
   accepting: boolean;
+  assignedVehicle: string | null;
   onAccept: () => void;
   onDiscard: () => void;
-}> = ({ route, metrics, accepted, accepting, onAccept, onDiscard }) => (
+}> = ({ route, metrics, accepted, accepting, assignedVehicle, onAccept, onDiscard }) => (
   <div className="flex flex-col gap-4">
     <div className="flex items-center gap-3">
       <span className="w-3 h-3 rounded-full shrink-0" style={{ background: route.color }} />
-      <h3 className="text-base font-extrabold text-foreground leading-tight">{route.name}</h3>
-      <span className="text-xs text-muted-foreground ml-auto">{route.bins.length} stops</span>
+      <div className="min-w-0">
+        <h3 className="text-base font-extrabold text-foreground leading-tight">{route.name}</h3>
+        {assignedVehicle && (
+          <div className="text-[10px] text-muted-foreground mt-0.5">
+            Assigned to: <span className="font-semibold text-foreground">{assignedVehicle}</span> (nearest to depot)
+          </div>
+        )}
+      </div>
+      <span className="text-xs text-muted-foreground ml-auto shrink-0">{route.bins.length} stops</span>
     </div>
 
     <div className="bg-muted/40 rounded-xl p-4">
@@ -178,6 +186,7 @@ const OptimizeReviewModal: React.FC<OptimizeReviewModalProps> = ({
           metrics={current.opt.result.metrics}
           accepted={isCurrentAccepted}
           accepting={accepting}
+          assignedVehicle={current.opt.assignedVehicle}
           onAccept={handleAccept}
           onDiscard={handleDiscard}
         />

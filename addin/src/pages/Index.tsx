@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer } from
@@ -7,6 +7,7 @@ import SmartRouteMap from "@/components/SmartRouteMap";
 import RouteOverlayPanel from "@/components/RouteOverlayPanel";
 import OptimizeReviewModal from "@/components/OptimizeReviewModal";
 import DriverReportModal from "@/components/DriverReportModal";
+import CostReportModal from "@/components/CostReportModal";
 import {
   TruckIcon,
   SearchIcon, CalendarIcon, CheckIcon, CloseIcon, SpinnerIcon,
@@ -197,6 +198,25 @@ const StatCard: React.FC<StatCardProps> = ({ icon, value, unit, label, decimals 
 };
 
 // ═══════════════════════════════════════════════
+// Week helpers
+// ═══════════════════════════════════════════════
+
+function getWeekBounds(offset: number): { start: Date; end: Date; label: string } {
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const diffToMon = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + diffToMon + offset * 7);
+  monday.setHours(0, 0, 0, 0);
+  const friday = new Date(monday);
+  friday.setDate(monday.getDate() + 4);
+  const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return { start: monday, end: friday, label: `${fmt(monday)}–${fmt(friday)}` };
+}
+
+type ActiveWeek = "this" | "next";
+
+// ═══════════════════════════════════════════════
 // Tour Callout (inline step tooltip)
 // ═══════════════════════════════════════════════
 
@@ -257,9 +277,13 @@ const Index: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const MAX_VISIBLE_CHIPS = 2;
-  const [startDate, setStartDate] = useState("2026-02-15");
-  const [endDate, setEndDate] = useState("2026-03-02");
+  const [activeWeek, setActiveWeek] = useState<ActiveWeek>("this");
+  const thisWeek = useMemo(() => getWeekBounds(0), []);
+  const nextWeek = useMemo(() => getWeekBounds(1), []);
+  const currentWeekBounds = activeWeek === "this" ? thisWeek : nextWeek;
+  const isForecast = activeWeek === "next";
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showCostReport, setShowCostReport] = useState(false);
   const [focusRouteId, setFocusRouteId] = useState<string | null>(null);
   const [tourStep, setTourStep] = useState(0); // -1 = dismissed
   const [driverSimEnabled, setDriverSimEnabled] = useState(false);
@@ -278,7 +302,6 @@ const Index: React.FC = () => {
   }, [sr.loadedRoutes.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const searchWrapRef = useRef<HTMLDivElement>(null);
-  const dateAreaRef = useRef<HTMLDivElement>(null);
   const thresholdCardRef = useRef<HTMLDivElement>(null);
   const optimizeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -389,9 +412,10 @@ const Index: React.FC = () => {
           {/* LEFT — Controls + Map */}
           <div className="w-[65%] flex flex-col gap-3">
             {/* Controls bar — adaptive layout */}
-            {sr.loadedRoutes.length === 0 ? (
-              /* ── Single-row: no tags ── */
+            {/* Controls row: search + week toggle + route chips */}
+            <div className="space-y-2">
               <div className="flex items-center gap-3">
+                {/* Search */}
                 <div className="relative flex-1 max-w-xs" ref={searchWrapRef} data-tour="search">
                   {!tourDone && (
                     <TourCallout
@@ -421,7 +445,7 @@ const Index: React.FC = () => {
                             disabled={added}
                             onClick={() => handleSelectRoute(route)}
                             className={`w-full text-left px-4 py-2.5 hover:bg-muted/60 transition flex items-center gap-2.5 ${added ? "opacity-50" : ""}`}>
-                            <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: added ? "#7EC8E3" : "#d1d5db" }} />
+                            <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: added ? "hsl(200,65%,44%)" : "#d1d5db" }} />
                             <div>
                               <div className="text-sm font-medium text-foreground">{route.name || "Unnamed Route"}{added ? " \u2713" : ""}</div>
                               <div className="text-[10px] text-muted-foreground">{route.bins ? `${route.bins.length} stops` : "Click to load"}</div>
@@ -432,146 +456,107 @@ const Index: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex items-center gap-2 ml-auto relative" ref={dateAreaRef} data-tour="dates">
+
+                {/* Week toggle */}
+                <div className="relative flex bg-muted rounded-lg p-0.5 ml-auto" data-tour="dates">
                   {!tourDone && (
                     <TourCallout
                       step={1} activeStep={tourStep} totalSteps={TOUR_STEPS}
-                      title="Set your date range"
-                      body="Pick the schedule window. SmartRoute uses this to predict which bins will need collection."
+                      title="Choose your planning window"
+                      body="'This Week' uses live sensor data for optimization. 'Next Week' shows predicted fill levels for pre-planning."
                       onNext={advanceTour} onDismiss={dismissTour}
                     />
                   )}
-                  <div className="relative">
-                    <CalendarIcon size={14} color="hsl(210, 15%, 50%)" className="absolute left-2.5 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="date"
-                      value={startDate}
-                      onChange={(e) => { setStartDate(e.target.value); if (tourStep === 1) advanceTour(); }}
-                      className="pl-8 pr-2 py-1.5 rounded-lg bg-muted text-xs outline-none focus:ring-2 focus:ring-primary/30 transition" />
-                  </div>
-                  <span className="text-muted-foreground text-xs">to</span>
-                  <div className="relative">
-                    <CalendarIcon size={14} color="hsl(210, 15%, 50%)" className="absolute left-2.5 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="date"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
-                      className="pl-8 pr-2 py-1.5 rounded-lg bg-muted text-xs outline-none focus:ring-2 focus:ring-primary/30 transition" />
-                  </div>
+                  <button
+                    onClick={() => { setActiveWeek("this"); if (tourStep === 1) advanceTour(); }}
+                    className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${
+                      activeWeek === "this" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    This Week ({thisWeek.label})
+                  </button>
+                  <button
+                    onClick={() => { setActiveWeek("next"); if (tourStep === 1) advanceTour(); }}
+                    className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${
+                      activeWeek === "next" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Next Week Forecast
+                  </button>
                 </div>
               </div>
-            ) : (
-              /* ── Two-column: with tags ── */
-              <div className="grid grid-cols-[1fr_auto] gap-4">
-                {/* Left: search + chips */}
-                <div className="space-y-2">
-                  <div className="relative" ref={searchWrapRef}>
-                    <SearchIcon size={16} color="hsl(240, 5%, 55%)" className="absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="text"
-                      placeholder="Search routes..."
-                      value={searchQuery}
-                      onChange={(e) => { setSearchQuery(e.target.value); setShowDropdown(true); }}
-                      onFocus={() => setShowDropdown(true)}
-                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-muted text-sm placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 transition" />
-                    {showDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-card shadow-lg rounded-xl border border-border z-50 max-h-64 overflow-y-auto">
-                        {filteredRoutes.length === 0 ? (
-                          <div className="px-4 py-3 text-xs text-muted-foreground">No routes found</div>
-                        ) : filteredRoutes.slice(0, 8).map((route) => {
-                          const added = sr.loadedRoutes.some((r) => r.id === route.id);
-                          return (
-                            <button
-                              key={route.id}
-                              disabled={added}
-                              onClick={() => handleSelectRoute(route)}
-                              className={`w-full text-left px-4 py-2.5 hover:bg-muted/60 transition flex items-center gap-2.5 ${added ? "opacity-50" : ""}`}>
-                              <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: added ? "#7EC8E3" : "#d1d5db" }} />
-                              <div>
-                                <div className="text-sm font-medium text-foreground">{route.name || "Unnamed Route"}{added ? " \u2713" : ""}</div>
-                                <div className="text-[10px] text-muted-foreground">{route.bins ? `${route.bins.length} stops` : "Click to load"}</div>
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {(filtersExpanded ? sr.loadedRoutes : sr.loadedRoutes.slice(0, MAX_VISIBLE_CHIPS)).map((r) =>
+
+              {/* Route chips */}
+              {sr.loadedRoutes.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {(filtersExpanded ? sr.loadedRoutes : sr.loadedRoutes.slice(0, MAX_VISIBLE_CHIPS)).map((r) =>
                     <button
                       key={r.id}
                       onClick={() => removeRoute(r.id)}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold hover:bg-primary/20 transition shrink-0">
-                        <span className="w-2 h-2 rounded-full" style={{ background: r.color }} />
-                        {r.name}
-                        <CloseIcon size={12} color="hsl(200, 70%, 55%)" />
-                      </button>
-                    )}
-                    {sr.loadedRoutes.length > MAX_VISIBLE_CHIPS && !filtersExpanded && (
-                      <button
-                        onClick={() => setFiltersExpanded(true)}
-                        className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-semibold hover:bg-muted/80 transition shrink-0">
-                        +{sr.loadedRoutes.length - MAX_VISIBLE_CHIPS} more
-                      </button>
-                    )}
-                    {filtersExpanded && sr.loadedRoutes.length > MAX_VISIBLE_CHIPS && (
-                      <button
-                        onClick={() => setFiltersExpanded(false)}
-                        className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-semibold hover:bg-muted/80 transition shrink-0">
-                        Show less
-                      </button>
-                    )}
-                  </div>
+                      <span className="w-2 h-2 rounded-full" style={{ background: r.color }} />
+                      {r.name}
+                      <span className="text-[10px] text-primary/60 ml-0.5">{r.bins.length}</span>
+                      <CloseIcon size={12} color="hsl(200, 65%, 44%)" />
+                    </button>
+                  )}
+                  {sr.loadedRoutes.length > MAX_VISIBLE_CHIPS && !filtersExpanded && (
+                    <button
+                      onClick={() => setFiltersExpanded(true)}
+                      className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-semibold hover:bg-muted/80 transition shrink-0">
+                      +{sr.loadedRoutes.length - MAX_VISIBLE_CHIPS} more
+                    </button>
+                  )}
+                  {filtersExpanded && sr.loadedRoutes.length > MAX_VISIBLE_CHIPS && (
+                    <button
+                      onClick={() => setFiltersExpanded(false)}
+                      className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-semibold hover:bg-muted/80 transition shrink-0">
+                      Show less
+                    </button>
+                  )}
                 </div>
-                {/* Right: scheduled routes dates */}
-                <div className="flex flex-col gap-1.5 min-w-[160px]">
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                    Scheduled Routes
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-semibold text-muted-foreground w-8">From</span>
-                    <div className="relative flex-1">
-                      <CalendarIcon size={14} color="hsl(240, 5%, 55%)" className="absolute left-2.5 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        className="w-full pl-8 pr-2 py-1.5 rounded-lg bg-muted text-xs outline-none focus:ring-2 focus:ring-primary/30 transition" />
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-semibold text-muted-foreground w-8">To</span>
-                    <div className="relative flex-1">
-                      <CalendarIcon size={14} color="hsl(240, 5%, 55%)" className="absolute left-2.5 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        className="w-full pl-8 pr-2 py-1.5 rounded-lg bg-muted text-xs outline-none focus:ring-2 focus:ring-primary/30 transition" />
-                    </div>
-                  </div>
-                </div>
+              )}
+            </div>
+
+            {/* Forecast banner */}
+            {isForecast && (
+              <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800">
+                <CalendarIcon size={14} color="hsl(38, 92%, 50%)" />
+                <span>
+                  <strong>Forecast mode:</strong> Fill levels are predicted for {nextWeek.label}. Optimization is disabled — use this view for pre-planning.
+                </span>
               </div>
             )}
 
             {/* Optimize status */}
             {sr.optimizeStatus && (
               <div className="text-xs text-muted-foreground flex items-center gap-2">
-                {sr.isOptimizing && <SpinnerIcon size={14} color="hsl(200, 70%, 55%)" />}
+                {sr.isOptimizing && <SpinnerIcon size={14} color="hsl(200, 65%, 44%)" />}
                 {sr.optimizeStatus}
               </div>
             )}
 
             {/* Map */}
             <div className="relative flex-1 min-h-0">
-                {/* Onboarding: ghost map hint when empty */}
+              {/* Onboarding: ghost map hint when empty */}
               {sr.loadedRoutes.length === 0 && (
                 <div className="absolute inset-0 z-[490] flex items-center justify-center pointer-events-none">
                   <div className="text-center opacity-50">
                     <TruckIcon size={48} color="hsl(200,65%,44%)" />
-                    <p className="text-sm font-semibold text-muted-foreground mt-2">Add a route to get started</p>
+                    <p className="text-sm font-semibold text-muted-foreground mt-2">
+                      Load your routes for the week of {thisWeek.label}
+                    </p>
                   </div>
+                </div>
+              )}
+
+              {/* Data source badge on map */}
+              {sr.loadedRoutes.length > 0 && (
+                <div className="absolute top-4 left-4 z-[1000] flex items-center gap-1.5 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm">
+                  <span className={`w-2 h-2 rounded-full ${isForecast ? "bg-amber-400" : "bg-green-500"}`} />
+                  <span className="text-[10px] font-semibold text-foreground">
+                    {isForecast ? "Predicted fill levels" : "Live sensor data · 15-min refresh"}
+                  </span>
                 </div>
               )}
               <div className="bg-card shadow-sm overflow-hidden rounded h-full">
@@ -584,6 +569,7 @@ const Index: React.FC = () => {
                   selectedRouteId={sr.selectedRouteId}
                   onRouteSelect={sr.setSelectedRouteId}
                   focusRouteId={focusRouteId}
+                  isForecast={isForecast}
                 />
               </div>
               <div className="absolute top-4 right-4 z-[1000] bg-card/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-sm">
@@ -738,10 +724,15 @@ const Index: React.FC = () => {
             <button
               ref={optimizeBtnRef}
               onClick={() => { handleOptimize(); if (tourStep === 3) dismissTour(); }}
-              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
+              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0 || isForecast}
               className="w-full py-3.5 bg-gradient-to-r from-primary to-accent text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 transition disabled:opacity-60 shadow-md rounded"
             >
-              {sr.isOptimizing ? (
+              {isForecast ? (
+                <>
+                  <CalendarIcon size={18} color="white" />
+                  Forecast Only — Switch to This Week
+                </>
+              ) : sr.isOptimizing ? (
                 <>
                   <SpinnerIcon size={18} color="white" />
                   Optimizing...
@@ -754,10 +745,20 @@ const Index: React.FC = () => {
               ) : (
                 <>
                   <TruckIcon size={18} color="white" />
-                  Optimize &amp; See Savings
+                  Optimize This Week's Routes
                 </>
               )}
             </button>
+
+            {/* Generate report button — after optimization */}
+            {optimizeState === "optimized" && !isForecast && (
+              <button
+                onClick={() => setShowCostReport(true)}
+                className="w-full py-2.5 bg-card border border-primary/20 text-primary font-semibold text-xs rounded hover:bg-primary/5 transition flex items-center justify-center gap-2"
+              >
+                Generate Cost Savings Report
+              </button>
+            )}
 
             {/* Metrics context label */}
             {sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId] && (
@@ -781,6 +782,12 @@ const Index: React.FC = () => {
             )}
 
             {/* Stat Cards */}
+            {optimizeState === "optimized" && (
+              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                Based on current sensor readings
+              </div>
+            )}
             <div className="grid grid-cols-2 gap-3">
                   <StatCard
                     icon={<img src={iconClock} alt="clock" style={{ width: 36, height: 36, imageRendering: "pixelated" }} />}
@@ -885,8 +892,8 @@ const Index: React.FC = () => {
           </div>
         )}
 
-        {/* ══════ CHARTS ══════ */}
-        <div className="grid grid-cols-2 gap-6 mt-6">
+        {/* ══════ CHARTS (hidden in forecast mode) ══════ */}
+        {!isForecast && <div className="grid grid-cols-2 gap-6 mt-6">
           {/* Fuel Chart */}
           <div className="bg-card shadow-sm p-6 rounded">
             <h3 className="text-sm font-bold text-foreground mb-1">Fuel Saved This Month vs Last</h3>
@@ -946,7 +953,7 @@ const Index: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </div>}
 
         {/* ══════ BIN FILL PREDICTIONS ══════ */}
         {sr.loadedRoutes.length > 0 && Object.keys(sr.predictions).length > 0 && (() => {
@@ -966,7 +973,13 @@ const Index: React.FC = () => {
               ? "bg-yellow-100 text-yellow-700"
               : "bg-red-100 text-red-700";
 
-          const actionBadge = (days: number, conf: string) => {
+          const actionBadge = (days: number, _conf: string) => {
+            if (isForecast) {
+              if (days <= 1) return { label: "Collect Mon/Tue", cls: "bg-destructive/15 text-destructive" };
+              if (days <= 3) return { label: "Collect mid-week", cls: "bg-orange-100 text-orange-700" };
+              if (days <= 5) return { label: "Collect Thu/Fri", cls: "bg-yellow-100 text-yellow-700" };
+              return { label: "Can wait", cls: "bg-green-100 text-green-700" };
+            }
             if (days === 0) return { label: "Collect Today", cls: "bg-destructive/15 text-destructive" };
             if (days <= 2) return { label: "Schedule Soon", cls: "bg-orange-100 text-orange-700" };
             if (days <= 7) return { label: "Plan Collection", cls: "bg-yellow-100 text-yellow-700" };
@@ -983,14 +996,24 @@ const Index: React.FC = () => {
           const totalFillRate = predRows.reduce((s, r) => s + r.pred.fillRatePerDay, 0);
           const avgFillRate = predRows.length > 0 ? (totalFillRate / predRows.length).toFixed(1) : "—";
 
+          const needCollectionThisWeek = predRows.filter((r) => r.pred.daysUntilThreshold <= 5).length;
+          const summaryLine = isForecast
+            ? `Based on 4 weeks of sensor history, ${needCollectionThisWeek} of ${predRows.length} bins will need collection during ${nextWeek.label}.`
+            : `${criticalCount} bin${criticalCount !== 1 ? "s" : ""} need${criticalCount === 1 ? "s" : ""} urgent collection this week. Average fill rate: ${avgFillRate}%/day.`;
+
           return (
-            <div className="mt-6 bg-card shadow-sm rounded p-6">
+            <div className={`${isForecast ? "mt-4" : "mt-6"} bg-card shadow-sm rounded p-6`}>
               <div className="flex items-start justify-between mb-1">
                 <div>
-                  <h3 className="text-sm font-bold text-foreground">Bin Fill Predictions</h3>
+                  <h3 className="text-sm font-bold text-foreground">
+                    {isForecast ? `Next Week Forecast (${nextWeek.label})` : "Bin Fill Predictions"}
+                  </h3>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    AI-powered fill rate forecasts based on historical collection logs
+                    {isForecast
+                      ? "Predicted fill levels for pre-planning next week's routes"
+                      : "Forecast based on 4 weeks of collection history"}
                   </p>
+                  <p className="text-xs text-foreground font-medium mt-1.5">{summaryLine}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0 ml-4">
                   {/* Driver sim toggle */}
@@ -1099,6 +1122,16 @@ const Index: React.FC = () => {
 
       {/* ══════ DRIVER REPORT MODAL ══════ */}
       {showDriverModal && <DriverReportModal onClose={() => setShowDriverModal(false)} />}
+
+      {/* ══════ COST REPORT MODAL ══════ */}
+      {showCostReport && (
+        <CostReportModal
+          metrics={sr.aggregateMetrics}
+          routeCount={Object.keys(sr.optimizedMap).length}
+          weekLabel={`Week of ${thisWeek.label}`}
+          onClose={() => setShowCostReport(false)}
+        />
+      )}
     </div>);
 
 };

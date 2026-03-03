@@ -34,6 +34,7 @@ export interface OptimizedResult {
   result: AlgoResult;
   accepted: boolean;
   roadPolylines: LatLng[][]; // one per vehicleRoute
+  assignedVehicle: string | null;
 }
 
 /* ── Constants ── */
@@ -67,8 +68,8 @@ export function useSmartRoute() {
   const [aceInsight, setAceInsight] = useState<string | null>(null);
   const [aceInsightLoading, setAceInsightLoading] = useState(false);
 
-  // Vehicles
-  const vehiclesRef = useRef<{ latitude: number; longitude: number }[]>([]);
+  // Vehicles (with optional name for assignment display)
+  const vehiclesRef = useRef<{ latitude: number; longitude: number; name?: string }[]>([]);
 
   // Colour counter
   const colorIdx = useRef(0);
@@ -167,7 +168,24 @@ export function useSmartRoute() {
         roadPolylines.push(poly);
       }
 
-      newOptMap[entry.id] = { result, accepted: false, roadPolylines };
+      // Assign nearest vehicle to this route's depot
+      let assignedVehicle: string | null = null;
+      if (vehiclesRef.current.length > 0) {
+        let bestDist = Infinity;
+        const toRad = (d: number) => d * Math.PI / 180;
+        for (const v of vehiclesRef.current) {
+          const dlat = toRad(v.latitude - entry.depot.lat);
+          const dlng = toRad(v.longitude - entry.depot.lng);
+          const a = Math.sin(dlat / 2) ** 2 + Math.cos(toRad(entry.depot.lat)) * Math.cos(toRad(v.latitude)) * Math.sin(dlng / 2) ** 2;
+          const dist = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 6371;
+          if (dist < bestDist) {
+            bestDist = dist;
+            assignedVehicle = v.name || `Vehicle (${v.latitude.toFixed(2)}, ${v.longitude.toFixed(2)})`;
+          }
+        }
+      }
+
+      newOptMap[entry.id] = { result, accepted: false, roadPolylines, assignedVehicle };
     }
 
     setOptimizedMap((prev) => ({ ...prev, ...newOptMap }));

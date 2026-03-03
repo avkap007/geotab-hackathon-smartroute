@@ -26,6 +26,7 @@ interface SmartRouteMapProps {
   selectedRouteId: string | null;
   onRouteSelect: (routeId: string) => void;
   focusRouteId?: string | null;
+  isForecast?: boolean;
 }
 
 const getOverflowTime = (fillLevel: number): string => {
@@ -106,7 +107,7 @@ const MapFocusController: React.FC<{ focusRouteId: string | null; loadedRoutes: 
 };
 
 const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
-  bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect, focusRouteId,
+  bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect, focusRouteId, isForecast,
 }) => {
   const icons = useMemo(() => {
     const map = new Map<string, L.DivIcon>();
@@ -256,6 +257,12 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">
                   <span className="font-medium text-foreground">Est. overflow:</span> {getOverflowTime(bin.fillLevel)}
+                </div>
+                <div className="flex items-center gap-1 mt-2 pt-2 border-t border-border">
+                  <span className={`w-1.5 h-1.5 rounded-full ${isForecast ? "bg-amber-400" : "bg-green-500"}`} />
+                  <span className="text-[10px] text-muted-foreground">
+                    {isForecast ? "Predicted fill level" : "Sensor data · updated 15 min ago"}
+                  </span>
                 </div>
               </div>
             </Popup>
