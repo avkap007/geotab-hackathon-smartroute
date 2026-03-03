@@ -106,7 +106,7 @@ Prompts that could be used to start a similar project from scratch.
 
 ## 4. Demo Script Prompts (For Judges)
 
-The hook and key talking points from `docs/DEMO_SCRIPT.md`:
+The hook and key talking points:
 
 ### Hook (20 sec)
 

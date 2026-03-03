@@ -65,7 +65,7 @@ SmartRoute is a Geotab Add-In that integrates bin fill-level sensor data with ve
 4. **Selective insertion** — For sub-threshold: `netValue = fillLevel - alpha × normalizedInsertionCost`. Insert when `netValue > 0`; `alpha = intensity × 3`
 5. **Metrics** — km saved, fuel (0.3 L/km), CO₂ (2.68 kg/L), hours (driving + 5 min per bin + 5 min idle per skipped stop)
 
-See [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) for a detailed algorithm breakdown and judge Q&A.
+See [docs/avni-prompts.md](docs/avni-prompts.md) for prompts and judge Q&A.
 
 ---
 
@@ -149,7 +149,6 @@ smartroute/
 │   ├── API_KEYS.md          # Where to get API keys
 │   ├── avni-prompts.md     # All prompts used for this project
 │   ├── COLLABORATION.md    # Person 1/2 handoff, algo contract
-│   ├── DEMO_SCRIPT.md      # 3-min demo script + algorithm detail
 │   ├── ROUTE_SCHEMA.md     # Zone/Route/RoutePlanItem schema
 │   └── VISION.md           # Roadmap: skip logic, predictive, metrics
 └── geotab-vibe-coding-resources/  # Curated refs from geotab-vibe-guide
@@ -192,5 +191,4 @@ See `backend/README.md` and `docs/API_KEYS.md`.
 ## References
 
 - [geotab-vibe-guide](https://github.com/fhoffa/geotab-vibe-guide) — Add-In patterns, API reference, hackathon ideas
-- [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) — 3-min demo script, algorithm breakdown, judge Q&A
 - [docs/avni-prompts.md](docs/avni-prompts.md) — All prompts used for this project (Ace API, development, demo)
