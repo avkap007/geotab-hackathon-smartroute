@@ -387,7 +387,7 @@ const Index: React.FC = () => {
       <main className="p-6">
         <div className="flex gap-6" style={{ minHeight: "520px" }}>
           {/* LEFT — Controls + Map */}
-          <div className={`${showReviewModal ? "w-[58%]" : "w-[65%]"} flex flex-col gap-3 transition-all duration-300`}>
+          <div className="w-[65%] flex flex-col gap-3">
             {/* Controls bar — adaptive layout */}
             {sr.loadedRoutes.length === 0 ? (
               /* ── Single-row: no tags ── */
@@ -594,8 +594,40 @@ const Index: React.FC = () => {
                     : "Route Preview"}
                 </span>
               </div>
-              {/* Route overlay panel (accept/discard) */}
-              {selectedRoute && selectedOpt && (
+              {/* Optimized Routes review overlay — floats on map, cycles through routes */}
+              {showReviewModal && (() => {
+                const optimizedRoutes = sr.loadedRoutes
+                  .map((route) => {
+                    const opt = sr.optimizedMap[route.id];
+                    return opt ? { route, opt } : null;
+                  })
+                  .filter(Boolean) as { route: typeof sr.loadedRoutes[0]; opt: typeof sr.optimizedMap[string] }[];
+
+                if (optimizedRoutes.length === 0) return null;
+
+                return (
+                  <div className="absolute bottom-4 left-4 z-[1100] bg-card/95 backdrop-blur-sm rounded-xl shadow-xl border border-border min-w-[280px] max-w-[340px] p-4 overflow-y-auto max-h-[85vh]">
+                    <OptimizeReviewModal
+                      optimizedRoutes={optimizedRoutes}
+                      onAccept={async (routeId) => {
+                        const routeName = await sr.acceptRoute(routeId);
+                        if (routeName) {
+                          toast({ title: "Route accepted", description: `"${routeName}" saved to Geotab.` });
+                        } else {
+                          toast({ title: "Failed to save route", variant: "destructive" });
+                        }
+                        return routeName;
+                      }}
+                      onDiscard={(routeId) => sr.discardRoute(routeId)}
+                      onClose={() => setShowReviewModal(false)}
+                      onRouteChange={(routeId) => setFocusRouteId(routeId)}
+                    />
+                  </div>
+                );
+              })()}
+
+              {/* Route overlay panel (accept/discard) — hidden when review overlay is active */}
+              {!showReviewModal && selectedRoute && selectedOpt && (
                 <RouteOverlayPanel
                   routeName={selectedRoute.name}
                   routeColor={selectedRoute.color}
@@ -623,10 +655,10 @@ const Index: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT — Controls or Review Panel */}
-          <div className={`${showReviewModal ? "w-[42%]" : "w-[35%]"} flex flex-col gap-4 transition-all duration-300`}>
+          {/* RIGHT — Controls */}
+          <div className="w-[35%] flex flex-col gap-4">
             {/* Combined Threshold + Intensity Card */}
-            {!showReviewModal && (<div className="bg-card shadow-sm p-6 rounded relative" ref={thresholdCardRef} data-tour="threshold">
+            <div className="bg-card shadow-sm p-6 rounded relative" ref={thresholdCardRef} data-tour="threshold">
               {!tourDone && (
                 <TourCallout
                   step={2} activeStep={tourStep} totalSteps={TOUR_STEPS}
@@ -689,50 +721,46 @@ const Index: React.FC = () => {
                   Higher = collect more sub-threshold bins with low detour cost
                 </p>
               </div>
-            </div>)}
+            </div>
 
             {/* Optimize Button — above stat cards */}
-            {!showReviewModal && (
-              <>
-                <div className="relative">
-                  {!tourDone && (
-                    <TourCallout
-                      step={3} activeStep={tourStep} totalSteps={TOUR_STEPS}
-                      title="Optimize & See Savings"
-                      body="SmartRoute runs Clarke-Wright + OR-Opt to find the most efficient routes, skipping bins that don't need collection."
-                      onNext={advanceTour} onDismiss={dismissTour}
-                      position="top"
-                    />
-                  )}
-                </div>
-                <button
-                  ref={optimizeBtnRef}
-                  onClick={() => { handleOptimize(); if (tourStep === 3) dismissTour(); }}
-                  disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
-                  className="w-full py-3.5 bg-gradient-to-r from-primary to-accent text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 transition disabled:opacity-60 shadow-md rounded"
-                >
-                  {sr.isOptimizing ? (
-                    <>
-                      <SpinnerIcon size={18} color="white" />
-                      Optimizing...
-                    </>
-                  ) : optimizeState === "optimized" ? (
-                    <>
-                      <CheckIcon size={18} color="white" />
-                      Optimized! Review again
-                    </>
-                  ) : (
-                    <>
-                      <TruckIcon size={18} color="white" />
-                      Optimize &amp; See Savings
-                    </>
-                  )}
-                </button>
-              </>
-            )}
+            <div className="relative">
+              {!tourDone && (
+                <TourCallout
+                  step={3} activeStep={tourStep} totalSteps={TOUR_STEPS}
+                  title="Optimize & See Savings"
+                  body="SmartRoute runs Clarke-Wright + OR-Opt to find the most efficient routes, skipping bins that don't need collection."
+                  onNext={advanceTour} onDismiss={dismissTour}
+                  position="top"
+                />
+              )}
+            </div>
+            <button
+              ref={optimizeBtnRef}
+              onClick={() => { handleOptimize(); if (tourStep === 3) dismissTour(); }}
+              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
+              className="w-full py-3.5 bg-gradient-to-r from-primary to-accent text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 transition disabled:opacity-60 shadow-md rounded"
+            >
+              {sr.isOptimizing ? (
+                <>
+                  <SpinnerIcon size={18} color="white" />
+                  Optimizing...
+                </>
+              ) : optimizeState === "optimized" ? (
+                <>
+                  <CheckIcon size={18} color="white" />
+                  Optimized! Review again
+                </>
+              ) : (
+                <>
+                  <TruckIcon size={18} color="white" />
+                  Optimize &amp; See Savings
+                </>
+              )}
+            </button>
 
             {/* Metrics context label */}
-            {!showReviewModal && sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId] && (
+            {sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId] && (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span
@@ -753,9 +781,7 @@ const Index: React.FC = () => {
             )}
 
             {/* Stat Cards */}
-            {!showReviewModal && (
-              <>
-                <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3">
                   <StatCard
                     icon={<img src={iconClock} alt="clock" style={{ width: 36, height: 36, imageRendering: "pixelated" }} />}
                     value={hoursSaved}
@@ -782,82 +808,48 @@ const Index: React.FC = () => {
                     decimals={0} />
                 </div>
 
-                {/* Overflow Risk Card */}
-                {overflowRisk && overflowRisk.highRisk + overflowRisk.medRisk > 0 && (
-                  <div className="bg-card shadow-sm rounded p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
-                        Overflow Risk
-                      </span>
-                      <div className="relative group">
-                        <button className="w-4 h-4 rounded-full bg-muted text-muted-foreground text-[10px] font-bold flex items-center justify-center hover:bg-primary/20 transition">i</button>
-                        <div className="absolute bottom-full right-0 mb-2 w-52 bg-foreground text-background text-[11px] rounded-lg px-3 py-2 shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 leading-relaxed">
-                          Bins predicted to reach threshold within 2 days (high) or 5 days (medium).
-                          <div className="absolute top-full right-3 border-4 border-transparent border-t-foreground" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      {overflowRisk.highRisk > 0 && (
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-destructive" />
-                          <span className="text-sm font-extrabold text-destructive">{overflowRisk.highRisk}</span>
-                          <span className="text-xs text-muted-foreground">critical</span>
-                        </div>
-                      )}
-                      {overflowRisk.medRisk > 0 && (
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                          <span className="text-sm font-extrabold text-amber-500">{overflowRisk.medRisk}</span>
-                          <span className="text-xs text-muted-foreground">soon</span>
-                        </div>
-                      )}
-                      <span className="text-xs text-muted-foreground ml-auto">
-                        of {overflowRisk.total} bins
-                      </span>
-                    </div>
-                    <div className="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-destructive transition-all"
-                        style={{ width: `${Math.round((overflowRisk.highRisk / overflowRisk.total) * 100)}%` }}
-                      />
+            {/* Overflow Risk Card */}
+            {overflowRisk && overflowRisk.highRisk + overflowRisk.medRisk > 0 && (
+              <div className="bg-card shadow-sm rounded p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
+                    Overflow Risk
+                  </span>
+                  <div className="relative group">
+                    <button className="w-4 h-4 rounded-full bg-muted text-muted-foreground text-[10px] font-bold flex items-center justify-center hover:bg-primary/20 transition">i</button>
+                    <div className="absolute bottom-full right-0 mb-2 w-52 bg-foreground text-background text-[11px] rounded-lg px-3 py-2 shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 leading-relaxed">
+                      Bins predicted to reach threshold within 2 days (high) or 5 days (medium).
+                      <div className="absolute top-full right-3 border-4 border-transparent border-t-foreground" />
                     </div>
                   </div>
-                )}
-              </>
-            )}
-
-            {/* Review Panel — shown in right column after optimization */}
-            {showReviewModal && (() => {
-              const optimizedRoutes = sr.loadedRoutes
-                .map((route) => {
-                  const opt = sr.optimizedMap[route.id];
-                  return opt ? { route, opt } : null;
-                })
-                .filter(Boolean) as { route: typeof sr.loadedRoutes[0]; opt: typeof sr.optimizedMap[string] }[];
-
-              if (optimizedRoutes.length === 0) return null;
-
-              return (
-                <div className="bg-card shadow-sm rounded p-5 flex-1 min-h-0 overflow-y-auto">
-                  <OptimizeReviewModal
-                    optimizedRoutes={optimizedRoutes}
-                    onAccept={async (routeId) => {
-                      const routeName = await sr.acceptRoute(routeId);
-                      if (routeName) {
-                        toast({ title: "Route accepted", description: `"${routeName}" saved to Geotab.` });
-                      } else {
-                        toast({ title: "Failed to save route", variant: "destructive" });
-                      }
-                      return routeName;
-                    }}
-                    onDiscard={(routeId) => sr.discardRoute(routeId)}
-                    onClose={() => setShowReviewModal(false)}
-                    onRouteChange={(routeId) => setFocusRouteId(routeId)}
+                </div>
+                <div className="flex items-center gap-3">
+                  {overflowRisk.highRisk > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-destructive" />
+                      <span className="text-sm font-extrabold text-destructive">{overflowRisk.highRisk}</span>
+                      <span className="text-xs text-muted-foreground">critical</span>
+                    </div>
+                  )}
+                  {overflowRisk.medRisk > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                      <span className="text-sm font-extrabold text-amber-500">{overflowRisk.medRisk}</span>
+                      <span className="text-xs text-muted-foreground">soon</span>
+                    </div>
+                  )}
+                  <span className="text-xs text-muted-foreground ml-auto">
+                    of {overflowRisk.total} bins
+                  </span>
+                </div>
+                <div className="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-destructive transition-all"
+                    style={{ width: `${Math.round((overflowRisk.highRisk / overflowRisk.total) * 100)}%` }}
                   />
                 </div>
-              );
-            })()}
+              </div>
+            )}
           </div>
         </div>
 
