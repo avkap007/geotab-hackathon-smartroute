@@ -51,8 +51,11 @@ export function useSmartRoute() {
   // Loaded routes on the map
   const [loadedRoutes, setLoadedRoutes] = useState<LoadedRoute[]>([]);
 
-  // Optimization results keyed by routeId
+  // Optimization results keyed by routeId (This Week — live sensor data)
   const [optimizedMap, setOptimizedMap] = useState<Record<string, OptimizedResult>>({});
+
+  // Forecast optimization results (Next Week — predicted fill levels, preview only)
+  const [forecastOptimizedMap, setForecastOptimizedMap] = useState<Record<string, OptimizedResult>>({});
 
   // Predictions keyed by binId
   const [predictions, setPredictions] = useState<Record<string, Prediction>>({});
@@ -140,8 +143,78 @@ export function useSmartRoute() {
       delete next[routeId];
       return next;
     });
+    setForecastOptimizedMap((prev) => {
+      const next = { ...prev };
+      delete next[routeId];
+      return next;
+    });
     if (selectedRouteId === routeId) setSelectedRouteId(null);
   }, [selectedRouteId]);
+
+  /* ── Days from today to next Monday (0 if today is Monday) ── */
+  const getDaysToNextMonday = useCallback(() => {
+    const now = new Date();
+    const day = now.getDay();
+    if (day === 0) return 1;
+    if (day === 1) return 0;
+    return 8 - day;
+  }, []);
+
+  /* ── Run forecast optimization (Next Week — predicted fill levels) ── */
+  const runForecastOptimize = useCallback(async () => {
+    if (loadedRoutes.length === 0 || isOptimizing) return;
+    setIsOptimizing(true);
+    setSelectedRouteId(null);
+
+    const daysToNextMon = getDaysToNextMonday();
+    const newOptMap: Record<string, OptimizedResult> = {};
+
+    for (const entry of loadedRoutes) {
+      setOptimizeStatus(`Forecasting ${entry.name}…`);
+
+      const projectedBins: AlgoBin[] = entry.bins.map((bin) => {
+        const pred = predictions[bin.id];
+        const fillRate = pred?.fillRatePerDay ?? 10;
+        const projectedFill = Math.min(100, bin.fillLevel + fillRate * daysToNextMon);
+        return { ...bin, fillLevel: projectedFill };
+      });
+
+      const result = await runOptimization(projectedBins, entry.depot, {
+        threshold,
+        intensity: intensity / 100,
+        vehicleCapacity: 10,
+        vehicles: vehiclesRef.current,
+      });
+
+      const roadPolylines: LatLng[][] = [];
+      for (const vr of result.vehicleRoutes) {
+        const poly = await fetchRoadPolyline(vr.points);
+        roadPolylines.push(poly);
+      }
+
+      let assignedVehicle: string | null = null;
+      if (vehiclesRef.current.length > 0) {
+        let bestDist = Infinity;
+        const toRad = (d: number) => d * Math.PI / 180;
+        for (const v of vehiclesRef.current) {
+          const dlat = toRad(v.latitude - entry.depot.lat);
+          const dlng = toRad(v.longitude - entry.depot.lng);
+          const a = Math.sin(dlat / 2) ** 2 + Math.cos(toRad(entry.depot.lat)) * Math.cos(toRad(v.latitude)) * Math.sin(dlng / 2) ** 2;
+          const dist = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 6371;
+          if (dist < bestDist) {
+            bestDist = dist;
+            assignedVehicle = v.name || `Vehicle (${v.latitude.toFixed(2)}, ${v.longitude.toFixed(2)})`;
+          }
+        }
+      }
+
+      newOptMap[entry.id] = { result, accepted: false, roadPolylines, assignedVehicle };
+    }
+
+    setForecastOptimizedMap((prev) => ({ ...prev, ...newOptMap }));
+    setOptimizeStatus("Forecast complete! Preview only — switch to This Week to save.");
+    setIsOptimizing(false);
+  }, [loadedRoutes, predictions, threshold, intensity, isOptimizing, getDaysToNextMonday]);
 
   /* ── Optimize all loaded routes ── */
   const runOptimize = useCallback(async () => {
@@ -275,11 +348,14 @@ export function useSmartRoute() {
 
     // Optimization
     optimizedMap,
+    forecastOptimizedMap,
     isOptimizing,
     optimizeStatus,
     runOptimize,
+    runForecastOptimize,
     acceptRoute,
     discardRoute,
+    getDaysToNextMonday,
 
     // Controls
     threshold,

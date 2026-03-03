@@ -10,6 +10,8 @@ interface OptimizeReviewModalProps {
   onClose: () => void;
   /** Called whenever the viewed route changes — parent can zoom the map */
   onRouteChange?: (routeId: string) => void;
+  /** When true, show "Preview only" UI — no Accept/Discard (Next Week forecast) */
+  isForecast?: boolean;
 }
 
 const MetricRow: React.FC<{ label: string; value: string; highlight?: boolean }> = ({
@@ -33,7 +35,8 @@ const RouteCard: React.FC<{
   assignedVehicle: string | null;
   onAccept: () => void;
   onDiscard: () => void;
-}> = ({ route, metrics, accepted, accepting, assignedVehicle, onAccept, onDiscard }) => (
+  isForecast?: boolean;
+}> = ({ route, metrics, accepted, accepting, assignedVehicle, onAccept, onDiscard, isForecast }) => (
   <div className="flex flex-col gap-4">
     <div className="flex items-center gap-3">
       <span className="w-3 h-3 rounded-full shrink-0" style={{ background: route.color }} />
@@ -56,7 +59,19 @@ const RouteCard: React.FC<{
       <MetricRow label="Distance saved" value={`${metrics.kmSaved.toFixed(1)} km`} />
     </div>
 
-    {accepted ? (
+    {isForecast ? (
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 py-2 px-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 font-semibold text-sm">
+          Preview only — switch to This Week to save routes
+        </div>
+        <button
+          onClick={onDiscard}
+          className="w-full py-2.5 bg-muted hover:bg-muted/70 text-muted-foreground font-bold text-sm rounded-lg transition"
+        >
+          Got it
+        </button>
+      </div>
+    ) : accepted ? (
       <div className="flex items-center gap-2 py-2 px-3 bg-green-50 rounded-lg text-green-700 font-semibold text-sm">
         <CheckIcon size={15} color="#15803d" />
         Saved to Geotab
@@ -94,6 +109,7 @@ const OptimizeReviewModal: React.FC<OptimizeReviewModalProps> = ({
   onDiscard,
   onClose,
   onRouteChange,
+  isForecast = false,
 }) => {
   const [idx, setIdx] = useState(0);
   const [accepted, setAccepted] = useState<Record<string, boolean>>({});
@@ -123,6 +139,11 @@ const OptimizeReviewModal: React.FC<OptimizeReviewModalProps> = ({
   const handleDiscard = () => {
     onDiscard(current.route.id);
     if (idx < total - 1) setIdx((i) => i + 1);
+  };
+
+  const handleForecastDismiss = () => {
+    if (idx < total - 1) setIdx((i) => i + 1);
+    else onClose();
   };
 
   const isCurrentAccepted = accepted[current.route.id] || current.opt.accepted;
@@ -188,7 +209,8 @@ const OptimizeReviewModal: React.FC<OptimizeReviewModalProps> = ({
           accepting={accepting}
           assignedVehicle={current.opt.assignedVehicle}
           onAccept={handleAccept}
-          onDiscard={handleDiscard}
+          onDiscard={isForecast ? handleForecastDismiss : handleDiscard}
+          isForecast={isForecast}
         />
       </div>
 

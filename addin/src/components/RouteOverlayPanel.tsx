@@ -10,10 +10,12 @@ interface RouteOverlayPanelProps {
   onAccept: () => void;
   onDiscard: () => void;
   onClose: () => void;
+  /** When true, show "Preview only" — no Accept/Discard (Next Week forecast) */
+  isForecast?: boolean;
 }
 
 const RouteOverlayPanel: React.FC<RouteOverlayPanelProps> = ({
-  routeName, routeColor, metrics, accepted, onAccept, onDiscard, onClose,
+  routeName, routeColor, metrics, accepted, onAccept, onDiscard, onClose, isForecast = false,
 }) => {
   return (
     <div className="absolute bottom-4 left-4 z-[1000] bg-card/95 backdrop-blur-sm rounded-xl shadow-lg p-4 min-w-[260px] border border-border">
@@ -44,7 +46,19 @@ const RouteOverlayPanel: React.FC<RouteOverlayPanelProps> = ({
           <b>{metrics.stopsSkipped}</b>
         </div>
       </div>
-      {accepted ? (
+      {isForecast ? (
+        <div className="flex flex-col gap-2">
+          <div className="text-xs text-amber-700 font-semibold py-1.5 px-2 bg-amber-50 border border-amber-200 rounded-lg">
+            Preview only · Look ahead
+          </div>
+          <button
+            onClick={onClose}
+            className="w-full py-2 bg-muted hover:bg-muted/70 text-muted-foreground text-xs font-bold rounded-lg transition"
+          >
+            Close
+          </button>
+        </div>
+      ) : accepted ? (
         <div className="text-xs text-green-600 font-semibold flex items-center gap-1">
           <CheckIcon size={14} color="#16a34a" /> Route accepted
         </div>

@@ -22,12 +22,14 @@ interface SmartRouteMapProps {
   threshold: number;
   optimizeState: OptimizeState;
   optimizedMap: Record<string, OptimizedResult>;
+  forecastOptimizedMap?: Record<string, OptimizedResult>;
   loadedRoutes: LoadedRoute[];
   selectedRouteId: string | null;
   onRouteSelect: (routeId: string) => void;
   focusRouteId?: string | null;
   isForecast?: boolean;
   acceptedRouteIds?: Set<string>;
+  highlightBinIds?: Set<string>;
 }
 
 const getOverflowTime = (fillLevel: number): string => {
@@ -108,18 +110,19 @@ const MapFocusController: React.FC<{ focusRouteId: string | null; loadedRoutes: 
 };
 
 const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
-  bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect, focusRouteId, isForecast, acceptedRouteIds,
+  bins, threshold, optimizeState, optimizedMap, forecastOptimizedMap, loadedRoutes, selectedRouteId, onRouteSelect, focusRouteId, isForecast, acceptedRouteIds, highlightBinIds,
 }) => {
   const icons = useMemo(() => {
     const map = new Map<string, L.DivIcon>();
     bins.forEach((b) => {
       const meets = b.fillLevel >= threshold;
-      const key = `${b.id}-${meets}`;
+      const highlighted = highlightBinIds?.has(b.stringId);
+      const key = `${b.id}-${meets}-${highlighted}`;
       if (!map.has(key)) {
         map.set(
           key,
           L.divIcon({
-            html: getBinSvg(b.fillLevel, meets),
+            html: `<div class="${highlighted ? "bin-marker-highlight" : ""}">${getBinSvg(b.fillLevel, meets)}</div>`,
             className: "",
             iconSize: [40, 46],
             iconAnchor: [20, 46],
@@ -129,13 +132,14 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
       }
     });
     return map;
-  }, [bins, threshold]);
+  }, [bins, threshold, highlightBinIds]);
 
-  // Collect all OSRM road polylines from optimized routes
+  // Collect all OSRM road polylines — use forecastOptimizedMap when isForecast
+  const activeOptMap = isForecast ? (forecastOptimizedMap ?? {}) : optimizedMap;
   const roadPolylines = useMemo(() => {
     const lines: { positions: L.LatLngTuple[]; color: string; routeId: string }[] = [];
     for (const route of loadedRoutes) {
-      const opt = optimizedMap[route.id];
+      const opt = activeOptMap[route.id];
       if (!opt) continue;
       opt.roadPolylines.forEach((poly, i) => {
         const color = opt.result.vehicleRoutes[i]?.color || route.color;
@@ -147,7 +151,7 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
       });
     }
     return lines;
-  }, [optimizedMap, loadedRoutes]);
+  }, [activeOptMap, loadedRoutes]);
 
   // Original route polylines — use OSRM road polyline when available, fallback to straight lines
   const originalPolylines = useMemo(() => {
@@ -171,7 +175,7 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
     return lines;
   }, [loadedRoutes]);
 
-  const hasOptimized = Object.keys(optimizedMap).length > 0;
+  const hasOptimized = Object.keys(activeOptMap).length > 0;
 
   return (
     <MapContainer
@@ -221,7 +225,8 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
       {/* Bin markers */}
       {bins.map((bin) => {
         const meets = bin.fillLevel >= threshold;
-        const icon = icons.get(`${bin.id}-${meets}`);
+        const highlighted = highlightBinIds?.has(bin.stringId);
+        const icon = icons.get(`${bin.id}-${meets}-${highlighted}`);
 
         return (
           <Marker key={bin.id} position={[bin.lat, bin.lng]} icon={icon}>
