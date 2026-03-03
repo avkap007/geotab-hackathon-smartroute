@@ -5,6 +5,7 @@ import {
 "recharts";
 import SmartRouteMap from "@/components/SmartRouteMap";
 import RouteOverlayPanel from "@/components/RouteOverlayPanel";
+import OptimizeReviewModal from "@/components/OptimizeReviewModal";
 import {
   TruckIcon,
   SearchIcon, CalendarIcon, CheckIcon, CloseIcon, SpinnerIcon,
@@ -206,6 +207,7 @@ const Index: React.FC = () => {
   const MAX_VISIBLE_CHIPS = 2;
   const [startDate, setStartDate] = useState("2026-02-15");
   const [endDate, setEndDate] = useState("2026-03-02");
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
 
   // Determine optimize button state from hook
@@ -244,6 +246,7 @@ const Index: React.FC = () => {
   const handleOptimize = async () => {
     if (sr.isOptimizing || sr.loadedRoutes.length === 0) return;
     await sr.runOptimize();
+    setShowReviewModal(true);
   };
 
   const handleSelectRoute = (route: GeotabRouteRef) => {
@@ -455,6 +458,36 @@ const Index: React.FC = () => {
 
             {/* Map */}
             <div className="relative flex-1 min-h-0">
+              {/* Onboarding overlay — shown when no routes loaded */}
+              {sr.loadedRoutes.length === 0 && (
+                <div className="absolute inset-0 z-[500] flex items-center justify-center pointer-events-none">
+                  <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4 pointer-events-auto">
+                    <h2 className="text-base font-extrabold text-foreground mb-1 text-center">
+                      Get started
+                    </h2>
+                    <p className="text-xs text-muted-foreground text-center mb-6">
+                      Three steps to optimize your waste collection routes
+                    </p>
+                    <div className="flex flex-col gap-4">
+                      {[
+                        { step: "1", icon: <SearchIcon size={18} color="#7EC8E3" />, label: "Search & select a route", sub: "Use the search bar above to add routes to the map" },
+                        { step: "2", icon: <span className="text-[#C9B6FF] text-lg font-extrabold leading-none">%</span>, label: "Adjust the fill threshold", sub: "Set the bin fill level that triggers collection" },
+                        { step: "3", icon: <TruckIcon size={18} color="#7EC8E3" />, label: 'Click "Optimize & See Savings"', sub: "The algorithm will plan the smartest routes" },
+                      ].map(({ step, icon, label, sub }) => (
+                        <div key={step} className="flex items-start gap-4">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                            {icon}
+                          </div>
+                          <div>
+                            <div className="text-sm font-semibold text-foreground">{label}</div>
+                            <div className="text-[11px] text-muted-foreground mt-0.5">{sub}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="bg-card shadow-sm overflow-hidden rounded h-full">
                 <SmartRouteMap
                   bins={mapBins}
@@ -521,9 +554,25 @@ const Index: React.FC = () => {
 
               {/* Intensity slider within same card */}
               <div className="mt-5 pt-4 border-t border-border">
-                <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
-                  Route Intensity
-                </label>
+                <div className="flex items-center gap-1.5">
+                  <label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
+                    Route Intensity
+                  </label>
+                  {/* Info tooltip */}
+                  <div className="relative group">
+                    <button
+                      type="button"
+                      className="w-4 h-4 rounded-full bg-muted text-muted-foreground text-[10px] font-bold flex items-center justify-center hover:bg-primary/20 transition"
+                      aria-label="Route Intensity explanation"
+                    >
+                      i
+                    </button>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-foreground text-background text-[11px] rounded-lg px-3 py-2 shadow-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 leading-relaxed">
+                      Controls how aggressively near-threshold bins are added. Higher = more stops collected when detour cost is cheap. Lower = only mandatory bins above the threshold.
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-foreground" />
+                    </div>
+                  </div>
+                </div>
                 <div className="mt-3 mb-2">
                   <input
                     type="range"
@@ -546,6 +595,29 @@ const Index: React.FC = () => {
                 </p>
               </div>
             </div>
+
+            {/* Optimize Button — above stat cards */}
+            <button
+              onClick={handleOptimize}
+              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
+              className="w-full py-3.5 bg-gradient-to-r from-[#7EC8E3] to-[#C9B6FF] text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 transition disabled:opacity-60 shadow-md rounded">
+              {sr.isOptimizing ? (
+                <>
+                  <SpinnerIcon size={18} color="white" />
+                  Optimizing...
+                </>
+              ) : optimizeState === "optimized" ? (
+                <>
+                  <CheckIcon size={18} color="white" />
+                  Optimized! Review again
+                </>
+              ) : (
+                <>
+                  <TruckIcon size={18} color="white" />
+                  Optimize &amp; See Savings
+                </>
+              )}
+            </button>
 
             {/* Metrics context label */}
             {sr.selectedRouteId && sr.optimizedMap[sr.selectedRouteId] && (
@@ -594,35 +666,40 @@ const Index: React.FC = () => {
                 unit=""
                 label="Stops Skipped"
                 decimals={0} />
-
             </div>
-
-            {/* Optimize Button */}
-            <div className="flex-1 min-h-0" />
-            <button
-              onClick={handleOptimize}
-              disabled={sr.isOptimizing || sr.loadedRoutes.length === 0}
-              className="w-full py-3.5 bg-gradient-to-r from-[#7EC8E3] to-[#C9B6FF] text-white font-bold text-sm flex items-center justify-center gap-2.5 hover:opacity-90 transition disabled:opacity-60 shadow-md rounded">
-
-              {sr.isOptimizing ?
-              <>
-                  <SpinnerIcon size={18} color="white" />
-                  Optimizing...
-                </> :
-              optimizeState === "optimized" ?
-              <>
-                  <CheckIcon size={18} color="white" />
-                  Optimized!
-                </> :
-
-              <>
-                  <TruckIcon size={18} color="white" />
-                  optimize these routes
-                </>
-              }
-            </button>
           </div>
         </div>
+
+        {/* ══════ ACE INSIGHT BANNER ══════ */}
+        {(sr.aceInsightLoading || sr.aceInsight) && (
+          <div className="mt-6 bg-gradient-to-r from-[#7EC8E3]/10 to-[#C9B6FF]/10 border border-[#C9B6FF]/30 rounded-xl px-5 py-4 flex items-start gap-3">
+            {/* AI sparkle icon */}
+            <div className="shrink-0 mt-0.5">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2L11.5 7.5H17L12.5 11L14 16.5L10 13.5L6 16.5L7.5 11L3 7.5H8.5L10 2Z" fill="url(#sparkle-grad)" />
+                <defs>
+                  <linearGradient id="sparkle-grad" x1="3" y1="2" x2="17" y2="16.5" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#7EC8E3" />
+                    <stop offset="1" stopColor="#C9B6FF" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1">
+                Geotab Ace AI Insight
+              </div>
+              {sr.aceInsightLoading && !sr.aceInsight ? (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <SpinnerIcon size={12} color="hsl(200, 70%, 55%)" />
+                  Generating fleet insight...
+                </div>
+              ) : (
+                <p className="text-sm text-foreground leading-relaxed">{sr.aceInsight}</p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* ══════ CHARTS ══════ */}
         <div className="grid grid-cols-2 gap-6 mt-6">
@@ -644,7 +721,6 @@ const Index: React.FC = () => {
                     boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                     fontSize: "12px"
                   }} />
-
                 <Line
                   type="monotone"
                   dataKey="thisMonth"
@@ -652,7 +728,6 @@ const Index: React.FC = () => {
                   strokeWidth={2.5}
                   dot={{ r: 4, fill: "#7EC8E3" }}
                   name="This Month" />
-
                 <Line
                   type="monotone"
                   dataKey="lastMonth"
@@ -661,7 +736,6 @@ const Index: React.FC = () => {
                   dot={{ r: 3, fill: "#E0D6F6" }}
                   strokeDasharray="4 4"
                   name="Last Month" />
-
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -684,13 +758,119 @@ const Index: React.FC = () => {
                     boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                     fontSize: "12px"
                   }} />
-
                 <Bar dataKey="skipped" fill="#C9B6FF" radius={[6, 6, 0, 0]} name="Stops Skipped" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
+
+        {/* ══════ BIN FILL PREDICTIONS ══════ */}
+        {sr.loadedRoutes.length > 0 && Object.keys(sr.predictions).length > 0 && (() => {
+          const predRows = sr.loadedRoutes.flatMap((route) =>
+            route.bins.map((bin) => {
+              const pred = sr.predictions[bin.id];
+              return pred ? { bin, pred, routeColor: route.color, routeName: route.name } : null;
+            }).filter(Boolean)
+          ) as { bin: typeof sr.loadedRoutes[0]["bins"][0]; pred: typeof sr.predictions[string]; routeColor: string; routeName: string }[];
+
+          if (predRows.length === 0) return null;
+
+          const confidenceStyle = (c: string) =>
+            c === "high"
+              ? "bg-green-100 text-green-700"
+              : c === "medium"
+              ? "bg-yellow-100 text-yellow-700"
+              : "bg-red-100 text-red-700";
+
+          return (
+            <div className="mt-6 bg-card shadow-sm rounded p-6">
+              <h3 className="text-sm font-bold text-foreground mb-1">Bin Fill Predictions</h3>
+              <p className="text-xs text-muted-foreground mb-4">
+                AI-powered fill rate forecasts based on historical collection logs
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 pr-4 font-semibold text-muted-foreground">Bin</th>
+                      <th className="text-left py-2 pr-4 font-semibold text-muted-foreground">Route</th>
+                      <th className="text-right py-2 pr-4 font-semibold text-muted-foreground">Fill rate / day</th>
+                      <th className="text-right py-2 pr-4 font-semibold text-muted-foreground">Days to threshold</th>
+                      <th className="text-left py-2 pr-4 font-semibold text-muted-foreground">Predicted date</th>
+                      <th className="text-left py-2 pr-4 font-semibold text-muted-foreground">Recommended days</th>
+                      <th className="text-left py-2 font-semibold text-muted-foreground">Confidence</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {predRows.map(({ bin, pred, routeColor, routeName }) => (
+                      <tr key={bin.id} className="border-b border-border/50 hover:bg-muted/30 transition">
+                        <td className="py-2 pr-4 font-medium text-foreground">{bin.name}</td>
+                        <td className="py-2 pr-4">
+                          <span className="flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full shrink-0" style={{ background: routeColor }} />
+                            {routeName}
+                          </span>
+                        </td>
+                        <td className="py-2 pr-4 text-right font-mono">
+                          {pred.fillRatePerDay > 0 ? `${pred.fillRatePerDay}%` : "—"}
+                        </td>
+                        <td className="py-2 pr-4 text-right font-mono">
+                          {pred.daysUntilThreshold === Infinity ? "—" : pred.daysUntilThreshold === 0 ? "Now" : `${pred.daysUntilThreshold}d`}
+                        </td>
+                        <td className="py-2 pr-4">
+                          {pred.predictedThresholdDate ?? "—"}
+                        </td>
+                        <td className="py-2 pr-4 text-muted-foreground">
+                          {pred.recommendedCollectionDays.length > 0
+                            ? pred.recommendedCollectionDays.slice(0, 3).join(", ")
+                            : "—"}
+                        </td>
+                        <td className="py-2">
+                          <span className={`px-2 py-0.5 rounded-full font-semibold capitalize ${confidenceStyle(pred.confidence)}`}>
+                            {pred.confidence}
+                          </span>
+                          {pred.inferredFromFleet && (
+                            <span className="ml-1 text-muted-foreground text-[10px]">(fleet avg)</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })()}
       </main>
+
+      {/* ══════ OPTIMIZE REVIEW MODAL ══════ */}
+      {showReviewModal && (() => {
+        const optimizedRoutes = sr.loadedRoutes
+          .map((route) => {
+            const opt = sr.optimizedMap[route.id];
+            return opt ? { route, opt } : null;
+          })
+          .filter(Boolean) as { route: typeof sr.loadedRoutes[0]; opt: typeof sr.optimizedMap[string] }[];
+
+        if (optimizedRoutes.length === 0) return null;
+
+        return (
+          <OptimizeReviewModal
+            optimizedRoutes={optimizedRoutes}
+            onAccept={async (routeId) => {
+              const routeName = await sr.acceptRoute(routeId);
+              if (routeName) {
+                toast({ title: "Route accepted", description: `"${routeName}" saved to Geotab.` });
+              } else {
+                toast({ title: "Failed to save route", variant: "destructive" });
+              }
+              return routeName;
+            }}
+            onDiscard={(routeId) => sr.discardRoute(routeId)}
+            onClose={() => setShowReviewModal(false)}
+          />
+        );
+      })()}
     </div>);
 
 };

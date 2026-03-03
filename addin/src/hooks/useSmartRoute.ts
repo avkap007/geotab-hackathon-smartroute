@@ -9,6 +9,7 @@ import {
   loadRouteById,
   writeRouteToGeotab,
   fetchVehicleStatuses,
+  queryAce,
   type GeotabRouteRef,
   type RouteEntry,
 } from "../services/geotabApi";
@@ -62,6 +63,10 @@ export function useSmartRoute() {
   const [optimizeStatus, setOptimizeStatus] = useState("");
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
 
+  // Ace AI insight
+  const [aceInsight, setAceInsight] = useState<string | null>(null);
+  const [aceInsightLoading, setAceInsightLoading] = useState(false);
+
   // Vehicles
   const vehiclesRef = useRef<{ latitude: number; longitude: number }[]>([]);
 
@@ -99,24 +104,21 @@ export function useSmartRoute() {
     const color = ROUTE_COLORS[colorIdx.current % ROUTE_COLORS.length];
     colorIdx.current++;
 
-    // Fetch OSRM road polyline for the original route (all bins in order)
+    // Add route immediately with straight-line fallback so map shows without waiting
+    const entry: LoadedRoute = { ...data, color, originalRoadPolyline: null };
+    setLoadedRoutes((prev) => [...prev, entry]);
+
+    // Fetch OSRM road polyline in the background — updates the route when ready
     const allPoints = [
       data.depot,
       ...data.bins.map((b) => ({ lat: b.lat, lng: b.lng })),
       data.depot,
     ];
-    let originalRoadPolyline: LatLng[] | null = null;
-    try {
-      setOptimizeStatus(`Fetching road route for ${ref.name}…`);
-      originalRoadPolyline = await fetchRoadPolyline(allPoints);
-      setOptimizeStatus("");
-    } catch {
-      setOptimizeStatus("");
-    }
-
-    const entry: LoadedRoute = { ...data, color, originalRoadPolyline };
-
-    setLoadedRoutes((prev) => [...prev, entry]);
+    fetchRoadPolyline(allPoints).then((polyline) => {
+      setLoadedRoutes((prev) =>
+        prev.map((r) => r.id === ref.id ? { ...r, originalRoadPolyline: polyline } : r)
+      );
+    }).catch(() => { /* keep straight-line fallback */ });
 
     // Run predictions for this route's bins
     const preds = predictFillLevels(data.collectionLogs, data.bins, threshold);
@@ -169,8 +171,25 @@ export function useSmartRoute() {
     }
 
     setOptimizedMap((prev) => ({ ...prev, ...newOptMap }));
-    setOptimizeStatus("Done! Click a route to review.");
+    setOptimizeStatus("Done! Review your optimized routes.");
     setIsOptimizing(false);
+
+    // Fire Ace query in background for fleet insight
+    const totalKmSaved = Object.values(newOptMap).reduce(
+      (sum, opt) => sum + (opt?.result?.metrics?.kmSaved || 0), 0,
+    );
+    const totalStopsSkipped = Object.values(newOptMap).reduce(
+      (sum, opt) => sum + (opt?.result?.metrics?.stopsSkipped || 0), 0,
+    );
+    setAceInsightLoading(true);
+    queryAce(
+      `Give one concise sentence of fleet insight about smart waste collection efficiency. ` +
+      `Context: route optimization reduced total travel distance by ${totalKmSaved.toFixed(1)} km ` +
+      `and skipped ${totalStopsSkipped} unnecessary bin stops. Focus on environmental or operational benefit.`
+    ).then((insight) => {
+      setAceInsight(insight);
+      setAceInsightLoading(false);
+    });
   }, [loadedRoutes, threshold, intensity, isOptimizing]);
 
   /* ── Accept an optimization (write to Geotab) ── */
@@ -257,6 +276,10 @@ export function useSmartRoute() {
     aggregateMetrics,
     allBins,
     predictions,
+
+    // Ace AI insight
+    aceInsight,
+    aceInsightLoading,
   };
 }
 

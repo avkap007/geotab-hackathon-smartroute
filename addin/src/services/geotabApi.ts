@@ -256,6 +256,81 @@ export async function writeRouteToGeotab(
 }
 
 /**
+ * Query Geotab Ace AI for a natural-language fleet insight.
+ *
+ * Flow: create-chat → send-prompt → poll get-message-group until DONE.
+ * Returns the reasoning string from the first completed message, or null on
+ * failure / timeout / unavailability (e.g. demo mode without Geotab API).
+ *
+ * Rate-limit note: Ace needs ~8s before the first poll; max ~10 attempts.
+ */
+export async function queryAce(prompt: string): Promise<string | null> {
+  const api = getGeotabApi();
+  if (!api) return null;
+
+  function aceCall<T>(functionName: string, functionParameters: Record<string, unknown>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      api!.call(
+        "GetAceResults",
+        { serviceName: "dna-planet-orchestration", functionName, customerData: true, functionParameters },
+        (result) => resolve((result as { apiResult: { results: T[] } }).apiResult.results[0] as T),
+        (err) => reject(err),
+      );
+    });
+  }
+
+  try {
+    // Step 1: create-chat
+    let chatId: string | undefined;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const chatData = await aceCall<{ chat_id?: string }>("create-chat", {});
+        chatId = chatData.chat_id;
+        if (chatId) break;
+      } catch { /* retry */ }
+      await new Promise((r) => setTimeout(r, 3000));
+    }
+    if (!chatId) return null;
+
+    // Step 2: send-prompt
+    const sendData = await aceCall<{ message_group_id?: string; message_group?: { id: string } }>(
+      "send-prompt",
+      { chat_id: chatId, prompt },
+    );
+    const mgId = sendData.message_group_id || sendData.message_group?.id;
+    if (!mgId) return null;
+
+    // Step 3: poll get-message-group (up to 10 attempts, 8s first delay then 5s)
+    await new Promise((r) => setTimeout(r, 8000));
+    for (let i = 0; i < 10; i++) {
+      const pollData = await aceCall<{
+        message_group?: {
+          status?: { status?: string };
+          messages?: Record<string, { reasoning?: string; preview_array?: unknown[] }>;
+        };
+      }>("get-message-group", { message_group_id: mgId });
+
+      const status = pollData.message_group?.status?.status;
+      if (status === "DONE") {
+        const messages = pollData.message_group?.messages || {};
+        for (const msg of Object.values(messages)) {
+          if (msg.reasoning) return msg.reasoning;
+          if (msg.preview_array && msg.preview_array.length > 0) {
+            return `Analysis complete: ${JSON.stringify(msg.preview_array[0])}`;
+          }
+        }
+        return null;
+      }
+      if (status === "FAILED") return null;
+      await new Promise((r) => setTimeout(r, 5000));
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Fetch live vehicle positions from Geotab.
  */
 export async function fetchVehicleStatuses(): Promise<{ latitude: number; longitude: number }[]> {

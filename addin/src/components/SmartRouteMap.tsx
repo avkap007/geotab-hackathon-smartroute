@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import React, { useMemo, useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { BinCharacter } from "./SvgIcons";
@@ -60,6 +60,26 @@ function getBinSvg(fillLevel: number, meetsThreshold: boolean): string {
     <path d="M17.5 34 Q22 38 26.5 34" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
   </svg>`;
 }
+
+/* Auto-zoom to the bounding box of all visible bins whenever they change */
+const MapController: React.FC<{ bins: Bin[] }> = ({ bins }) => {
+  const map = useMap();
+  const prevCountRef = useRef(0);
+
+  useEffect(() => {
+    if (bins.length === 0) return;
+    // Only zoom when new bins are added (not on threshold re-render)
+    if (bins.length <= prevCountRef.current) return;
+    prevCountRef.current = bins.length;
+
+    const bounds = L.latLngBounds(bins.map((b) => [b.lat, b.lng] as L.LatLngTuple));
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { padding: [48, 48], maxZoom: 15 });
+    }
+  }, [bins, map]);
+
+  return null;
+};
 
 const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
   bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect,
@@ -139,6 +159,7 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
       />
+      <MapController bins={bins} />
 
       {/* Original route lines — always visible as dashed, dimmed when optimized */}
       {originalPolylines.map((line, i) => (
