@@ -192,4 +192,6 @@ Watch the 3-minute demo: [Google Drive](https://drive.google.com/file/d/1lks6aoq
 ## References
 
 - [geotab-vibe-guide](https://github.com/fhoffa/geotab-vibe-guide) — Add-In patterns, API reference, hackathon ideas
-- [docs/avni-prompts.md](docs/avni-prompts.md) — All prompts used for this project
+- [docs/avni-prompts.md](docs/avni-prompts.md) — Avni's prompts (Cursor / Claude Code)
+- [docs/ananya-prompts.md](docs/ananya-prompts.md) — Ananya's prompts (Lovable / UI design)
+- [docs/yogya_prompts.json](docs/yogya_prompts.json) — Yogya's prompts (algorithm / backend)
