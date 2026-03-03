@@ -11,6 +11,7 @@ export interface AlgoMetrics {
   fuelSavedL: number;
   co2AvoidedKg: number;
   hoursSaved: number;
+  idleMinutesSaved: number;  // minutes of engine-idle time avoided (stop time per skipped bin)
 }
 
 export interface VehicleRoute {
@@ -81,7 +82,15 @@ export function runOptimization(
       reject(new Error("SmartRouteAlgo not loaded"));
       return;
     }
-    window.SmartRouteAlgo.runAsync(bins, depot, options, resolve);
+    window.SmartRouteAlgo.runAsync(bins, depot, options, (result) => {
+      // Augment with idle/stop time savings.
+      // Each skipped stop avoids ~5 min: engine idle + collection + pull-away.
+      const idleMin = result.metrics.stopsSkipped * 5;
+      result.metrics.idleMinutesSaved = idleMin;
+      // Add idle savings to total hoursSaved
+      result.metrics.hoursSaved = result.metrics.hoursSaved + idleMin / 60;
+      resolve(result);
+    });
   });
 }
 

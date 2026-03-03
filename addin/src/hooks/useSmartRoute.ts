@@ -252,9 +252,10 @@ export function useSmartRoute() {
         fuelSavedL: acc.fuelSavedL + m.fuelSavedL,
         co2AvoidedKg: acc.co2AvoidedKg + m.co2AvoidedKg,
         hoursSaved: acc.hoursSaved + m.hoursSaved,
+        idleMinutesSaved: acc.idleMinutesSaved + (m.idleMinutesSaved ?? 0),
       };
     },
-    { stopsSkipped: 0, kmSaved: 0, fuelSavedL: 0, co2AvoidedKg: 0, hoursSaved: 0 },
+    { stopsSkipped: 0, kmSaved: 0, fuelSavedL: 0, co2AvoidedKg: 0, hoursSaved: 0, idleMinutesSaved: 0 },
   );
 
   /* ── All bins across loaded routes (for the map) ── */
