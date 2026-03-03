@@ -27,6 +27,7 @@ interface SmartRouteMapProps {
   onRouteSelect: (routeId: string) => void;
   focusRouteId?: string | null;
   isForecast?: boolean;
+  acceptedRouteIds?: Set<string>;
 }
 
 const getOverflowTime = (fillLevel: number): string => {
@@ -107,7 +108,7 @@ const MapFocusController: React.FC<{ focusRouteId: string | null; loadedRoutes: 
 };
 
 const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
-  bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect, focusRouteId, isForecast,
+  bins, threshold, optimizeState, optimizedMap, loadedRoutes, selectedRouteId, onRouteSelect, focusRouteId, isForecast, acceptedRouteIds,
 }) => {
   const icons = useMemo(() => {
     const map = new Map<string, L.DivIcon>();
@@ -200,18 +201,22 @@ const SmartRouteMap: React.FC<SmartRouteMapProps> = ({
       ))}
 
       {/* Optimized road polylines (solid, shown after optimization) */}
-      {hasOptimized && optimizeState === "optimized" && roadPolylines.map((line, i) => (
-        <Polyline
-          key={`opt-${i}`}
-          positions={line.positions}
-          color={line.color}
-          weight={selectedRouteId === line.routeId ? 6 : 4}
-          opacity={0.85}
-          eventHandlers={{
-            click: () => onRouteSelect(line.routeId),
-          }}
-        />
-      ))}
+      {hasOptimized && optimizeState === "optimized" && roadPolylines.map((line, i) => {
+        const isAccepted = acceptedRouteIds?.has(line.routeId);
+        return (
+          <Polyline
+            key={`opt-${i}`}
+            positions={line.positions}
+            color={isAccepted ? "#16a34a" : line.color}
+            weight={selectedRouteId === line.routeId ? 6 : isAccepted ? 5 : 4}
+            opacity={isAccepted ? 0.95 : 0.85}
+            dashArray={isAccepted ? undefined : undefined}
+            eventHandlers={{
+              click: () => onRouteSelect(line.routeId),
+            }}
+          />
+        );
+      })}
 
       {/* Bin markers */}
       {bins.map((bin) => {
