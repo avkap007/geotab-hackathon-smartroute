@@ -22,6 +22,13 @@ Most fleets don't have sensors yet. And those that do are locked to one vendor. 
 
 ---
 
+## Demo
+
+
+
+https://github.com/user-attachments/assets/243a7282-45a4-4332-a3f5-4ffd0d4c93ee
+
+
 ## Screenshots
 
 **Review & Accept — floating overlay shows route metrics + nearest Geotab vehicle assignment**
@@ -180,12 +187,6 @@ smartroute/
     ├── explore-db.js               # List devices, zones, routes
     └── seed-demo-routes.js         # Create Toronto demo route
 ```
-
----
-
-## Demo
-
-Watch the 3-minute demo: [Google Drive](https://drive.google.com/file/d/1lks6aoqf8iqPxwyqrcKnSQxKpxggEL3I/view?usp=sharing)
 
 ---
 
